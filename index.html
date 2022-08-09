@@ -556,6 +556,31 @@ float:left;
 width:200px;
 margin: 16px;
 }
+#customMenuContainer{
+position:absolute;
+left:25vw;
+top:25vh;
+width:50vw;
+height:50vh;
+background:#aaa;
+padding: 10px;
+box-sizing: border-box;
+font: 24px VT323;
+border:3px solid;
+border-color: rgb(200,200,200) rgb(80,80,80) rgb(80,80,80) rgb(200,200,200);
+}
+@keyframes appear{
+from{
+left:75vw;
+opacity:0;
+}
+}
+@keyframes disappear{
+to{
+left:75vw;
+opacity:0;
+}
+}
 </style>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VRNT3CCCGH"></script>
@@ -595,6 +620,10 @@ Then save the program as a Spin-off.
 <div id="messages"></div>
 <input id="messageInput">
 </div>
+<div id="customMenuContainer" class='hidden'>
+<button id="customMenuClose" style="float:right;">&times;</button>
+<div id="customMenu"></div>
+</div>
 <div style="position:absolute;top:0;left:0;width:100vw;"><video id="endPoemVideo" style="display:block;height:calc(100vh - 40px);margin:auto;" class="hidden"><source src="https://ia801602.us.archive.org/11/items/Rick_Astley_Never_Gonna_Give_You_Up/Rick_Astley_Never_Gonna_Give_You_Up.mp4"></video></div>
 <div id="controls" class="hidden"></div>
 <div id="controlDetect" class="hidden" tabindex="0">Click or press a key</div>
@@ -629,7 +658,6 @@ The load save menu is where you load and create worlds.<br>
 To select a world, you click it.<br>
 The create new world button takes you to the Create world menu.<br>
 The play selected world button loads the selected world.<br>
-<span style="color:yellow; font-family:fantasy;display:none;">"Congratulations, you graduate!" - Iruka Sensei<br></span>
 The edit button takes you to the Edit world menu.<br>
 The delete button deletes the selected world.<br>
 The export button puts the save code of the selected world in the input box.<br>
@@ -1085,6 +1113,7 @@ let errorScreen = document.querySelector("#errorScreen")
 // If there is an error, show error screen
 const errors = []
 function logError(e){
+if(typeof e === "string") e = {message:e}
 errors.push(e)
 var html = "<h1>Error!</h1>"
 errors.forEach(e => {
@@ -1099,6 +1128,7 @@ errorScreen.innerHTML = html
 errorScreen.style.display = "block"
 }
 window.addEventListener("error", logError)
+if(window.self !== window.top) logError("You must open MineKhan in a new window to work.")
 </script>
 <script type="application/javascript">
 "use strict";
@@ -1126,6 +1156,9 @@ window.centerMessage = document.getElementById("centerMessage")
 window.anvilTextbox = document.getElementById("anvilTextbox")
 window.invTextbox = document.getElementById("invTextbox")
 window.marketplaceInfo = document.querySelector("#marketplaceInfo")
+window.customMenuContainer = document.querySelector("#customMenuContainer")
+window.customMenuEl = document.querySelector("#customMenu")
+window.customMenuClose = document.querySelector("#customMenuClose")
 var hoverbox = document.getElementById("onhover")
 window.endPoemVideo = document.querySelector("#endPoemVideo")
 window.controls = document.getElementById("controls")
@@ -3381,6 +3414,15 @@ blank: "0g0g1ZZZ",
 "shockwave15_3": "0g0g2000ZZZ00010101020206040c0o0(0K0ħ3ëe0Ý0",
 drip: "0g0g3000ZZZľËH001ë002ë00006Ĉ00000000000000000000001ë002ë0000000000000000000000",
 splash: "0g0g4000?ĔZp$Z0ŃZ0000000000000000000000004ë40300ë0000000000000000000000000ë4000c0",
+generic0: "0g0g2000ZZZ00000000800000000000000000000000",
+generic1: "0g0g2000ZZZ000000g0800000000000000000000000",
+generic2: "0g0g2000ZZZ000000g0c00080000000000000000000",
+generic3: "0g0g2000ZZZ000040g0c0s080000000000000000000",
+generic4: "0g0g2000ZZZ0000k0o0c0u080000000000000000000",
+generic5: "0g0g2000ZZZ0000k0q0$0u0E0000000000000000000",
+generic6: "0g0g2000ZZZ0080)0r0Ù0u0!0g00000000000000000",
+generic7: "0g0g2000ZZZg0}0)0ă0Ù0Ì0#0)00000000000000000",
+spyglassModel: "0g0gbþńHYÌY000ŊYZ(ÁWUĊHĉTWŅ>YĥĊYáŊWŞðW1yyyyyyyjyyyyyyy?yyyyyyyÔyyyyyyyñyyyyyyy?yyyyyyyÇyyyyyyyāyyyyyyyæyyyyyyyæyyyyyyyæyyyyyyyñyyyyyyyĒyyyyyyy1yyyyyyyjyyyyyyyyyyyyyyy",
 //pretty: "0g0g40001blc009d4hc009efw01ulak1c3300022112200033333022111122033303332112211233300033312222133300022333222233322022113330033311222112233333322112112220333302221111222033330222112112233333322112221133300333112202233322223332200033312222133300033321122112333033302211112203333300222112200033",
 //pigFace: "0g0gr000006w14172ew1hejb3s1heul881luzbw81lvx4oo1o2w1dk1qb44541qbfcoo1sj0ws81sjc3qw1sjc5bs1sjndvc1sjnfg81sjynzs1sjypko1sk9y481skl9tk1ur8we01urk6ig1urvf201urvgmw1urvi7s1us6p6g1us6qrc1ustb081x2x0xkaa669999ddddbbddaa669999ddddbbdd7766ccii99kknnnn7766ccii99kknnnn88cceeeeddddeenn88cceeeeddddeenn00qqbbbbjjjjqq0000qqbbbbjjjjqq0099ddhhppppppggdd99ddhhppppppggddcccc11ddff11llllcccc11ddff11llll999922335544oomm999922335544oommbbbbddeellffffnnbbbbddeellffffnn",
 /*
@@ -4026,6 +4068,9 @@ transparent:true,
 solid:false,
 hidden:true,
 drop: "redstone",
+tick:function(block,x,y,z,dimension){
+if(world.getPower(x,y,z,dimension)) world.addParticle(new RedstoneParticle(x,y-0.49,z),dimension)
+},
 onupdate: function(x,y,z,b,world,sx,sy,sz,dimension){
 var tags = world.getTags(x,y,z,dimension)
 if(!tags) return this.onset(x,y,z,dimension)
@@ -5195,7 +5240,7 @@ dripThroughBlocks:[210/255, 59/255, 17/255],
 tick:function(x,y,z,dimension){
 blockData[blockIds.fire].spread(x,y,z,dimension)
 var b = world.getBlock(x,y+1,z)
-if(!block && !block.liquid && rand() < 0.05) world.addParticle(new LavaParticle(x,y+0.5,z),dimension)
+if(!b && !b.liquid && rand() < 0.05) world.addParticle(new LavaParticle(x,y+0.5,z),dimension)
 },
 getLevel:function(block){
 switch(block){
@@ -8724,6 +8769,8 @@ category:"nature"
 {
 name:"spyglass",
 Name:"Spyglass",
+textures:"spyglassModel",
+iconTexture:"spyglass",
 item:true,
 spyglass:true,
 category:"items"
@@ -9762,6 +9809,32 @@ lightLevel: 7,
 woodSound:true,
 solid:false,
 flatIcon:true,
+tick:function(block,x,y,z,dimension){
+if(!world.getPower(x,y,z,dimension)) return
+let wall = this.id | SLAB
+let pix = 1/16
+switch(block){
+case wall | NORTH:
+z += pix*5
+y += pix*6
+break
+case wall | SOUTH:
+z -= pix*5
+y += pix*6
+break
+case wall | EAST:
+x += pix*5
+y += pix*6
+break
+case wall | WEST:
+x -= pix*5
+y += pix*6
+break
+default:
+y += pix*2
+}
+world.addParticle(new RedstoneParticle(x,y,z),dimension)
+},
 onupdate: function(x,y,z,b,world,sx,sy,sz,dimension){
 this.onpowerupdate(x,y,z,null,null,null,null,dimension)
 if(world.getPower(x,y,z,dimension) === 16){ //is torch on?
@@ -10050,7 +10123,8 @@ if(a && !blockData[a].transparent){
 world.setBlockPower(ax,ay,az,null,dir,dimension)
 }
 }
-}
+},
+category:"redstone"
 },
 {
 name:"repeater",
@@ -12832,13 +12906,7 @@ const crafts = {
 "jungleLog": {name:"junglePlanks", amount:4, shapeless: true},
 "spruceLog": {name:"sprucePlanks", amount:4, shapeless: true},
 "mangroveLog": {name:"mangrovePlanks", amount:4, shapeless:true},
-"oakPlanks,air,air,oakPlanks": {name:"stick", amount:4, shaped:true},
-"acaciaPlanks,air,air,acaciaPlanks": {name:"stick", amount:4, shaped:true},
-"birchPlanks,air,air,birchPlanks": {name:"stick", amount:4, shaped:true},
-"darkOakPlanks,air,air,darkOakPlanks": {name:"stick", amount:4, shaped:true},
-"junglePlanks,air,air,junglePlanks": {name:"stick", amount:4, shaped:true},
-"sprucePlanks,air,air,sprucePlanks": {name:"stick", amount:4, shaped:true},
-"mangrovePlanks,air,air,mangrovePlanks": {name:"stick", amount:4, shaped:true},
+"_planks,air,air,_planks": {name:"stick", amount:4, shaped:true},
 "oakPlanks,oakPlanks,air,oakPlanks,oakPlanks,air,oakPlanks,oakPlanks":{name:"oakDoor", amount:3},
 "acaciaPlanks,acaciaPlanks,air,acaciaPlanks,acaciaPlanks,air,acaciaPlanks,acaciaPlanks":{name:"acaciaDoor", amount:3},
 "birchPlanks,birchPlanks,air,birchPlanks,birchPlanks,air,birchPlanks,birchPlanks":{name:"birchDoor", amount:3},
@@ -12859,22 +12927,8 @@ const crafts = {
 "warpedPlanks,warpedPlanks,warpedPlanks,warpedPlanks,warpedPlanks,warpedPlanks":{name:"warpedTrapdoor", amount:2},
 "crimsonPlanks,crimsonPlanks,crimsonPlanks,crimsonPlanks,crimsonPlanks,crimsonPlanks":{name:"crimsonTrapdoor", amount:2},
 "ironIngot,ironIngot,ironIngot,ironIngot,ironIngot,ironIngot":{name:"ironTrapdoor", amount:2},
-"redWool,redWool,redWool,oakPlanks,oakPlanks,oakPlanks":{name:"redBed"},
-"redWool,redWool,redWool,birchPlanks,birchPlanks,birchPlanks":{name:"redBed"},
-"redWool,redWool,redWool,sprucePlanks,sprucePlanks,sprucePlanks":{name:"redBed"},
-"redWool,redWool,redWool,acaciaPlanks,acaciaPlanks,acaciaPlanks":{name:"redBed"},
-"redWool,redWool,redWool,junglePlanks,junglePlanks,junglePlanks":{name:"redBed"},
-"redWool,redWool,redWool,darkOakPlanks,darkOakPlanks,darkOakPlanks":{name:"redBed"},
-"redWool,redWool,redWool,mangrovePlanks,mangrovePlanks,mangrovePlanks":{name:"redBed"},
-"oakPlanks,oakPlanks,air,oakPlanks,oakPlanks":{name:"craftingTable"},
-"birchPlanks,birchPlanks,air,birchPlanks,birchPlanks":{name:"craftingTable"},
-"darkOakPlanks,darkOakPlanks,air,darkOakPlanks,darkOakPlanks":{name:"craftingTable"},
-"acaciaPlanks,acaciaPlanks,air,acaciaPlanks,acaciaPlanks":{name:"craftingTable"},
-"sprucePlanks,sprucePlanks,air,sprucePlanks,sprucePlanks":{name:"craftingTable"},
-"junglePlanks,junglePlanks,air,junglePlanks,junglePlanks":{name:"craftingTable"},
-"mangrovePlanks,mangrovePlanks,air,mangrovePlanks,mangrovePlanks":{name:"craftingTable"},
-"warpedPlanks,warpedPlanks,air,warpedPlanks,warpedPlanks":{name:"craftingTable"},
-"crimsonPlanks,crimsonPlanks,air,crimsonPlanks,crimsonPlanks":{name:"craftingTable"},
+"redWool,redWool,redWool,_planks,_planks,_planks":{name:"redBed"},
+"_planks,_planks,air,_planks,_planks":{name:"craftingTable"},
 "coal,air,air,stick":{name:"torch",amount:4},
 "coal,coal,coal,coal,coal,coal,coal,coal,coal":{name:"coalBlock"},
 "ironIngot,ironIngot,ironIngot,ironIngot,ironIngot,ironIngot,ironIngot,ironIngot,ironIngot":{name:"ironBlock"},
@@ -12882,53 +12936,29 @@ const crafts = {
 "diamond,diamond,diamond,diamond,diamond,diamond,diamond,diamond,diamond":{name:"diamondBlock"},
 "lapisLazuli,lapisLazuli,lapisLazuli,lapisLazuli,lapisLazuli,lapisLazuli,lapisLazuli,lapisLazuli,lapisLazuli":{name:"lapisBlock"},
 "emerald,emerald,emerald,emerald,emerald,emerald,emerald,emerald,emerald":{name:"emeraldBlock"},
-"oakPlanks,oakPlanks,oakPlanks,air,stick,air,air,stick":{name:"woodenPickaxe"},
-"birchPlanks,birchPlanks,birchPlanks,air,stick,air,air,stick":{name:"woodenPickaxe"},
-"sprucePlanks,sprucePlanks,sprucePlanks,air,stick,air,air,stick":{name:"woodenPickaxe"},
-"junglePlanks,junglePlanks,junglePlanks,air,stick,air,air,stick":{name:"woodenPickaxe"},
-"darkOakPlanks,darkOakPlanks,darkOakPlanks,air,stick,air,air,stick":{name:"woodenPickaxe"},
-"acaciaPlanks,acaciaPlanks,acaciaPlanks,air,stick,air,air,stick":{name:"woodenPickaxe"},
-"mangrovePlanks,mangrovePlanks,mangrovePlanks,air,stick,air,air,stick":{name:"woodenPickaxe"},
-"cobblestone,cobblestone,cobblestone,air,stick,air,air,stick":{name:"stonePickaxe"},
+"_planks,_planks,_planks,air,stick,air,air,stick":{name:"woodenPickaxe"},
+"_stone,_stone,_stone,air,stick,air,air,stick":{name:"stonePickaxe"},
 "ironIngot,ironIngot,ironIngot,air,stick,air,air,stick":{name:"ironPickaxe"},
 "goldIngot,goldIngot,goldIngot,air,stick,air,air,stick":{name:"goldenPickaxe"},
 "diamond,diamond,diamond,air,stick,air,air,stick":{name:"diamondPickaxe"},
 "ironIngot,air,air,air,flint": {name:"flintAndSteel"},
-"air,oakPlanks,air,air,oakPlanks,air,air,stick": {name:"woodenSword"},
-"air,birchPlanks,air,air,birchPlanks,air,air,stick": {name:"woodenSword"},
-"air,sprucePlanks,air,air,sprucePlanks,air,air,stick": {name:"woodenSword"},
-"air,junglePlanks,air,air,junglePlanks,air,air,stick": {name:"woodenSword"},
-"air,darkOakPlanks,air,air,darkOakPlanks,air,air,stick": {name:"woodenSword"},
-"air,acaciaPlanks,air,air,acaciaPlanks,air,air,stick": {name:"woodenSword"},
-"air,mangrovePlanks,air,air,mangrovePlanks,air,air,stick": {name:"woodenSword"},
-"air,cobblestone,air,air,cobblestone,air,air,stick": {name:"stoneSword"},
+"air,_planks,air,air,_planks,air,air,stick": {name:"woodenSword"},
+"air,_stone,air,air,_stone,air,air,stick": {name:"stoneSword"},
 "air,ironIngot,air,air,ironIngot,air,air,stick": {name:"ironSword"},
 "air,goldIngot,air,air,goldIngot,air,air,stick": {name:"goldenSword"},
 "air,diamond,air,air,diamond,air,air,stick": {name:"diamondSword"},
 "air,air,air,snowBlock,snowBlock,snowBlock": {name:"snow", amount:6},
 "snowball,snowball,air,snowball,snowball": {name:"snowBlock"},
 "ironIngot,air,ironIngot,air,ironIngot":{name:"bucket"},
-"cobblestone,cobblestone,cobblestone,cobblestone,air,cobblestone,cobblestone,cobblestone,cobblestone":{name:"furnace"},
+"_stone,_stone,_stone,_stone,air,_stone,_stone,_stone,_stone":{name:"furnace"},
 "wheat,wheat,wheat":{name:"bread"},
-"oakPlanks,air,air,stick,air,air,stick":{name:"woodenShovel"},
-"birchPlanks,air,air,stick,air,air,stick":{name:"woodenShovel"},
-"sprucePlanks,air,air,stick,air,air,stick":{name:"woodenShovel"},
-"junglePlanks,air,air,stick,air,air,stick":{name:"woodenShovel"},
-"darkOakPlanks,air,air,stick,air,air,stick":{name:"woodenShovel"},
-"acaciaPlanks,air,air,stick,air,air,stick":{name:"woodenShovel"},
-"mangrovePlanks,air,air,stick,air,air,stick":{name:"woodenShovel"},
-"cobblestone,air,air,stick,air,air,stick":{name:"stoneShovel"},
+"_planks,air,air,stick,air,air,stick":{name:"woodenShovel"},
+"_stone,air,air,stick,air,air,stick":{name:"stoneShovel"},
 "ironIngot,air,air,stick,air,air,stick":{name:"ironShovel"},
 "goldIngot,air,air,stick,air,air,stick":{name:"goldenShovel"},
 "diamond,air,air,stick,air,air,stick":{name:"diamondShovel"},
-"oakPlanks,oakPlanks,air,oakPlanks,stick,air,air,stick":{name:"woodenAxe"},
-"birchPlanks,birchPlanks,air,birchPlanks,stick,air,air,stick":{name:"woodenAxe"},
-"sprucePlanks,sprucePlanks,air,sprucePlanks,stick,air,air,stick":{name:"woodenAxe"},
-"junglePlanks,junglePlanks,air,junglePlanks,stick,air,air,stick":{name:"woodenAxe"},
-"darkOakPlanks,darkOakPlanks,air,darkOakPlanks,stick,air,air,stick":{name:"woodenAxe"},
-"acaciaPlanks,acaciaPlanks,air,acaciaPlanks,stick,air,air,stick":{name:"woodenAxe"},
-"mangrovePlanks,mangrovePlanks,air,mangrovePlanks,stick,air,air,stick":{name:"woodenAxe"},
-"cobblestone,cobblestone,air,cobblestone,stick,air,air,stick":{name:"stoneAxe"},
+"_planks,_planks,air,_planks,stick,air,air,stick":{name:"woodenAxe"},
+"_stone,_stone,air,_stone,stick,air,air,stick":{name:"stoneAxe"},
 "ironIngot,ironIngot,air,ironIngot,stick,air,air,stick":{name:"ironAxe"},
 "goldIngot,goldIngot,air,goldIngot,stick,air,air,stick":{name:"goldenAxe"},
 "diamond,diamond,air,diamond,stick,air,air,stick":{name:"diamondAxe"},
@@ -12976,8 +13006,8 @@ const crafts = {
 "diamondBlock": {name:"diamond",amount:9,shapeless:true},
 "copperIngot,copperIngot,copperIngot,copperIngot,copperIngot,copperIngot,copperIngot,copperIngot,copperIngot":{name:"copperBlock"},
 "copperBlock": {name:"copperIngot",amount:9,shapeless:true},
-"oakPlanks,oakPlanks,air,air,stick,air,air,stick":{name:"woodenHoe"},
-"cobblestone,cobblestone,air,air,stick,air,air,stick":{name:"stoneHoe"},
+"_planks,_planks,air,air,stick,air,air,stick":{name:"woodenHoe"},
+"_stone,_stone,air,air,stick,air,air,stick":{name:"stoneHoe"},
 "ironIngot,ironIngot,air,air,stick,air,air,stick":{name:"ironHoe"},
 "goldIngot,goldIngot,air,air,stick,air,air,stick":{name:"goldenHoe"},
 "diamond,diamond,air,air,stick,air,air,stick":{name:"diamondHoe"},
@@ -13008,10 +13038,10 @@ const crafts = {
 "stoneBricks,vine":{name:"mossyStoneBricks",shapeless:true},
 "cobblestone,vine":{name:"mossyCobble",shapeless:true},
 "chiseledStoneBricks,chiseledStoneBricks,chiseledStoneBricks,chiseledStoneBricks,netheriteIngot,chiseledStoneBricks,chiseledStoneBricks,chiseledStoneBricks,chiseledStoneBricks":{name:"lodestone"},
-"oakPlanks,oakPlanks,oakPlanks,oakPlanks,redstone,oakPlanks,oakPlanks,oakPlanks,oakPlanks":{name:"noteBlock"},
-"oakPlanks,oakPlanks,oakPlanks,oakPlanks,diamond,oakPlanks,oakPlanks,oakPlanks,oakPlanks":{name:"jukebox"},
+"_planks,_planks,_planks,_planks,redstone,_planks,_planks,_planks,_planks":{name:"noteBlock"},
+"_planks,_planks,_planks,_planks,diamond,_planks,_planks,_planks,_planks":{name:"jukebox"},
 "ironIngot,ironIngot,ironIngot,ironIngot,furnace,ironIngot,smoothStone,smoothStone,smoothStone":{name:"blastFurnace"},
-"air,oakLog,air,oakLog,furnace,oakLog,air,oakLog":{name:"smoker"},
+"air,_log,air,_log,furnace,_log,air,_log":{name:"smoker"},
 "carvedPumpkin,torch":{name:"jackOLantern",shapeless:true},
 "air,ironIngot,air,ironIngot":{name:"shears"},
 "melonSlice":{name:"melonSeeds",shapeless:true},
@@ -13026,7 +13056,7 @@ const crafts = {
 "diorite,quartz":{name:"granite",shapeless:true},
 "granite,granite,air,granite,granite":{name:"polishedGranite",amount:4,shaped:true},
 "amethystShard,air,air,copperIngot,air,air,copperIngot":{name:"spyglass",shaped:true},
-"oakPlanks,air,oakPlanks,air,oakPlanks":{name:"bowl",amount:4,shaped:true},
+"_planks,air,_planks,air,_planks":{name:"bowl",amount:4,shaped:true},
 "redMushroom,brownMushroom,bowl":{name:"mushroomStew",shapeless:true},
 "egg,noodles,wheatSeeds,bowl":{name:"ramen",shapeless:true},
 "wheat,egg,wheat":{name:"noodles",shaped:true},
@@ -13034,17 +13064,17 @@ const crafts = {
 "dirt,gravel,air,gravel,dirt":{name:"coarseDirt",amount:4,shaped:true},
 "itemFrame,glowInkSac":{name:"glowItemFrame",shapeless:true},
 "copperBlock,copperBlock,air,copperBlock,copperBlock":{name:"cutCopper",amount:4,shaped:true},
-"air,stick,air,stick,coal,stick,oakLog,oakLog,oakLog":{name:"campfire"},
-"air,stick,air,stick,soulSand,stick,oakLog,oakLog,oakLog":{name:"soulCampfire"},
-"oakPlanks,oakPlanks,oakPlanks,oakPlanks,air,oakPlanks,oakPlanks,oakPlanks,oakPlanks":{name:"chest"},
+"air,stick,air,stick,coal,stick,_log,_log,_log":{name:"campfire"},
+"air,stick,air,stick,soulSand,stick,_log,_log,_log":{name:"soulCampfire"},
+"_planks,_planks,_planks,_planks,air,_planks,_planks,_planks,_planks":{name:"chest"},
 "clayBall,clayBall,air,clayBall,clayBall":{name:"clay",shaped:true},
 "brick,brick,air,brick,brick":{name:"bricks",shaped:true},
 "brick,air,brick,air,brick":{name:"flowerPot",shaped:true},
 "air,amethystShard,air,amethystShard,glass,amethystShard,air,amethystShard":{name:"tintedGlass",amount:2},
 "redstone,air,air,stick":{name:"redstoneTorch",shaped:true},
-"stick,air,air,cobblestone":{name:"lever",shaped:true},
-"oakPlanks,oakPlanks,oakPlanks,cobblestone,ironIngot,cobblestone,cobblestone,redstone,cobblestone":{name:"piston"},
-"cobblestone,cobblestone,cobblestone,redstone,redstone,quartz,cobblestone,cobblestone,cobblestone":{name:"observer"},
+"stick,air,air,_stone":{name:"lever",shaped:true},
+"_planks,_planks,_planks,_stone,ironIngot,_stone,_stone,redstone,_stone":{name:"piston"},
+"_stone,_stone,_stone,redstone,redstone,quartz,_stone,_stone,_stone":{name:"observer"},
 "string,string,air,string,string": {name:"whiteWool"},
 "poppy": {name:"redDye", shapeless: true},
 "redTulip": {name:"redDye", shapeless: true},
@@ -13174,12 +13204,29 @@ const crafts = {
 "redstoneLamp,yellowDye":{name:"yellowRedstoneLamp",shapeless:true},
 "redstoneLamp,greenDye":{name:"greenRedstoneLamp",shapeless:true},
 "redstoneLamp,blueDye":{name:"blueRedstoneLamp",shapeless:true},
-"goldNugget,goldNugget,goldNugget,goldNugget,melonSlice,goldNugget,goldNugget,goldNugget,goldNugget":{name:"glisteringMelonSlice"}
+"goldNugget,goldNugget,goldNugget,goldNugget,melonSlice,goldNugget,goldNugget,goldNugget,goldNugget":{name:"glisteringMelonSlice"},
+"lightGrayWool,lightGrayWool,lightGrayWool,_planks,_planks,_planks":{name:"lightGrayBed"},
+"lightBlueWool,lightBlueWool,lightBlueWool,_planks,_planks,_planks":{name:"lightBlueBed"},
+"magentaWool,magentaWool,magentaWool,_planks,_planks,_planks":{name:"magentaBed"},
+"yellowWool,yellowWool,yellowWool,_planks,_planks,_planks":{name:"yellowBed"},
+"purpleWool,purpleWool,purpleWool,_planks,_planks,_planks":{name:"purpleBed"},
+"orangeWool,orangeWool,orangeWool,_planks,_planks,_planks":{name:"orangeBed"},
+"whiteWool,whiteWool,whiteWool,_planks,_planks,_planks":{name:"whiteBed"},
+"greenWool,greenWool,greenWool,_planks,_planks,_planks":{name:"greenBed"},
+"brownWool,brownWool,brownWool,_planks,_planks,_planks":{name:"brownBed"},
+"blackWool,blackWool,blackWool,_planks,_planks,_planks":{name:"blackBed"},
+"pinkWool,pinkWool,pinkWool,_planks,_planks,_planks":{name:"pinkBed"},
+"limeWool,limeWool,limeWool,_planks,_planks,_planks":{name:"limeBed"},
+"grayWool,grayWool,grayWool,_planks,_planks,_planks":{name:"grayBed"},
+"cyanWool,cyanWool,cyanWool,_planks,_planks,_planks":{name:"cyanBed"},
+"blueWool,blueWool,blueWool,_planks,_planks,_planks":{name:"blueBed"},
 }
 //replace anything in crafts starting with _
-/*var craftTypes = {
-_planks: ["oakPlanks","birckPlanks","sprucePlanks","junglePlanks","darkOakPlanks","acaciaPlanks","mangrovePlanks"]
-}*/
+var craftTypes = {
+_planks: ["oakPlanks","birchPlanks","sprucePlanks","junglePlanks","darkOakPlanks","acaciaPlanks","mangrovePlanks","crimsonPlanks","warpedPlanks"],
+_stone: ["cobblestone","cobbledDeepslate","blackstone"],
+_log: ["oakLog","birchLog","spruceLog","jungleLog","darkOakLog","acaciaLog","mangroveLog","crimsonLog","warpedLog"]
+}
 var breakTypes = {
 plant: "axe",
 wood: "axe",
@@ -14178,18 +14225,22 @@ var currentAmbient = {} //Object with ambient sound sources
 var currentAmbientVolume = {}
 win.currentAmbient = currentAmbient
 //fill the crafts that have less than 9 items. Ex: "thing" => "thing,air,air..."
+let craftArrays = {}
 let arr, arr2 = new Array(9)
 for(let i in crafts){
 arr = i.split(",")
 for(let j = 0; j<9; j++){
 if(arr[j]){
+let temp = arr[j]
 arr[j] = blockIds[arr[j]]
+if(arr[j] === undefined) arr[j] = temp
 }else{
 arr.push(0)
 }
 }
 crafts[i].id = blockIds[crafts[i].name]
 if(crafts[i].amount === undefined) crafts[i].amount = 1
+craftArrays[arr.join(",")] = arr.slice()
 crafts[arr.join(",")] = crafts[i]
 //shaped recipes
 if(crafts[i].shaped){
@@ -14233,6 +14284,7 @@ arr2[bx+(by*3)] = b
 }
 }
 crafts[arr2.join(",")] = craft2
+craftArrays[arr2.join(",")] = arr2.slice()
 }
 offsetY = -1
 }
@@ -14240,8 +14292,26 @@ offsetY = -1
 delete crafts[i]
 }
 win.crafts = crafts
+for(let i in craftTypes){
+for(let j=0; j<craftTypes[i].length; j++){
+craftTypes[i][j] = blockIds[craftTypes[i][j]]
+}
+}
+function checkCraftType(a,b){
+return craftTypes[a] && craftTypes[a].includes(b) || a === b
+}
+function getCraft(craft){
+main:for(var i in crafts){
+if(crafts[i].shapeless) continue
+var arr = craftArrays[i]
+for(var j=0; j<arr.length; j++){
+if(!checkCraftType(arr[j], craft[j])) continue main
+}
+return i
+}
+}
 function shapelessCraft(craft) {
-let arr2 = craft;
+/*let arr2 = craft;
 arr2.sort(function(a, b) {
 return a - b;
 });
@@ -14255,6 +14325,37 @@ return a - b;
 let comp = arr.map(num => Number(num));
 if(arrayValues(comp,arr2)) {
 return i;
+}
+}*/
+main:for(var i in crafts){
+if(!crafts[i].shapeless) continue
+var arr = craft.slice()
+var arr2 = craftArrays[i]
+for(var j of arr2){ //remove the ones that exist for this recipe
+var k = -1
+for(var l=0; l<arr.length; l++){
+if(checkCraftType(arr2[j],arr[l])){
+k = l
+continue
+}
+}
+if(k === -1) continue main //recipe doesn't have this item
+arr.splice(k,1)
+}
+if(!arr.length) return i
+}
+}
+function updateCraftingGrid(){
+let arr = inventory.crafting.map(v => v?v.id:0)
+let craft = getCraft(arr)
+if(craft){
+inventory.craftingRes = crafts[craft]
+}else{
+let shapeless = shapelessCraft(arr)
+if(shapeless){
+inventory.craftingRes = crafts[shapeless]
+}else{
+inventory.craftingRes = 0
 }
 }
 }
@@ -14459,7 +14560,6 @@ hotbar:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALYAAAAuCAYAAACFxeMqAAAAAX
 "dBKbNC2tbVRMBB0/5trOBJWgI11eP97JgQcKY1QPBanXr170eVLl+lqx1WKlkW5KoJm3jJH8GjqLfTCGAB3Idcg9D1KK/vnNPZqDx6M89MLIab43evPAQD72lu1u/b8gmL2rj2y+K2/dg78P/xUN0Uet2W8AAAAAElFTkSuQmCC",
 veryCold:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAALCAYAAACQy8Z9AAAAAXNSR0IArs4c6QAAAIhJREFUOE+1U0EOgCAMkz959+qTvXrnT5oRa0rZFhIjF2B0pSujbHu9zmMtyzOwtxkxmw3DMeR4+Q0YkXLciBnLl2t+U+gBIlVQr0QcT0kjpVqdVjF4yd56nmZe4uwlZYKv604pXlnVRupQtvrceZo9GlpqpiMGUu3X6KIM959S9sbrP/Z05pfd+mjgsHwuzEEAAAAASUVORK5CYII=",
 veryHot:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAALCAYAAACQy8Z9AAAAAXNSR0IArs4c6QAAAIlJREFUOE+tU0EOgDAI0zd49ej/X+TRq2/QsFjTdIUYdZcNBqWUbdzn5Zi2dRyuBTt2+GKPGPYhx+W3wAyU/QHMsVxc8xtDF5CxAnsFYn8JmjHV7rSLTkvW1mlaaYm7G5QBvp47UDcMtIdXwLZ2E/Yj0KyQaokCFvStliWoDuMXpm7CeLfVhwDTE/o7yGRT7KQdAAAAAElFTkSuQmCC",
-generic: "https://data.thingmaker.repl.co/images/generic.png",
 freezeEffect: "https://data.thingmaker.repl.co/images/freeze_effect.png",
 spyglassScope:"https://data.thingmaker.repl.co/images/spyglass_scope.png",
 skin:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAFDUlEQVR42u2a20sUURzH97G0LKMotPuWbVpslj1olJXdjCgyisowsSjzgrB0gSKyC5UF1ZNQWEEQSBQ9dHsIe+zJ/+nXfM/sb/rN4ZwZ96LOrnPgyxzP/M7Z+X7OZc96JpEISfWrFhK0YcU8knlozeJKunE4HahEqSc2nF6zSEkCgGCyb+82enyqybtCZQWAzdfVVFgBJJNJn1BWFgC49/VpwGVlD0CaxQiA5HSYEwBM5sMAdKTqygcAG9+8coHKY/XXAZhUNgDYuBSPjJL/GkzVVhAEU5tqK5XZ7cnFtHWtq/TahdSw2l0HUisr1UKIWJQBAMehDuqiDdzndsP2EZECAG1ZXaWMwOCODdXqysLf++uXUGv9MhUHIByDOijjdiSAoH3ErANQD73C7TXXuGOsFj1d4YH4OTJAEy8y9Hd0mCaeZ5z8dfp88zw1bVyiYhCLOg1ZeAqC0ybaDttHRGME1DhDeVWV26u17lRAPr2+mj7dvULfHw2q65fhQRrLXKDfIxkau3ZMCTGIRR3URR5toU38HbaPiMwUcKfBAkoun09PzrbQ2KWD1JJaqswjdeweoR93rirzyCMBCmIQizqoizZkm2H7iOgAcHrMHbbV9KijkUYv7qOn55sdc4fo250e+vUg4329/Xk6QB/6DtOws+dHDGJRB3XRBve+XARt+4hIrAF4UAzbnrY0ve07QW8uHfB+0LzqanMM7qVb+3f69LJrD90/1axiEIs6qIs21BTIToewfcSsA+Bfb2x67OoR1aPPzu2i60fSNHRwCw221Suz0O3jO+jh6V1KyCMGse9721XdN5ePutdsewxS30cwuMjtC860T5JUKpXyKbSByUn7psi5l+juDlZYGh9324GcPKbkycaN3jUSAGxb46IAYPNZzW0AzgiQ5tVnzLUpUDCAbakMQXXrOtX1UMtHn+Q9/X5L4wgl7t37r85OSrx+TYl379SCia9KXjxRpiTjIZTBFOvrV1f8ty2eY/T7XJ81FQAwmA8ASH1ob68r5PnBsxA88/xAMh6SpqW4HRnLBrkOA9Xv5wPAZjAUgOkB+SHxgBgR0qSMh0zmZRsmwDJm1gFg2PMDIC8/nAHIMls8x8GgzOsG5WiaqREgYzDvpTwjLDy8NM15LpexDEA3LepjU8Z64my+8PtDCmUyRr+fFwA2J0eAFYA0AxgSgMmYBMZTwFQnO9RNAEaHOj2DXF5UADmvAToA2ftyxZYA5BqgmZZApDkdAK4mAKo8GzPlr8G8AehzMAyA/i1girUA0HtYB2CaIkUBEHQ/cBHSvwF0AKZFS5M0ZwMQtEaEAmhtbSUoDADH9ff3++QZ4o0I957e+zYAMt6wHkhzpjkuAcgpwNcpA7AZDLsvpwiuOkBvxygA6Bsvb0HlaeKIF2EbADZpGiGzBsA0gnwQHGOhW2snRpbpPexbAB2Z1oicAMQpTnGKU5ziFKc4xSlOcYpTnOIUpzgVmgo+XC324WfJAdDO/+ceADkCpuMFiFKbApEHkOv7BfzfXt+5gpT8V7rpfYJcDz+jAsB233r6yyBsJ0mlBCDofuBJkel4vOwBFPv8fyYAFPJ+wbSf/88UANNRVy4Awo6+Ig2gkCmgA5DHWjoA+X7AlM//owLANkX0w0359od++pvX8fdMAcj3/QJ9iJsAFPQCxHSnQt8vMJ3v2wCYpkhkAOR7vG7q4aCXoMoSgG8hFAuc/grMdAD4B/kHl9da7Ne9AAAAAElFTkSuQmCC",
@@ -14642,7 +14742,7 @@ let tex
 let textureAtlas, textAtlas
 let textureMap
 let dirtBuffer, netherBuffer, endBuffer
-let dirtTexture, netherTexture, endTexture, panoramaTexture, genericTexture, skinTexture, endPortalTexture
+let dirtTexture, netherTexture, endTexture, panoramaTexture, skinTexture, endPortalTexture
 let textureCoords
 let texCoordsBuffers
 let mainbg, dirtbg, netherbg, endbg // Background images
@@ -14842,6 +14942,10 @@ onenter: () => {
 editSignBox.value = editingSign.text
 editSignBox.focus()
 }
+},
+"custom menu":{
+enter:[customMenuContainer],
+exit:[customMenuContainer]
 },
 "multiplayer lost long":{
 enter:[window.centerMessage],
@@ -15379,6 +15483,18 @@ Messages.add("That sound doesn't exsist.")
 }
 },
 {
+name:"title",
+args:['text','subtext','color','fadeIn','fadeOut','stay'],
+info:"Shows text on screen. fadeIn and fadeOut and stay are miliseconds.",
+func: split => {
+split[4] = (split[4] || split[4] === 0) ? parseFloat(split[4]) : undefined
+split[5] = (split[5] || split[5] === 0) ? parseFloat(split[5]) : undefined
+split[6] = (split[6] || split[6] === 0) ? parseFloat(split[5]) : undefined
+showTitle(split[1], split[2], split[3], split[4],split[5],split[6])
+if(multiplayer) send({type:"title",data:split[1],sub:split[2],color:split[3],fadeIn:split[4],fadeOut:split[5],stay:split[6]})
+}
+},
+{
 name:"online",
 noCheats: true,
 info: "Lists people that are playing on this world.",
@@ -15739,6 +15855,13 @@ sideMessageTitle = title
 sideMessageContent = content
 }
 win.sideMessage = sideMessage
+function customMenu(html){
+customMenuClose.onclick = () => play()
+customMenuEl.innerHTML = html
+releasePointer()
+changeScene("custom menu")
+}
+win.customMenu = customMenu
 function die(){
 oofSound()
 calculateTotalXP()
@@ -16050,7 +16173,6 @@ ts:(40 * min(width, height) / 600) / 16,
 holding: 0,
 space: invItems,
 crafting: [0,0,0,0,0,0,0,0,0],
-craftingStr: "",
 craftingRes: 0, //block id
 anvilInput:0,
 anvilMaterial:0,
@@ -16070,7 +16192,6 @@ data:null
 },
 category:0
 }
-inventory.craftingStr = inventory.crafting.join(",")
 let furnaceData = inventory.furnaceData
 let chestData = inventory.chestData
 win.inventory = inventory
@@ -18670,6 +18791,24 @@ east: 0,
 west: 0
 }
 },
+spyglass:{
+verts:[
+[objectify(6.9,2.4,6.9,2.2,2.2,0,0, false,false,false,2,2)],
+[objectify(6.9,8.6,9.1,2.2,2.2,0,5, false,false,false,2,2),objectify(7,13.5,9,2,2,0,13)],
+[objectify(9.1,8.6,9.1,2.2,6.2,0,7, false,false,false,2,6),objectify(9,13.5,9,2,5,0,2)],
+[objectify(6.9,8.6,6.9,2.2,6.2,0,7, false,false,false,2,6),objectify(7,13.5,7,2,5,0,2)],
+[objectify(9.1,8.6,6.9,2.2,6.2,0,7, false,false,false,2,6),objectify(9,13.5,7,2,5,0,2)],
+[objectify(6.9,8.6,9.1,2.2,6.2,0,7, false,false,false,2,6),objectify(7,13.5,9,2,5,0,2)]
+],
+cull: {
+top: 0,
+bottom: 0,
+north: 0,
+south: 0,
+east: 0,
+west: 0
+}
+},
 sun:{
 verts:[
 [],[],[],
@@ -19732,7 +19871,8 @@ break
 }
 }
 if(baseBlock.item){
-baseBlock.shape = shapes.item
+if(baseBlock.spyglass) baseBlock.shape = shapes.spyglass
+else baseBlock.shape = shapes.item
 continue
 }
 var drop = baseBlock.drop || i
@@ -21758,6 +21898,7 @@ entHitbox.player = false
 if (p.spectator) {
 return
 }
+if(!cheats) reach = normReach
 let blockState = world.getBlock(p2.x, p2.y, p2.z, p.dimension)
 if (blockState && !(blockData[blockState].noHitbox && !(holding && blockData[holding].allHitbox))) {
 hitBox.pos = [ p2.x, p2.y, p2.z ]
@@ -22312,10 +22453,13 @@ ontouch(x, y, z, p.dimension)
 }
 }
 let runGravity = function() {
-if(liquid !== lastLiquid){
+if(!p.spectator && liquid !== lastLiquid){
 lastLiquid = liquid
 if(liquid && wet){
-playSound("liquid.splash")
+playSound("liquid.splash",0,posSound(p.x,p.y-p.bottomH,p.z)/*,abs(1/(p.velocity.y+1))*/)
+for(var i=0; i<10; i++){
+world.addParticle(new SplashParticle(p.x,p.y-p.bottomH,p.z),p.dimension)
+}
 }else if(!wet){
 //playSound("liquid.exit")
 }
@@ -22386,7 +22530,7 @@ p3.punchEffect = p.punchEffect
 p3.sleeping = screen === "sleep"
 p3.sitting = p.sitting
 p3.swimming = p.swimming
-p3.pulling = p.pulling
+p3.usingItem = p.usingItem
 p3.hidden = screen === "dead" || p.spectator
 p3.spectating = p.spectating && p.spectating.id || null
 updateTextures()
@@ -22596,12 +22740,12 @@ p.character.sneaking = p.sneaking
 p.character.walking = p.walking
 p.character.sprinting = p.sprinting
 p.character.holding = holding || 0
-p.character.punchEffect = p.punchEffect + 2
+p.character.punchEffect = p.punchEffect + 1.5
 p.character.eating = p.eating
 p.character.sleeping = p3.sleeping
 p.character.sitting = p.sitting
 p.character.swimming = p.swimming
-p.character.pulling = p.pulling
+p.character.usingItem = p.usingItem
 p.character.hidden = p3.hidden
 p.character.update()
 }
@@ -23228,7 +23372,7 @@ if(critical) damage *= 1.5
 if(entHitbox.player){
 if (worldSettings.pvp) {
 var pd = p.direction
-send({type:"hit", username:username, damage:damage, velx:pd.x/2, velz:pd.z/2}, ent.id)
+send({type:"hit", username:username, damage:damage, velx:pd.x/2, velz:pd.z/2, holding}, ent.id)
 }
 }else{
 if(ent.onhit){
@@ -23405,6 +23549,7 @@ world.setBlock(sx,sy,sz, world.getOriginalBlock(sx,sy,sz,dimension), false,false
 if(intensity > 0 && rand() > 0.995){
 var time = rand()*1000
 world.addParticle(new ShockwaveParticle(sx, sy, sz, time), dimension)
+world.addParticle(new PoofParticle(sx,sy,sz), dimension)
 }
 }
 }//end for loop
@@ -25207,7 +25352,7 @@ if(!(s && blockData[s].solid)) world.addParticle(new DripParticle(x-0.51,y+rand(
 if((blockData[block].name === "fire" || blockData[block].name === "Lava") && worldSettings.fireSpreads){
 blockData[block].tick(x,y,z,this.type)
 }
-if(blockData[block].name === "torch" || blockData[block].name === "soulTorch" || blockData[block].name === "farmland" || blockData[block].name === "furnace"){
+if(blockData[block].name === "torch" || blockData[block].name === "soulTorch" || blockData[block].name === "farmland" || blockData[block].name === "furnace" || blockData[block].name === "redstoneDust" || blockData[block].name === "redstoneTorch"){
 blockData[block].tick(block,x,y,z,this.type)
 }
 if(blockData[block].sign){
@@ -28469,7 +28614,6 @@ gl.drawElements(gl.TRIANGLES, 6 * this.faces, gl.UNSIGNED_INT, 0)
 glExtensions.vertex_array_object.bindVertexArrayOES(null)
 }
 }
-//character is seen in 3rd person mode
 class Player extends Entity{
 constructor(blockID){
 super(0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, null, null, 0, Infinity, "this isn't really a VAO... but it will be overwritten")
@@ -28496,7 +28640,9 @@ this.eating = false
 this.sleeping = false
 this.sitting = false
 this.swimming = false
-this.pulling = false
+this.usingItem = false
+this.prevWalking = false
+this.walkStart = 0
 this.prevSwimming = false
 this.swimStart = 0
 var part = this.generateVAO(shapes.playerHead,0,0)
@@ -28714,10 +28860,17 @@ part.ry = Math.PI * -0.5
 }else if(blockData[this.holding].name === "bow"){
 part.x = 0
 part.y = pix*-12
-part.z = pix*0
+part.z = 0
 part.w = part.h = part.d = 1
 part.rx = Math.PI / 1.25
 part.ry = Math.PI * -0.5
+}else if(blockData[this.holding].spyglass){
+part.x = pix*2
+part.y = pix*-10
+part.z = 0
+part.w = part.h = part.d = 1
+part.rx = -this.holdRot
+part.ry = 0
 }else if(blockData[this.holding].item){
 part.x = 0
 part.y = pix*-11
@@ -28735,14 +28888,18 @@ part.ry = Math.PI / 4
 }else{
 this.parts.rightArm.rx = 0
 }
+if(this.walking !== this.prevWalking){
+this.prevWalking = this.walking
+this.walkStart = now
+}
 var walkRotTarget
 if(this.walking){
 if(this.sprinting && !this.swimming){
-walkRotTarget = sin(((now - this.spawn) / 250) * Math.PI) * Math.PI / 4
+walkRotTarget = sin(((now - this.walkStart) / 250) * Math.PI) * Math.PI / 4
 }else if(this.sneaking && !this.swimming){
-walkRotTarget = sin((now - this.spawn) / 220) * Math.PI / 4
+walkRotTarget = sin((now - this.walkStart) / 220) * Math.PI / 4
 }else{
-walkRotTarget = sin(((now - this.spawn) / 500) * Math.PI) * Math.PI / 4
+walkRotTarget = sin(((now - this.walkStart) / 500) * Math.PI) * Math.PI / 4
 }
 }else{
 walkRotTarget = 0
@@ -28776,7 +28933,7 @@ this.parts.leftArm.rx += this.walkRot
 this.parts.rightArm.rx -= this.walkRot
 }
 if(this.punchEffect > 0){
-this.punchEffect -= 2
+this.punchEffect -= 1.5
 if(this.punchEffect < 0) this.punchEffect = 0
 var punchEffect = this.punchEffect
 this.parts.rightArm.rx -= punchEffect/6
@@ -28788,10 +28945,14 @@ if(this.eating){
 this.parts.rightArm.rx -= Math.PI2 + (sin(((now - this.spawn) / 125) * Math.PI) / 16) - 0.5
 this.parts.rightArm.ry2 = Math.PI4
 }
-if(this.pulling){
+if(this.usingItem){
+if(blockData[this.holding].name === "bow"){
 this.parts.leftArm.rx = -Math.PI2
 this.parts.leftArm.ry2 = -Math.PI4
 this.parts.rightArm.rx = -Math.PI2
+}else if(blockData[this.holding].spyglass){
+this.parts.rightArm.rx = -Math.PI2+this.holdRot
+}
 }
 if(this.capeImg){
 var target
@@ -29065,7 +29226,7 @@ if (now - this.spawn > this.despawns) {
 this.canDespawn = true
 }
 }
-onhit(damage){
+onhit(damage,remote){
 var prev = damage
 if(this.harmEffect > 0){
 if(damage > this.lastDamage){
@@ -29075,6 +29236,7 @@ damage -= this.lastDamage
 this.health -= damage
 this.harmEffect = 30
 this.lastDamage = prev
+if(multiplayer && !remote) send({type:"entEvent",event:"damageMob",id:this.id,data:damage})
 }
 }
 class Cow extends Mob{
@@ -29385,15 +29547,13 @@ const z = round(this.z)
 const blockLight = world.getLight(x, y, z, 1, this.dimension)
 const skysLight = world.getLight(x, y, z, 0, this.dimension)
 const lightLevel = min(max(skysLight * skyLight / 15, blockLight / 15) * 0.9 + 0.1, 1.0) * this.brightness
-gl.bindTexture(gl.TEXTURE_2D, genericTexture)
-gl.uniform1i(glCache.uSamplerParticle, 6)
+gl.bindTexture(gl.TEXTURE_2D, textureAtlas)
+gl.uniform1i(glCache.uSamplerParticle, 0)
 gl.uniform1f(glCache.uLightLevelParticle, lightLevel)
 gl.uniformMatrix4fv(glCache.uViewParticle, false, modelViewProjectionMatrix.elements)
-gl.uniform1i(glCache.isTextureAtlasParticle, 0)
 glExtensions.vertex_array_object.bindVertexArrayOES(this.vao)
 gl.drawElements(gl.TRIANGLES, 6 * this.faces, gl.UNSIGNED_INT, 0)
 glExtensions.vertex_array_object.bindVertexArrayOES(null)
-gl.uniform1i(glCache.isTextureAtlasParticle, 1)
 }
 }
 win.PoofParticle = PoofParticle
@@ -29416,7 +29576,7 @@ for (let X = -w2; X <= w2; X+=space) {
 for (let Z = -d2; Z <= d2; Z+=space) {
 let n = X * X / w2 + Y * Y / h2 + Z * Z / d2
 if (n < 1) {
-world.addParticle(new PoofParticle(x+X,y+Y,z+Z), dimension)
+world.addParticle(new PoofParticle(x+X,y+Y-1,z+Z), dimension)
 }
 }
 }
@@ -29471,20 +29631,79 @@ const z = round(this.z)
 const blockLight = world.getLight(x, y, z, 1, this.dimension)
 const skysLight = world.getLight(x, y, z, 0, this.dimension)
 const lightLevel = min(max(skysLight * skyLight / 15, blockLight / 15) * 0.9 + 0.1, 1.0)
-gl.bindTexture(gl.TEXTURE_2D, genericTexture)
-gl.uniform1i(glCache.uSamplerParticle, 6)
+gl.bindTexture(gl.TEXTURE_2D, textureAtlas)
+gl.uniform1i(glCache.uSamplerParticle, 0)
 gl.uniform1f(glCache.uLightLevelParticle, lightLevel)
 gl.uniformMatrix4fv(glCache.uViewParticle, false, modelViewProjectionMatrix.elements)
-gl.uniform1i(glCache.isTextureAtlasParticle, 0)
 if(this.tint) gl.uniform3f(glCache.tintParticle, this.tint[0],this.tint[1],this.tint[2])
 glExtensions.vertex_array_object.bindVertexArrayOES(this.vao)
 gl.drawElements(gl.TRIANGLES, 6 * this.faces, gl.UNSIGNED_INT, 0)
 glExtensions.vertex_array_object.bindVertexArrayOES(null)
-gl.uniform1i(glCache.isTextureAtlasParticle, 1)
 if(this.tint) gl.uniform3f(glCache.tintParticle, 1,1,1)
 }
 }
 win.FallingDustParticle = FallingDustParticle
+class RedstoneParticle extends Particle{
+constructor(x,y,z, tint){
+var s = rand(0.125,0.5)
+super(x, y, z, 0, 0, rand(-0.01,0.01), rand(-0.01,0.01), rand(-0.01,0.01), s, s, s, null, null, genericVaos.size, genericVaos.length*tickTime, genericVaos[genericVaos.length-1])
+this.tint = tint || blockData[blockIds.redstoneDust].tint[round(rand(10,15))]
+}
+update(){
+let now = performance.now()
+this.updateVelocity(now)
+this.vely = 0.01
+this.move(now)
+this.vao = genericVaos[genericVaos.length-1-floor((now-this.spawn)/tickTime)]
+if (now - this.spawn > this.despawns) {
+this.canDespawn = true
+}
+this.canFacePlayer = true
+}
+render(){
+if(this.canFacePlayer){
+this.facePlayer()
+this.canFacePlayer = false
+}
+let diff = (performance.now() - this.lastUpdate) / tickTime
+if (diff > 1) diff = 1
+let renderx = (this.x - this.previousX) * diff + this.previousX
+let rendery = (this.y - this.previousY) * diff + this.previousY
+let renderz = (this.z - this.previousZ) * diff + this.previousZ
+const modelMatrix = new Matrix();
+modelMatrix.identity()
+modelMatrix.translate(renderx, rendery, renderz)
+modelMatrix.rotY(this.yaw)
+modelMatrix.rotX(this.pitch)
+modelMatrix.scale(this.width, this.height, this.depth)
+const viewMatrix = p.transformation.elements
+const proj = p.projection
+const projectionMatrix = [proj[0], 0, 0, 0, 0, proj[1], 0, 0, 0, 0, proj[2], proj[3], 0, 0, proj[4], 0]
+const modelViewProjectionMatrix = new Matrix()
+modelViewProjectionMatrix.identity()
+modelViewProjectionMatrix.mult(projectionMatrix)
+modelViewProjectionMatrix.mult(viewMatrix)
+modelViewProjectionMatrix.mult(modelMatrix.elements)
+// row major to column major
+modelViewProjectionMatrix.transpose()
+const x = round(this.x)
+const y = round(this.y)
+const z = round(this.z)
+const blockLight = world.getLight(x, y, z, 1, this.dimension)
+const skysLight = world.getLight(x, y, z, 0, this.dimension)
+const lightLevel = min(max(skysLight * skyLight / 15, blockLight / 15) * 0.9 + 0.1, 1.0)
+gl.bindTexture(gl.TEXTURE_2D, textureAtlas)
+gl.uniform1i(glCache.uSamplerParticle, 0)
+gl.uniform1f(glCache.uLightLevelParticle, lightLevel)
+gl.uniformMatrix4fv(glCache.uViewParticle, false, modelViewProjectionMatrix.elements)
+if(this.tint) gl.uniform3f(glCache.tintParticle, this.tint[0],this.tint[1],this.tint[2])
+glExtensions.vertex_array_object.bindVertexArrayOES(this.vao)
+gl.drawElements(gl.TRIANGLES, 6 * this.faces, gl.UNSIGNED_INT, 0)
+glExtensions.vertex_array_object.bindVertexArrayOES(null)
+if(this.tint) gl.uniform3f(glCache.tintParticle, 1,1,1)
+}
+}
+win.RedstoneParticle = RedstoneParticle
 class ShockwaveParticle extends Particle{
 constructor(x,y,z, delay){
 var vao = shockwaveVaos[8]
@@ -29601,15 +29820,13 @@ const z = round(this.z)
 const blockLight = world.getLight(x, y, z, 1, this.dimension)
 const skysLight = world.getLight(x, y, z, 0, this.dimension)
 const lightLevel = min(max(skysLight * skyLight / 15, blockLight / 15) * 0.9 + 0.1, 1.0) * this.brightness
-gl.bindTexture(gl.TEXTURE_2D, genericTexture)
-gl.uniform1i(glCache.uSamplerParticle, 6)
+gl.bindTexture(gl.TEXTURE_2D, textureAtlas)
+gl.uniform1i(glCache.uSamplerParticle, 0)
 gl.uniform1f(glCache.uLightLevelParticle, lightLevel)
 gl.uniformMatrix4fv(glCache.uViewParticle, false, modelViewProjectionMatrix.elements)
-gl.uniform1i(glCache.isTextureAtlasParticle, 0)
 glExtensions.vertex_array_object.bindVertexArrayOES(this.vao)
 gl.drawElements(gl.TRIANGLES, 6 * this.faces, gl.UNSIGNED_INT, 0)
 glExtensions.vertex_array_object.bindVertexArrayOES(null)
-gl.uniform1i(glCache.isTextureAtlasParticle, 1)
 }
 }
 win.SmokeParticle = SmokeParticle
@@ -29905,15 +30122,29 @@ if(delay) this.vely = 0
 this.move(now)
 if(this.onGround && !delay){
 this.animation += 0.5
-var animation = floor(this.animation)
-if(animation <= 1) this.vao = dripVaos[0]
-else if(this.splash){
-this.vao = splashVaos[animation-2]
-this.tint = null
-this.width = this.height = this.depth = 0.5
+this.vao = dripVaos[0]
+if(this.animation > 1){
+this.canDespawn = true
+if(this.splash) world.addParticle(new SplashParticle(this.x,this.y,this.z),this.dimension)
 }
 }else if(!delay) this.vao = dripVaos[2]
-if (now - this.spawn > this.despawns || this.animation > (this.splash?5:1)) {
+if (now - this.spawn > this.despawns) {
+this.canDespawn = true
+}
+this.canFacePlayer = true
+}
+}
+class SplashParticle extends Particle{
+constructor(x,y,z){
+var s = 0.5
+super(x, y, z, 0, 0, rand(-0.3,0.3), rand(0.3), rand(-0.3,0.3), s, s, s, null, null, dripVaos.size, 20000, splashVaos[floor(rand(4))])
+this.defaultGravityStength = -0.032
+}
+update(){
+let now = performance.now()
+this.updateVelocity(now)
+this.move(now)
+if (now - this.spawn > this.despawns || this.onGround) {
 this.canDespawn = true
 }
 this.canFacePlayer = true
@@ -30014,26 +30245,27 @@ experienceOrbVaos.push(vao)
 shape = shapes.blockParticle
 genericVaos.size = shape.size
 shapeVerts = shape.verts
-for(let y=0; y<3; y++){
-for(let x=0; x<3; x++){
-var texSize = 1/3
+for(let i=0; i<8; i++){
 let blockSides = Object.keys(Block)
 let texture = []
 let index = 0
+var texVerts = textureCoords[textureMap["generic"+i]]
+if(!texVerts) continue
 for (let n = 0; n < 6; n++) {
 let side = blockSides[n]
 let directionalFaces = shapeVerts[Sides[side]]
 for (let facei = 0; facei < directionalFaces.length; facei++) {
-let tx = x / 3
-let ty = y / 3
-texture[index    ] = tx + texSize
-texture[index + 1] = ty
-texture[index + 2] = tx
-texture[index + 3] = ty
-texture[index + 4] = tx
-texture[index + 5] = ty + texSize
-texture[index + 6] = tx + texSize
-texture[index + 7] = ty + texSize
+let tx = texVerts[0]
+let ty = texVerts[1]
+let texShapeVerts = shapeTexVerts[n][facei]
+texture[index    ] = tx + texShapeVerts[0]
+texture[index + 1] = ty + texShapeVerts[1]
+texture[index + 2] = tx + texShapeVerts[2]
+texture[index + 3] = ty + texShapeVerts[3]
+texture[index + 4] = tx + texShapeVerts[4]
+texture[index + 5] = ty + texShapeVerts[5]
+texture[index + 6] = tx + texShapeVerts[6]
+texture[index + 7] = ty + texShapeVerts[7]
 index += 8
 }
 }
@@ -30052,7 +30284,6 @@ gl.enableVertexAttribArray(glCache.aVertexParticle)
 gl.enableVertexAttribArray(glCache.aTextureParticle)
 glExtensions.vertex_array_object.bindVertexArrayOES(null)
 genericVaos.push(vao)
-}
 }
 //drip
 shape = shapes.blockParticle
@@ -30684,6 +30915,8 @@ loadSaveChunks[data.idx] = data.data
 }else if(data.type === "loadSave"){
 connectingProgress = ""
 world = new World()
+p.flying = false
+p.autoBreak = p.autoPlace = false
 world.id = external ? originalTarget : data.id
 didEndPoem = false
 if(data.stringChunks){
@@ -30760,7 +30993,7 @@ thisplayer.eating = pos.eating
 thisplayer.sleeping = pos.sleeping
 thisplayer.sitting = pos.sitting
 thisplayer.swimming = pos.swimming
-thisplayer.pulling = pos.pulling
+thisplayer.usingItem = pos.usingItem
 thisplayer.hidden = pos.hidden
 thisplayer.spectating = pos.spectating
 thisplayer.afk = data.afk
@@ -30810,6 +31043,8 @@ if(!ent) return
 if(data.event === "itemAmount"){
 ent.amount = data.data
 ent.willUpdateShape = true
+}else if(data.event === "damageMob"){
+ent.onhit(data.data,true)
 }
 }else if(data.type === "achievment"){
 Messages.add(data.USER+" earned the achievment: "+data.data)
@@ -30846,6 +31081,8 @@ volume = posSound(data.x,data.y,data.z)
 }
 if(data.volume) volume *= data.volume
 playSound(data.data, 0, volume, data.pitch)
+}else if(data.type === "title"){
+showTitle(data.data,data.sub,data.color,data.fadeIn,data.fadeOut,data.stay)
 }else if(data.type === "eval"){
 console.log("Evaluating script: "+data.data)
 var res, error = false
@@ -33458,6 +33695,8 @@ Button.add(60, 40, 80, 30, "Back", "marketplace info", r => changeScene("marketp
 // Comingsoon menu buttons
 Button.add(width / 2, 395, width / 3, 40, "Back", "comingsoon menu", r => changeScene(previousScreen))
 // Options Sliders & Buttons
+var needsCheats = () => !cheats
+var noCheatsThenSayIt = () => !cheats && "This requires cheats."
 Slider.add(width/4, height/2 + -245, width / 3, 40, "options", "Render Distance", 1, 32, "renderDistance", val => settings.renderDistance = round(val))
 Slider.add(width/4, height/2 + -185, width / 3, 40, "options", "FOV", 30, 110, "fov", val => {
 p.FOV(val)
@@ -33471,7 +33710,7 @@ Button.add(width / 4, height/2 + -65, width / 3, 40, ["Reach distance: "+normRea
 if(r === "Reach distance: "+normReach){
 reach = normReach
 }else reach = bigReach
-})
+}, needsCheats, noCheatsThenSayIt, () => reach === bigReach ? 1 : 0)
 //Button.add(width / 2, 500, width / 3, 40, ["Sound: On", "Sound: Off"], "options", r => soundOn = r === "Sound: On")
 Slider.add(width / 4, height/2 + -5, width / 3, 40, "options", "Sound Volume", 0,1, "volume", val => settings.volume = val, true, val => {blockSound(blockIds.grass, "place",0,0,0,1)}, {"0%":"Off"})
 Button.add(width / 4, height/2 + 55, width / 3, 40, "Change Controls", "options", r => changeScene("options controls"))
@@ -33489,8 +33728,6 @@ Button.add(width * 0.75, height/2 + -65, width / 3, 40, ["First person","Third p
 //Button.add(width * 0.75, height/2 + -5, width / 3, 40, ["Start sending audio","Stop sending audio"], "options", r => recordingAudio ? stopRecordAudio() : startRecordAudio(), () => true||!multiplayer,"Sends audio from your microphone to other players. Only works in multiplayer.", () => recordingAudio ? 1 : 0)
 Button.add(width / 2, height - 50, width / 3, 40, "Back", "options", r => changeScene(beforeOptionsScreen))
 // World settings buttons
-var needsCheats = () => !cheats
-var noCheatsThenSayIt = () => !cheats && "This requires cheats."
 Button.add(width / 2, height/2 + -245, width / 4, 40, ["TNT Explodes: On","TNT Explodes: Off"], "options worldSettings", r => worldSettings.tntExplode = r === "TNT Explodes: On", null, null, () => worldSettings.tntExplode ? 0 : 1)
 Button.add(width / 2, height/2 + -185, width / 4, 40, ["Kill command enabled","Kill command disabled"], "options worldSettings", r => worldSettings.killCmdOff = r === "Kill command disabled", null, null, () => worldSettings.killCmdOff ? 1 : 0)
 Button.add(width / 2, height/2 + -125, width / 4, 40, ["Day/Night Cycle: On", "Day/Night Cycle: Off"], "options worldSettings", r => worldSettings.dayNightCycle = r === "Day/Night Cycle: On", needsCheats, noCheatsThenSayIt, () => worldSettings.dayNightCycle ? 0 : 1)
@@ -33785,20 +34022,7 @@ gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
 gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
 mainBGW = images.panorama.width
 })
-let genericPixels = new Uint8Array([255,0,0,1])
-genericTexture = gl.createTexture()
-gl.activeTexture(gl.TEXTURE6)
-gl.bindTexture(gl.TEXTURE_2D, genericTexture)
-gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, genericPixels)
-images.generic.addEventListener("load", function(){
-gl.activeTexture(gl.TEXTURE6)
-gl.bindTexture(gl.TEXTURE_2D, genericTexture)
-gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, images.generic)
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-})
+//TEXTURE6 available
 let skinPixels = new Uint8Array([255,0,0,1])
 skinTexture = gl.createTexture()
 gl.activeTexture(gl.TEXTURE7)
@@ -34233,20 +34457,6 @@ ctx.textAlign = 'right'
 text(p2.x + ", " + p2.y + ", " + p2.z, width - 10, 15, 0)
 ctx.textAlign = 'left'
 text(str, 5, height - 77, 12)
-}
-function updateCraftingGrid(){
-let arr = inventory.crafting.map(v => v?v.id:0)
-let recipe = inventory.craftingStr = arr.join(",")
-if(crafts[recipe]){
-inventory.craftingRes = crafts[recipe]
-}else{
-var shapeless = shapelessCraft(arr)
-if(shapeless){
-inventory.craftingRes = crafts[shapeless]
-}else{
-inventory.craftingRes = 0
-}
-}
 }
 window.invScroll = 0;
 let draggingInvBar = false
@@ -35367,7 +35577,7 @@ if (screen !== "play") {
 cursor("")
 mouseX = e.x
 mouseY = e.y
-if(screen !== "main menu" && !(screen === "furnace" && furnaceData.data.smelting) && screen !== "dead" && screen !== "chat" && screen !== "edit sign" && screen !== "sleep" && screen !== "endPoem"){
+if(screen !== "main menu" && !(screen === "furnace" && furnaceData.data.smelting) && screen !== "dead" && screen !== "chat" && screen !== "edit sign" && screen !== "sleep" && screen !== "endPoem" && screen !== "custom menu"){
 drawScreens[screen]()
 redraw = true
 Slider.drag()
@@ -35759,7 +35969,7 @@ play()
 canvas.onkeyup = function(e) {
 let k = e.key.toLowerCase()
 Key[k] = false
-if(k === "escape" && (screen === "pause" || screen === "inventory" || screen === "chest" || screen === "furnace" || screen === "anvil" || screen === "chat" || screen === "options" && previousScreen === "pause") && Date.now() > unpauseDelay) {
+if(k === "escape" && (screen === "pause" || screen === "inventory" || screen === "chest" || screen === "furnace" || screen === "anvil" || screen === "chat" || screen === "custom menu" || screen === "options" && previousScreen === "pause") && Date.now() > unpauseDelay) {
 play()
 }
 if (screen === "play") {
@@ -37639,7 +37849,7 @@ win.menuMusicVolume = 1
 win.menuMusicIdx = 0
 win.currentMusic = null
 function updateMusic(){
-if(screen === "play" || screen === "pause" || screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "options" || screen.startsWith("options ") || screen === "chat" || screen === "edit sign" || screen === "sleep" || screen === "endPoem"){
+if(screen === "play" || screen === "pause" || screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "options" || screen.startsWith("options ") || screen === "chat" || screen === "edit sign" || screen === "sleep" || screen === "endPoem" || screen === "custom menu"){
 if(menuMusicVolume > 0) menuMusicVolume -= 0.01
 if(menuMusicVolume < 0) menuMusicVolume = 0
 if(currentMusic && menuMusicVolume === 0){
@@ -37985,13 +38195,15 @@ var rhtml = ""
 for(var c in crafts){
 var r = crafts[c]
 if(r.hidden) continue
-var arr = c.split(",")
+var arr = craftArrays[c]
 rhtml += "<div class='recipe'>"
 rhtml +=  blockData[r.id].Name+"<br><br>"
 rhtml += "<div class='grid'>"
 //Grid
 for(var a=0; a<arr.length; a++){
-var id = parseInt(arr[a])
+var id = arr[a]
+if(craftTypes[id]) id = craftTypes[id][0]
+else id = parseInt(id)
 if(id) {
 if(!icons[id]) addIcon(id)
 var img = icons[id]
@@ -38385,11 +38597,11 @@ item.dropStart = performance.now()
 }else if(item.dropStart) delete item.dropStart
 }
 }
-if(tick) p.pulling = false
+if(tick) p.usingItem = false
 if(tick && controlMap.place.pressed){
 var item = inventory.hotbar[inventory.hotbarSlot]
 if(item && item.id && blockData[item.id].name === "bow" && hasItem(blockIds.arrow)){
-p.pulling = true
+p.usingItem = true
 var pull = item.pulling || 0
 var start = item.pullStart || 0
 if(pull < 3 && now - start > 500){
@@ -38399,6 +38611,8 @@ item.pulling = pull
 item.icon = item.id+"_"+pull
 updateHUD = true
 }
+}else if(item && item.id && blockData[item.id].spyglass){
+p.usingItem = true
 }
 }
 if((now - attackCooldownStart) / 1000 * 20 > attackCooldownTime){
@@ -38644,7 +38858,7 @@ loseHealthEffect -= 4
 updateHUD = true
 }
 if(p.punchEffect > 0 && tick){
-p.punchEffect -= 2
+p.punchEffect -= 1.5
 }
 if(p.punchEffect < 0) p.punchEffect = 0
 if(tick){
@@ -39009,6 +39223,9 @@ ctx.textAlign = 'center'
 text(`${i} of ${total} players sleeping.`, width / 2, height - 70)
 }else allSleeping = true
 }
+drawScreens["custom menu"] = () => {
+defineWorld(tick)
+}
 drawScreens.pause = () => {
 strokeWeight(1)
 clear()
@@ -39148,7 +39365,7 @@ drawScreens[screen]()
 Button.draw()
 Slider.draw()
 }
-if (screen === "play" || screen === "loading" || screen === "netherLoading" || screen === "endLoading" || screen === "dead" || screen === "chat" || screen === "edit sign" || screen === "sleep" || screen === "endPoem") {
+if (screen === "play" || screen === "loading" || screen === "netherLoading" || screen === "endLoading" || screen === "dead" || screen === "chat" || screen === "edit sign" || screen === "sleep" || screen === "endPoem" || screen === "custom menu") {
 drawScreens[screen]()
 Button.draw()
 Slider.draw()
