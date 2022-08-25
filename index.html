@@ -6,7 +6,7 @@ My credits (not Willard's)
 * Red Monster (https://www.khanacademy.org/profile/monsterred) made the shapes for the blocks
 * Shoos10 (https://www.khanacademy.org/profile/kaid_651789387350300127259402) created the Island World type
 * Repeat (https://www.khanacademy.org/profile/kaid_730847189850789421961173) made a few fixes/changes here and there
-* Trexler made some code
+* Trexler and Luke Powers made some code (use search to find)
 * I created the survival mode
 Willard's credits
 * This program (MineKhan) was made by Willard (me). The original is https://www.khanacademy.org/cs/mc/5647155001376768 (just adding this so that spin-offs have it)
@@ -618,7 +618,7 @@ Then save the program as a Spin-off.
 <p id="message" class="hidden darklinks" style="position: absolute; top: 10px; right: 10px; z-index: 1; text-align: right; background-color: rgba(255, 255, 255, 0.3);"></p>
 <div id="messagesHolder" class="hidden">
 <div id="messages"></div>
-<input id="messageInput">
+<input id="messageInput" autocomplete="off" spellcheck="false">
 </div>
 <div id="customMenuContainer" class='hidden'>
 <button id="customMenuClose" style="float:right;">&times;</button>
@@ -950,11 +950,28 @@ uniform float light;
 uniform vec3 sky;
 uniform vec3 skyBottom;
 varying vec3 position;
+float rand3D(in vec3 co){
+return fract(sin(dot(co.xyz ,vec3(12.9898,78.233,144.7272))) * 43758.5453);
+}
+vec3 round3(vec3 position){
+position.x = floor(position.x*800.)/800.;
+position.y = floor(position.y*800.)/800.;
+position.z = floor(position.z*800.)/800.;
+return position;
+}
 void main (void) {
-if(light == 0.) discard;
 vec3 dir = normalize(position);
-float horizonal = min(dot(dir, vec3(0., 1., 0.))/1.+1., 1.);
-gl_FragColor = vec4(mix(sky,skyBottom,horizonal)*light, 1.);
+float horizonal = min(dot(dir, vec3(0., 1., 0.))+1., 1.);
+vec3 nightSky = vec3(0.);
+if(light != 1.){
+float stars = rand3D(round3(position));
+if(stars > 0.999){
+nightSky = vec3(1.);
+}//else if(stars > 0.998){
+//nightSky = vec3(0.5);
+//}
+}
+gl_FragColor = vec4(mix(nightSky,mix(sky,skyBottom,horizonal),light), 1.);
 }
 </script>
 <script type="x-shader/vertex" id="entityVertexShader">
@@ -3423,6 +3440,10 @@ generic5: "0g0g2000ZZZ0000k0q0$0u0E0000000000000000000",
 generic6: "0g0g2000ZZZ0080)0r0Ù0u0!0g00000000000000000",
 generic7: "0g0g2000ZZZg0}0)0ă0Ù0Ì0#0)00000000000000000",
 spyglassModel: "0g0gbþńHYÌY000ŊYZ(ÁWUĊHĉTWŅ>YĥĊYáŊWŞðW1yyyyyyyjyyyyyyy?yyyyyyyÔyyyyyyyñyyyyyyy?yyyyyyyÇyyyyyyyāyyyyyyyæyyyyyyyæyyyyyyyæyyyyyyyñyyyyyyyĒyyyyyyy1yyyyyyyjyyyyyyyyyyyyyyy",
+dispenserFrontVertical: "0g0g9Á)Z;ŊYËÒYÖĎYâľHðoHJPWwíWgTW00g0hgh02O>UOQOw2@yNÄOQS3VÓB?ÄA(4VUÃ)V)xk)QMj?Ox3Ó>äñ)ÓwkVÎIImVTkUÁIIlUS4V*äñ?Qw4?)ÎkÃyMj?>ÄÒÄBSjAN??>Ã(3yBA)O>(2zUÂzNOw00g0hh00",
+dispenserFront: "0g0geÁ)Z;ŊYËÒYÖĎYâľHðoHJPWĮsHĚĲWĒĒYĆåZgTWwíWéŞZ00g0hgh02O>UOQOw2@yNÄOQS3VGA?GA(4ÅIá[Iáxk,ëî-8àx3ÕÐÔã+ðwkåďðÕæÿTjæĀØġòď(9òðģĤäĀùađóĲĳäĂĉqþĐŃĮóÖKmđĒÿæĎĒKd×ÓđÓÓĎķ3)>|ńQO(00g0hh00",
+dropperFrontVertical: "0g0g9Á)Z;ŊYËÒYÖĎYâľHðoHJPWwíWgTW00g0hgh02O>UOQOw2@yNÄOQS3VÓA?ÄA(4VUz?V)xkONyyBOx3ÓxGGâÓwkVDIIãVTkUDIImUS4VDGÞmQw4?*ÓÓÂyMj?>ÒVÄBSjAN??>Ã(3yBA)O>(2zUÂzNOw00g0hh00",
+dropperFront: "0g0geÁ)Z;ŊYËÒYÖĎYâľHðoHJPWĮsHĚĲWĒĒYĆåZwíWgTWéŞZ00g0hgh02O>UOQOw2@yNÄOQS3VGA?GA(4ÅIá[Iáxk,ëî-8àx3ÕÐÔã+ðwkåďðÕæÿTjæĀÖāòď(9òôĳĲğĀùađóĤģäĂĉqþĐłğóÖKmđĒÿæĎĒKd×ÓđÓÓĎķ3)>|ńQO(00g0hh00",
 //pretty: "0g0g40001blc009d4hc009efw01ulak1c3300022112200033333022111122033303332112211233300033312222133300022333222233322022113330033311222112233333322112112220333302221111222033330222112112233333322112221133300333112202233322223332200033312222133300033321122112333033302211112203333300222112200033",
 //pigFace: "0g0gr000006w14172ew1hejb3s1heul881luzbw81lvx4oo1o2w1dk1qb44541qbfcoo1sj0ws81sjc3qw1sjc5bs1sjndvc1sjnfg81sjynzs1sjypko1sk9y481skl9tk1ur8we01urk6ig1urvf201urvgmw1urvi7s1us6p6g1us6qrc1ustb081x2x0xkaa669999ddddbbddaa669999ddddbbdd7766ccii99kknnnn7766ccii99kknnnn88cceeeeddddeenn88cceeeeddddeenn00qqbbbbjjjjqq0000qqbbbbjjjjqq0099ddhhppppppggdd99ddhhppppppggddcccc11ddff11llllcccc11ddff11llll999922335544oomm999922335544oommbbbbddeellffffnnbbbbddeellffffnn",
 /*
@@ -4917,6 +4938,35 @@ noDrop:true,
 dropSelfWhenSheared:true,
 shearBreakTime:0.35,
 liquidBreakable:"drop",
+onupdate:function(x,y,z,b,world,sx,sy,sz,dimension){
+var fx = x, fz = z
+switch(b){
+case this.id | WALLFLAT | NORTH:
+fz++
+break
+case this.id | WALLFLAT | SOUTH:
+fz--
+break
+case this.id | WALLFLAT | EAST:
+fx++
+break
+case this.id | WALLFLAT | WEST:
+fx--
+break
+}
+var block = world.getBlock(fx,y,fz,dimension)
+var above = world.getBlock(x,y+1,z,dimension)
+if(!worldSettings.blocksFall || block && blockData[block].solid || above === b) return
+world.setTimeout(function(){
+var block = world.getBlock(fx,y,fz,dimension)
+var above = world.getBlock(x,y+1,z,dimension)
+if(block && blockData[block].solid || above === b) return
+world.setBlock(x,y,z, 0,false,false,false,false,dimension)
+world.addItems(x,y,z,dimension,0,0,0,b,true)
+blockParticles(b,x,y,z,30, "break",world,dimension)
+blockSound(b, "dig", x,y,z)
+},tickTime)
+},
 tint:leafTint,
 biomeTintTop:true,
 biomeTintBottom:true,
@@ -5053,6 +5103,7 @@ var w = world.getBlock(x-1,y,z,dimension)
 if (n && blockData[n].name === "Lava" || s && blockData[s].name === "Lava" || e && blockData[e].name === "Lava" || w && blockData[w].name === "Lava") {
 return world.setBlock(x,y,z,blockIds.cobblestone,false,false,false,false,dimension)
 }
+if(!worldSettings.blocksFall) return
 for(var i=0; i<world.timeoutQueue.length; i++){
 var t = world.timeoutQueue[i]
 if(t.x === x && t.y === y && t.z === z && t.d === dimension){
@@ -5077,8 +5128,8 @@ var X = this.getLevelAt(bx+1,by,bz,dimension)
 var z = this.getLevelAt(bx,by,bz-1,dimension)
 var Z = this.getLevelAt(bx,by,bz+1,dimension)
 var current = this.current
-current.x = (X < level) + (x > level) - (X > level) - (x < level)
-current.z = (Z < level) + (z > level) - (Z > level) - (z < level)
+current.x = (X && X < level) + (x > level) - (X > level) - (x && x < level)
+current.z = (Z && Z < level) + (z > level) - (Z > level) - (z && z < level)
 if(noNormalize) return current
 let mag = Math.sqrt(current.x * current.x + current.z * current.z)
 current.x /= mag
@@ -5345,6 +5396,7 @@ var block = world.getBlock(x,y+1,z,dimension)
 if (block && blockData[block].name === "Water") {
 return world.setBlock(x,y,z,blockIds.obsidian,false,false,false,false,dimension)
 }
+if(!worldSettings.blocksFall) return
 for(var i=0; i<world.timeoutQueue.length; i++){
 var t = world.timeoutQueue[i]
 if(t.x === x && t.y === y && t.z === z && t.d === dimension){
@@ -5369,8 +5421,8 @@ var X = this.getLevelAt(bx+1,by,bz,dimension)
 var z = this.getLevelAt(bx,by,bz-1,dimension)
 var Z = this.getLevelAt(bx,by,bz+1,dimension)
 var current = this.current
-current.x = (X < level) + (x > level) - (X > level) - (x < level)
-current.z = (Z < level) + (z > level) - (Z > level) - (z < level)
+current.x = (X && X < level) + (x > level) - (X > level) - (x && x < level)
+current.z = (Z && Z < level) + (z > level) - (Z > level) - (z && z < level)
 if(noNormalize) return current
 let mag = Math.sqrt(current.x * current.x + current.z * current.z)
 current.x /= mag
@@ -9595,7 +9647,8 @@ solid:false,
 onupdate:function(x,y,z,b,world,sx,sy,sz,dimension){
 needsSupportingBlocks(x,y,z,b,world,dimension)
 },
-category:"nature"
+category:"nature",
+liquidBreakable:"drop"
 },
 {
 name:"tomatoSeeds",
@@ -11887,6 +11940,8 @@ category:"nature"
 name:"oakSign",
 Name:"write on oak wood",
 textures:"oakPlanks",
+poleTop:"logTop",
+poleSide:"logSide",
 iconTexture:"oakSign",
 flatIcon:true,
 sign:true,
@@ -11899,6 +11954,8 @@ category:"decoration"
 name:"birchSign",
 Name:"Birch Sign",
 textures:"birchPlanks",
+poleTop:"birchLogTop",
+poleSide:"birchLogSide",
 iconTexture:"birchSign",
 flatIcon:true,
 sign:true,
@@ -11911,6 +11968,8 @@ category:"decoration"
 name:"acaciaSign",
 Name:"Acacia Sign",
 textures:"acaciaPlanks",
+poleTop:"acaciaLogTop",
+poleSide:"acaciaLogSide",
 iconTexture:"acaciaSign",
 flatIcon:true,
 sign:true,
@@ -11923,6 +11982,8 @@ category:"decoration"
 name:"jungleSign",
 Name:"Jungle Sign",
 textures:"junglePlanks",
+poleTop:"jungleLogTop",
+poleSide:"jungleLogSide",
 iconTexture:"jungleSign",
 flatIcon:true,
 sign:true,
@@ -11935,6 +11996,8 @@ category:"decoration"
 name:"spruceSign",
 Name:"Spruce Sign",
 textures:"sprucePlanks",
+poleTop:"spruceLogTop",
+poleSide:"spruceLogSide",
 iconTexture:"spruceSign",
 flatIcon:true,
 sign:true,
@@ -11947,6 +12010,8 @@ category:"decoration"
 name:"darkOakSign",
 Name:"Dark Oak Sign",
 textures:"darkOakPlanks",
+poleTop:"darkOakLogTop",
+poleSide:"darkOakLogSide",
 iconTexture:"darkOakSign",
 flatIcon:true,
 sign:true,
@@ -11960,6 +12025,8 @@ category:"decoration"
 name:"mangroveSign",
 Name:"Mangrove Sign",
 textures:"mangrovePlanks",
+poleTop:"mangroveLogTop",
+poleSide:"mangroveLog",
 iconTexture:"mangroveSign",
 flatIcon:true,
 sign:true,
@@ -12648,6 +12715,218 @@ this.explode(x,y,z,null,dimension)
 },
 category:"redstone"
 },
+{
+name:"crimsonSign",
+Name:"Crimson Sign",
+textures:"crimsonPlanks",
+poleTop:"crimsonStemTop",
+poleSide:"crimsonStemSide",
+iconTexture:"crimsonSign",
+flatIcon:true,
+sign:true,
+breakTime:1.5,
+woodSound:true,
+type:"wood",
+category:"decoration"
+},
+{
+name:"warpedSign",
+Name:"Warped Sign",
+textures:"warpedPlanks",
+poleTop:"warpedStemTop",
+poleSide:"warpedStemSide",
+iconTexture:"warpedSign",
+flatIcon:true,
+sign:true,
+breakTime:1.5,
+woodSound:true,
+type:"wood",
+category:"decoration"
+},
+{
+name:"dropper",
+Name:"Dropper",
+textures:["furnaceTop","furnaceTop","furnaceSide","dropperFront","furnaceSide","furnaceSide"],
+upTextures:fillTextureArray(["furnaceTop","dropperFrontVertical","furnaceTop"]),
+downTextures:fillTextureArray(["dropperFrontVertical","furnaceTop","furnaceTop"]),
+stoneSound:true,
+category:"redstone",
+onclick:function(x,y,z,dimension){
+dispenserData.x = x
+dispenserData.y = y
+dispenserData.z = z
+dispenserData.dimension = dimension
+changeScene("dispenser")
+releasePointer()
+},
+onbreak:function(x,y,z, block, data,dimension){
+if(!(data && data.dispenser && data.contents)) return
+data = data.contents
+for(var i=0; i<data.length; i++){
+if(data[i] && data[i].id){
+world.addItems(x,y,z,dimension,0,0,0,data[i].id, true, data[i].amount, data[i].durability, data[i].customName)
+}
+}
+},
+onpowerupdate:function(x,y,z,sx,sy,sz,blockPowerChanged,dimension){
+var block = world.getBlock(x,y,z,dimension)
+var power = world.getRedstonePower(x,y,z,dimension) || world.getSurroundingBlockPower(x,y,z,dimension)
+var tags = world.getTags(x,y,z,dimension)
+var on = tags && tags.on || false
+if(power !== on) {
+world.setTagByName(x,y,z,"on",power,false,dimension)
+if(power){
+var me = this
+world.setTimeout(function(){
+playSound("click",0,posSound(x,y,z))
+if(multiplayer) send({type:"playSound", data:"click", x,y,z})
+if(!tags || !tags.contents) return
+var items = tags.contents.filter(r => r && r.id)
+var idx = floor(rand(items.length))
+if(!items[idx] || !items[idx].id) return
+idx = tags.contents.indexOf(items[idx]), items = tags.contents
+var vx = 0, vy = 0, vz = 0, ix = x, iy = y, iz = z
+switch(block){
+case me.id | NORTH:
+vz = -0.25
+iz -= 0.75
+break
+case me.id | SOUTH:
+vz = 0.25
+iz += 0.75
+break
+case me.id | EAST:
+vx = -0.25
+ix -= 0.75
+break
+case me.id | WEST:
+vx = 0.25
+ix += 0.75
+break
+case me.id | SLAB:
+vy = 0.25
+iy += 0.75
+break
+case me.id | STAIR:
+vy = -0.25
+iy -= 0.75
+break
+}
+world.addItems(ix,iy,iz,dimension,vx,vy,vz,items[idx].id, false, 1, items[idx].durability, items[idx].customName)
+items[idx].amount--
+if(items[idx].amount <= 0) items[idx] = 0
+world.setTags(x,y,z,tags,false,dimension)
+},tickTime*4)
+}
+}
+},
+onset:function(x,y,z,dimension){
+this.onpowerupdate(x,y,z,null,null,null,null,dimension)
+},
+},
+{
+name:"dispenser",
+Name:"Dispenser",
+textures:["furnaceTop","furnaceTop","furnaceSide","dispenserFront","furnaceSide","furnaceSide"],
+upTextures:fillTextureArray(["furnaceTop","dispenserFrontVertical","furnaceTop"]),
+downTextures:fillTextureArray(["dispenserFrontVertical","furnaceTop","furnaceTop"]),
+stoneSound:true,
+category:"redstone",
+breakTime:17.5,
+type:"rock2",
+onclick:function(x,y,z,dimension){
+dispenserData.x = x
+dispenserData.y = y
+dispenserData.z = z
+dispenserData.dimension = dimension
+changeScene("dispenser")
+releasePointer()
+},
+onbreak:function(x,y,z, block, data,dimension){
+if(!(data && data.dispenser && data.contents)) return
+data = data.contents
+for(var i=0; i<data.length; i++){
+if(data[i] && data[i].id){
+world.addItems(x,y,z,dimension,0,0,0,data[i].id, true, data[i].amount, data[i].durability, data[i].customName)
+}
+}
+},
+onpowerupdate:function(x,y,z,sx,sy,sz,blockPowerChanged,dimension){
+var block = world.getBlock(x,y,z,dimension)
+var power = world.getRedstonePower(x,y,z,dimension) || world.getSurroundingBlockPower(x,y,z,dimension)
+var tags = world.getTags(x,y,z,dimension)
+var on = tags && tags.on || false
+if(power !== on) {
+world.setTagByName(x,y,z,"on",power,false,dimension)
+if(power){
+var me = this
+world.setTimeout(function(){
+playSound("click",0,posSound(x,y,z))
+if(multiplayer) send({type:"playSound", data:"click", x,y,z})
+if(!tags || !tags.contents) return
+var items = tags.contents.filter(r => r && r.id)
+var idx = floor(rand(items.length))
+if(!items[idx] || !items[idx].id) return
+idx = tags.contents.indexOf(items[idx]), items = tags.contents
+var vx = 0, vy = 0, vz = 0, ix = x, iy = y, iz = z
+switch(block){
+case me.id | NORTH:
+vz = -0.25
+iz--
+break
+case me.id | SOUTH:
+vz = 0.25
+iz++
+break
+case me.id | EAST:
+vx = -0.25
+ix--
+break
+case me.id | WEST:
+vx = 0.25
+ix++
+break
+case me.id | SLAB:
+vy = 0.25
+iy++
+break
+case me.id | STAIR:
+vy = -0.25
+iy--
+break
+}
+var front = world.getBlock(ix,iy,iz,dimension)
+if(front && front.solid) return
+var data = blockData[items[idx].id]
+var minus = true
+if(data.name === "arrow") world.addEntity(new Arrow(ix,iy,iz,vx*4,vy*4,vz*4),false,dimension)
+else if(data.name === "boneMeal") data.onuse(ix,iy,iz, front, null, null, emptyFunc,dimension)
+else if(data.name === "snowball") world.addEntity(new Snowball(ix,iy,iz,vx*4,vy*4,vz*4),false,dimension)
+else if(data.name === "egg") world.addEntity(new Egg(ix,iy,iz,vx*4,vy*4,vz*4),false,dimension)
+else if(data.name === "bucket"){
+var set = false
+if(front === blockIds.Water) set = true, items[idx].id = blockIds.waterBucket
+if(front === blockIds.Lava) set = true, items[idx].id = blockIds.lavaBucket
+if(front === blockIds.powderSnow) set = true, items[idx].id = blockIds.powderSnowBucket
+world.setBlock(ix,iy,iz,0,false,false,false,false,dimension)
+minus = false
+}else if(data.name === "waterBucket") world.setBlock(ix,iy,iz,blockIds.Water,false,false,false,false,dimension), items[idx].id = blockIds.bucket, minus = false
+else if(data.name === "lavaBucket") world.setBlock(ix,iy,iz,blockIds.Lava,false,false,false,false,dimension), items[idx].id = blockIds.bucket, minus = false
+else if(data.name === "powderSnowBucket") world.setBlock(ix,iy,iz,blockIds.powderSnow,false,false,false,false,dimension), items[idx].id = blockIds.bucket, minus = false
+else if(data.name === "tnt") data.explode(ix,iy,iz,null,dimension)
+else if(data.item) world.addItems(ix,iy,iz,dimension,vx,vy,vz,items[idx].id, false, 1, items[idx].durability, items[idx].customName)
+else world.setBlock(ix,iy,iz,items[idx].id,false,false,false,false,dimension)
+if(minus) items[idx].amount--
+if(items[idx].amount <= 0) items[idx] = 0
+world.setTags(x,y,z,tags,false,dimension)
+},tickTime*4)
+}
+}
+},
+onset:function(x,y,z,dimension){
+this.onpowerupdate(x,y,z,null,null,null,null,dimension)
+},
+}
 /*
 { name: "pigFace" },
 { 
@@ -13220,12 +13499,15 @@ const crafts = {
 "grayWool,grayWool,grayWool,_planks,_planks,_planks":{name:"grayBed"},
 "cyanWool,cyanWool,cyanWool,_planks,_planks,_planks":{name:"cyanBed"},
 "blueWool,blueWool,blueWool,_planks,_planks,_planks":{name:"blueBed"},
+"_planks,air,air,_planks,_planks,_planks,_planks,air,_planks":{name:"chair"},
+"_stone,_stone,_stone,_stone,air,_stone,_stone,redstone,_stone":{name:"dropper"},
+"_stone,_stone,_stone,_stone,bow,_stone,_stone,redstone,_stone":{name:"dropper"},
 }
 //replace anything in crafts starting with _
 var craftTypes = {
 _planks: ["oakPlanks","birchPlanks","sprucePlanks","junglePlanks","darkOakPlanks","acaciaPlanks","mangrovePlanks","crimsonPlanks","warpedPlanks"],
 _stone: ["cobblestone","cobbledDeepslate","blackstone"],
-_log: ["oakLog","birchLog","spruceLog","jungleLog","darkOakLog","acaciaLog","mangroveLog","crimsonLog","warpedLog"]
+_log: ["oakLog","birchLog","spruceLog","jungleLog","darkOakLog","acaciaLog","mangroveLog","crimsonStem","warpedStem"]
 }
 var breakTypes = {
 plant: "axe",
@@ -14331,16 +14613,14 @@ main:for(var i in crafts){
 if(!crafts[i].shapeless) continue
 var arr = craft.slice()
 var arr2 = craftArrays[i]
-for(var j of arr2){ //remove the ones that exist for this recipe
-var k = -1
-for(var l=0; l<arr.length; l++){
-if(checkCraftType(arr2[j],arr[l])){
-k = l
-continue
-}
-}
-if(k === -1) continue main //recipe doesn't have this item
+remover:for(var j of arr2){ //remove the ones that exist for this recipe
+for(var k=0; k<arr.length; k++){
+if(checkCraftType(j,arr[k])){
 arr.splice(k,1)
+continue remover
+}
+}
+continue main //recipe doesn't have this item
 }
 if(!arr.length) return i
 }
@@ -15487,6 +15767,7 @@ name:"title",
 args:['text','subtext','color','fadeIn','fadeOut','stay'],
 info:"Shows text on screen. fadeIn and fadeOut and stay are miliseconds.",
 func: split => {
+split[1] = split[1] || "/title"
 split[4] = (split[4] || split[4] === 0) ? parseFloat(split[4]) : undefined
 split[5] = (split[5] || split[5] === 0) ? parseFloat(split[5]) : undefined
 split[6] = (split[6] || split[6] === 0) ? parseFloat(split[5]) : undefined
@@ -15611,6 +15892,7 @@ str += "<span style='color:lightblue;'>/"+r.name+"</span> "
 if(r.args) str += r.args.join(" ")
 str += "<br>"
 })
+str += "<span style='color:#aaa;'>Hint: Press tab to autofill commands.</span>"
 Messages.add(str)
 }
 }else{
@@ -15627,15 +15909,17 @@ cmd.func(split)
 win.runCmd = runCmd
 }
 let Messages = {
-span: document.createElement("span"),
 array: [],
 all: [],
+hints: [],
+hintIdx: -1,
+history: [],
 remove: (function(){
 var arr = [
 ["k","c","u","f"].reverse().join(""), ["t","n","u","c"].reverse().join(""), "stupid",
 {replace:"blood",with:"red liquid"},
 "dumb",
-{replace:"bitch",with:"a female dog, wolf, fox, or otter"},
+{replace:"bitch",with:"female dog, wolf, fox, or otter"},
 {replace:"shit",with:"poo poo"},
 {replace:"discord",with:"that chating app"},
 {replace:"crap",with:"something of extremely poor quality"}
@@ -15695,6 +15979,7 @@ if(!from){
 if(!msg) return
 }
 this.add((from || username)+": "+msg, lazy)
+if(!from) this.history.push(msg)
 if(!from && multiplayer){
 send({type:"message", data:msg, username:username})
 }
@@ -15714,16 +15999,20 @@ runCmd(messageInput.value)
 Messages.write(messageInput.value)
 }
 messageInput.value = ""
+this.showArr()
 },
 updateInput(){
 var value = messageInput.value
+this.hints.length = 0
+if(messageInput.prevValue !== messageInput.value) this.hintIdx = 0
 if(value[0] === "/"){
-var amount = 0, str = "", cmd = ""
+var amount = 0, str = "", cmd = "", spaceIdx = -1
 for(let i=0; i<value.length; i++){
-if(value[i] === " ") amount++
+if(value[i] === " ") amount++, spaceIdx = i
 if(amount === 0 && i !== 0) cmd += value[i]
 }
-if(value.includes(" ")){
+if(spaceIdx !== -1){
+var valuesBefore = value.substring(0,spaceIdx)+" "
 cmd = getCmd(cmd)
 if(cmd && cmd.args){
 str += "<span style='color:#aaa;'>"
@@ -15746,7 +16035,12 @@ else if(count === amount) argValue += i
 if(type === "type:block"){
 count = 0
 for(i=1; i<BLOCK_COUNT; i++){
-if(blockData[i].name.includes(argValue)) str += "<br>"+blockData[i].name, count++
+if(blockData[i].name.includes(argValue)){
+var b = this.hintIdx === this.hints.length
+str += "<br>"+(b ? "<b style='color:yellow;' id='selectedHint'>" : "")+blockData[i].name+(b ? "</b>" : "")
+this.hints.push(valuesBefore+blockData[i].name)
+count++
+}
 if(count>50) break
 }
 }else if(type === "type:x"){
@@ -15760,19 +16054,31 @@ str += "<br>overworld<br>nether<br>end"
 }else if(type === "type:sound"){
 count = 0
 for(i of soundNames){
-if(i.includes(argValue)) str += "<br>"+i, count++
+if(i.includes(argValue)){
+var b = this.hintIdx === this.hints.length
+str += "<br>"+(b ? "<b style='color:yellow;' id='selectedHint'>" : "")+i+(b ? "</b>" : "")
+this.hints.push(valuesBefore+i)
+count++
+}
 if(count>50) break
 }
 }else if(type === "type:player"){
 if(multiplayer){
 count = 0
 for(i in players){
-if(players[i].username && players[i].username.includes(argValue)) str += "<br>"+players[i].username, count++
+if(players[i].username && players[i].username.includes(argValue)){
+var b = this.hintIdx === this.hints.length
+str += "<br>"+(b ? "<b style='color:yellow;' id='selectedHint'>" : "")+players[i].username+(b ? "</b>" : "")
+this.hints.push(valuesBefore+players[i].username)
+count++
+}
 if(count>50) break
 }
 }
 }else{
-str += "<br>"+type
+var b = this.hintIdx === this.hints.length
+str += "<br>"+(b ? "<b style='color:yellow;' id='selectedHint'>" : "")+type+(b ? "</b>" : "")
+this.hints.push(valuesBefore+type)
 }
 }
 }
@@ -15780,25 +16086,130 @@ str += "<br>"+type
 }else{
 amount = 0
 for(i of cmds){
-if(i.name.includes(cmd)){
-str += "/"+i.name+"<br>"
+if(i.name.toLowerCase().includes(cmd.toLowerCase())){
+var b = this.hintIdx === this.hints.length
+str += (b ? "<b style='color:yellow;' id='selectedHint'>" : "")+"/"+i.name+(b ? "</b>" : "")+"<br>"
+this.hints.push("/"+i.name)
 amount++
 }
 if(amount>50) break
 }
 }
-if(str !== messages.innerHTML) messages.innerHTML = str
+if(str !== messages.innerHTML){
+messages.innerHTML = str
+var s = document.getElementById("selectedHint")
+if(s){
+var rect = s.getBoundingClientRect()
+var rect2 = messages.getBoundingClientRect()
+if(rect.y < rect2.y || rect.y+rect.height > rect2.y+rect2.height) s.scrollIntoView(rect.y < rect2.y)
+}
+}
 }else if(messageInput.prevValue && messageInput.prevValue.startsWith("/")){
 this.showAll()
 }
 messageInput.prevValue = value
 },
+formatGetAttributesInString:function(str){
+var arr = []
+var attribute = "", value = ""
+var inQuotes = false, quoteType = null
+var isValue = false
+for(var l of str){
+if((!quoteType || l === quoteType) && (l === "'" || l === '"')){
+inQuotes = !inQuotes
+quoteType = l
+}else if(!inQuotes && l === " "){
+if(attribute) arr.push([attribute,value])
+attribute = value = ""
+isValue = false
+quoteType = null
+}else if(!inQuotes && l === "="){
+isValue = true
+}else{
+if(isValue) value += l
+else attribute += l
+}
+}
+if(attribute) arr.push([attribute,value])
+return arr
+},
+formatGetElementsInString:function(str){
+var main = []
+var element = {elements:main}
+while(str){
+var isText = true
+if(str[0] === "<"){
+var i = 0
+var j = str.indexOf(">")
+if(j === -1){
+str = "&lt;"+str.substring(1,str.length) //replace < with &lt;
+continue
+}
+if(str[i+1] === "/"){
+var tagName = str.substring(i+2,j)
+if(tagName === element.tagName){
+element = element.parent
+}
+isText = false
+}else if(!this.formatUnparsedElements.includes(element.tagName)){
+var preclose = (str[j-1] === "/") ? 1 : 0
+var attributeStart = str.indexOf(" ")
+if(attributeStart > j) attributeStart = -1
+var tagEnd = attributeStart === -1 ? j-preclose : attributeStart+i
+attributeStart = attributeStart === -1 ? j-preclose : attributeStart+i+1
+var tagName = str.substring(i+1,tagEnd)
+var parent = element
+var attributes = this.formatGetAttributesInString(str.substring(attributeStart,j-preclose))
+element = {tagName,attributes,elements:[],parent}
+parent.elements.push(element)
+if(this.formatUnclosedElements.includes(tagName) || preclose){
+element = parent
+}
+isText = false
+}
+if(!isText) str = str.substring(j+1,str.length)
+}
+if(isText){
+var i = str.substring(1,str.length).indexOf("<")
+if(i === -1) i = str.length
+else i++
+element.elements.push(str.substring(0,i))
+str = str.substring(i,str.length)
+}
+}
+return main
+},
+formatSafeElements: ["h1","h2","h3","h4","h5","h6","p","img","video","audio","a","ul","ol","li","pre","code","br","b","i","big","center","small","span","strike","strong","sub","sup","table","tbody","td","tfoot","th","thead","tr","hr"],
+formatSafeAttributes: ["align","alt","width","height","href","src","media","title","style"],
+formatUnclosedElements: ["img","br","hr"],
+formatUnparsedElements: ["pre","code"],
+formatConvertToSafeHtml:function(elements){
+var str = ""
+for(var e of elements){
+if(typeof e === "string"){
+str += e
+continue
+}
+if(!this.formatSafeElements.includes(e.tagName)) e.tagName = "span"
+str += "<"+e.tagName
+if(e.attributes.length) for(var a of e.attributes){
+if(!this.formatSafeAttributes.includes(a[0])) continue
+str += " "+a[0]
+if(a[1]) str+=`="${a[1].replace(/"/g,"&quot;")}"`
+}
+str += ">"
+if(this.formatUnclosedElements.includes(e.tagName)) continue
+if(this.formatUnparsedElements.includes(e.tagName)) str += this.formatConvertToSafeHtml(e.elements).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+else str += this.formatConvertToSafeHtml(e.elements)
+str += `</${e.tagName}>`
+}
+return str
+},
 format(str){
+str = this.formatConvertToSafeHtml(this.formatGetElementsInString(str))
 for(var obj of this.remove){ //remove bad words
 str = str.replace(obj.replace, "<span style='color:red; background:black;'>"+obj.with+"</span>")
 }
-this.span.innerHTML = str
-str = this.span.innerHTML //make html in message correct
 if(str.includes("§")){
 var arr = str.split("§")
 var res = "<span>"+arr[0]
@@ -15819,14 +16230,34 @@ messages.scrollTop = messages.scrollHeight
 window.Messages = Messages
 window.messages.onclick = () => canvas.focus()
 messagesHolder.onmousedown = e => canvas.onmousedown(e) //make buttons work
+messageInput.onkeydown = e => {
+if(e.key === "Tab"){
+if(Messages.hints.length) messageInput.value = Messages.hints[Messages.hintIdx]
+Messages.updateInput()
+e.preventDefault()
+}else if(e.key === "ArrowUp"){
+if(Messages.hints.length){
+Messages.hintIdx--
+if(Messages.hintIdx < 0) Messages.hintIdx = Messages.hints.length-1
+Messages.updateInput()
+}
+}else if(e.key === "ArrowDown"){
+if(Messages.hints.length){
+Messages.hintIdx++
+if(Messages.hintIdx >= Messages.hints.length) Messages.hintIdx = 0
+Messages.updateInput()
+}
+}
+}
 messageInput.onkeyup = e => {
 if(e.key === "Enter") {
 Messages.submitInput()
 }else if (e.key === "Escape") {
 play()
-}else{
-Messages.updateInput()
 }
+}
+messageInput.oninput = e => {
+Messages.updateInput()
 }
 let title = ""
 let subtitle = ""
@@ -15857,7 +16288,7 @@ sideMessageContent = content
 win.sideMessage = sideMessage
 function customMenu(html){
 customMenuClose.onclick = () => play()
-customMenuEl.innerHTML = html
+customMenuEl.innerHTML = Messages.format(html)
 releasePointer()
 changeScene("custom menu")
 }
@@ -16190,10 +16621,13 @@ chestData:{
 x:0,y:0,z:0,dimension:"",
 data:null
 },
+dispenserData:{
+x:0,y:0,z:0,dimension:"",
+data:null
+},
 category:0
 }
-let furnaceData = inventory.furnaceData
-let chestData = inventory.chestData
+let {furnaceData, chestData, dispenserData} = inventory
 win.inventory = inventory
 //}
 for(var i=0; i<9; i++){
@@ -18519,12 +18953,12 @@ rotate:true
 },
 sign:{
 verts:[
-[objectify(-4,14,7,16,2,0,0),objectify(7,0,7,2,2,-16,0),objectify(12,14,7,8,2,0,0)],
+[objectify(-4,14,7,16,2,0,0),objectify(7,0,7,2,2,7,7, false,false,null,null,null,"poleTop"),objectify(12,14,7,8,2,0,0)],
 [objectify(-4,26,9,16,2,0,0),objectify(12,26,9,8,2,0,0)],
-[objectify(20,26,9,16,12,0,0),objectify(9,14,9,2,14,-32,0),objectify(4,26,9,8,12,0,0)],
-[objectify(-4,26,7,16,12,0,0),objectify(7,14,7,2,14,-32,0),objectify(12,26,7,8,12,0,0)],
-[objectify(20,26,7,2,12,0,0),objectify(9,14,7,2,14,-32,0)],
-[objectify(-4,26,9,2,12,0,0),objectify(7,14,9,2,14,-32,0)]
+[objectify(20,26,9,16,12,0,0),objectify(9,14,9,2,14,0,0, false,false,null,null,null,"poleSide"),objectify(4,26,9,8,12,0,0)],
+[objectify(-4,26,7,16,12,0,0),objectify(7,14,7,2,14,0,0, false,false,null,null,null,"poleSide"),objectify(12,26,7,8,12,0,0)],
+[objectify(20,26,7,2,12,0,0),objectify(9,14,7,2,14,0,0, false,false,null,null,null,"poleSide")],
+[objectify(-4,26,9,2,12,0,0),objectify(7,14,9,2,14,0,0, false,false,null,null,null,"poleSide")]
 ],
 cull: {
 top: 0,
@@ -20485,6 +20919,11 @@ makeBlock(baseBlock.textures2, shapes.crop, stairBlock, baseBlock)
 makeBlock(baseBlock.textures3, shapes.crop, crossBlock, baseBlock)
 crossBlock.dropAmount = [2,5]
 }
+if(baseBlock.name === "dropper" || baseBlock.name === "dispenser"){
+baseBlock.shape = shapes.rotate
+makeBlock(baseBlock.upTextures, shapes.cube, slabBlock)
+makeBlock(baseBlock.downTextures, shapes.cube, stairBlock)
+}
 blockData[i | SLAB] = slabBlock
 blockData[i | STAIR] = stairBlock
 blockData[i | CROSS] = crossBlock
@@ -22423,6 +22862,27 @@ p.flying = false
 }
 p.lastUpdate = performance.now()
 contacts.clear()
+if(p.spectator && p.spectating){
+var s = p.spectating
+p.x = s.x
+p.y = s.y
+p.z = s.z
+p.velocity.x = p.velocity.y = p.velocity.z = 0
+p.dimension = s.dimension
+switch(s.type){
+case "Player":
+p.x = s.targetX
+p.y = s.targetY
+p.z = s.targetZ
+p.walking = s.walking
+p.sprinting = s.sprinting
+p.sneaking = s.sneaking
+p.eating = s.eating
+p.swimming = s.swimming
+break
+}
+harmEffect = s.harmEffect || 0
+}
 lookingAt()
 let pd = p.direction
 listener.positionX.value = p.x+p.offsetX
@@ -22460,6 +22920,10 @@ playSound("liquid.splash",0,posSound(p.x,p.y-p.bottomH,p.z)/*,abs(1/(p.velocity.
 for(var i=0; i<10; i++){
 world.addParticle(new SplashParticle(p.x,p.y-p.bottomH,p.z),p.dimension)
 }
+if(multiplayer) send({
+type:"particles", particleType:"SplashParticle",
+x:p.x, y:p.y-p.bottomH, z:p.z, dimension:p.dimension, amount: 10
+})
 }else if(!wet){
 //playSound("liquid.exit")
 }
@@ -22825,29 +23289,15 @@ p.velocity.z += (si * move.x + co * move.z) * friction
 }
 if(p.spectator && p.spectating){
 var s = p.spectating
-p.x = s.x
-p.y = s.y
-p.z = s.z
-p.velocity.x = p.velocity.y = p.velocity.z = 0
-p.dimension = s.dimension
 switch(s.type){
 case "Player":
-p.x = s.targetX
-p.y = s.targetY
-p.z = s.targetZ
 p.rx = -s.headPitch
 p.ry = -s.headYaw
-p.walking = s.walking
-p.sprinting = s.sprinting
-p.sneaking = s.sneaking
-p.eating = s.eating
-p.swimming = s.swimming
 break
 default:
 p.rx = -s.pitch
 p.ry = -s.yaw
 }
-harmEffect = s.harmEffect || 0
 }
 const TAU = Math.PI * 2
 const PI1_2 = Math.PI / 2
@@ -23081,14 +23531,14 @@ if(!onclick(x, y, z, p.dimension)){p.lastPlace = Date.now(); return} //if it doe
 }
 if(holding && blockData[holding].shovel){
 if(cblock === blockIds.grass || cblock === blockIds.dirt || cblock === blockIds.rootedDirt || cblock === blockIds.mycelium || cblock === blockIds.podzol){
-world.setBlock(x,y,z,blockIds.grass | TALLCROSS, p.dimension)
+world.setBlock(x,y,z,blockIds.grass | TALLCROSS, false,false,false,false,p.dimension)
 var h = inventory.hotbar[inventory.hotbarSlot]
 h.durability --
 h.animation = 1.5
 return p.lastPlace = Date.now()
 }
 if(blockData[cblock].campfire){
-world.setBlock(x,y,z,blockData[cblock].id | SLAB, p.dimension)
+world.setBlock(x,y,z,blockData[cblock].id | SLAB, false,false,false,false,p.dimension)
 var h = inventory.hotbar[inventory.hotbarSlot]
 h.durability --
 h.animation = 1.5
@@ -23109,14 +23559,14 @@ return p.lastPlace = Date.now()
 }
 if(holding && cblock && blockData[holding].hoe){
 if((blockData[cblock].name === "grass" || cblock === blockIds.dirt) && !world.getBlock(x,y+1,z)){
-world.setBlock(x,y,z,blockIds.farmland, p.dimension)
+world.setBlock(x,y,z,blockIds.farmland, false,false,false,false,p.dimension)
 var h = inventory.hotbar[inventory.hotbarSlot]
 h.durability --
 h.animation = 1.5
 return p.lastPlace = Date.now()
 }
 if(cblock === blockIds.rootedDirt){
-world.setBlock(x,y,z,blockIds.dirt, p.dimension)
+world.setBlock(x,y,z,blockIds.dirt, false,false,false,false,p.dimension)
 var h = inventory.hotbar[inventory.hotbarSlot]
 h.durability --
 h.animation = 1.5
@@ -23126,7 +23576,7 @@ return p.lastPlace = Date.now()
 }
 if(holding && cblock && blockData[holding].shears){
 if(cblock === blockIds.pumpkin){
-world.setBlock(x,y,z,blockIds.carvedPumpkin, p.dimension)
+world.setBlock(x,y,z,blockIds.carvedPumpkin, false,false,false,false,p.dimension)
 var h = inventory.hotbar[inventory.hotbarSlot]
 h.durability --
 h.animation = 1.5
@@ -23294,6 +23744,11 @@ else blockMode = FLIP
 }
 if(blockData[holding].sign){
 if(side) blockMode = STAIR
+else blockMode = CUBE
+}
+if(blockData[holding].name === "dropper" || blockData[holding].name === "dispenser"){
+if(hitBox.face === "top") blockMode = SLAB
+else if(hitBox.face === "bottom") blockMode = STAIR
 else blockMode = CUBE
 }
 if(side && blockIds[blockData[block].name+"SW"]){
@@ -23599,6 +24054,7 @@ world.addEntity(new BlockEntity(b, x,y,z, solid),false,dimension)
 return true
 }
 function needsSupportingBlocks(x,y,z, b,world,dimension){ // if block under is gone, dissapear
+if(!worldSettings.blocksFall) return
 var under = world.getBlock(x,y-1,z,dimension)
 if(!under || !blockData[under].solid){
 world.setTimeout(() => {
@@ -23612,7 +24068,7 @@ blockSound(b, "dig", x,y,z)
 return true
 }
 }
-function blockParticles(block,x,y,z,amount, type, w = world, dimension, dir){
+function blockParticles(block,x,y,z,amount, type, w = world, dimension, dir, remote){
 var world = w
 for(var i=0; i<amount; i++) {
 var ax = x, ay = y, az = z
@@ -23656,6 +24112,10 @@ break
 }
 world.addParticle(new BlockParticle(blockData[block].textures[2], ax,ay,az, type, block), dimension)
 }
+if(multiplayer && !remote) send({
+type:"particles", particleType:"blockParticles",
+block,x,y,z,amount,dimension,thisType:type,dir
+})
 }
 function goToDimension(d){
 d = d || ""
@@ -23680,7 +24140,7 @@ changeScene("loading")
 }
 }
 p3.hidden = true
-multiplayer.sendPos(true)
+if(multiplayer) multiplayer.sendPos(true)
 }
 win.goToDimension = goToDimension
 // Save the coords for a small sphere used to carve out caves
@@ -24411,7 +24871,7 @@ ret[0] = ret[1] = ret[2] = ret[3] = ret[4] = ret[5] = ret[6] = ret[7] = ret[8] =
 return ret
 },
 }
-var worldGenArray = {
+const worldGenArray = {
 array: [],
 size: 0,
 add: function(x, y, z, block) {
@@ -25156,6 +25616,20 @@ let i = (rnd >> 8) + this.x
 let j = (rnd >> 4 & 15) + this.y
 let k = (rnd & 15) + this.z
 blockData[blockIds.birchSapling].grow(i,j,k,this.type)
+}else if(blockData[this.blocks[rnd]].name === "vine" || blockData[this.blocks[rnd]].name === "weepingVines"){
+let i = (rnd >> 8) + this.x
+let j = (rnd >> 4 & 15) + this.y
+let k = (rnd & 15) + this.z
+if(!this.world.getBlock(i,j-1,k)){
+this.world.setBlock(i,j-1,k,this.blocks[rnd], false,false,false,false,this.type)
+}
+}else if(blockData[this.blocks[rnd]].name === "twistingVines"){
+let i = (rnd >> 8) + this.x
+let j = (rnd >> 4 & 15) + this.y
+let k = (rnd & 15) + this.z
+if(!this.world.getBlock(i,j+1,k)){
+this.world.setBlock(i,j+1,k,this.blocks[rnd], false,false,false,false,this.type)
+}
 }
 }
 for (i = 0; i < 8; i++) {
@@ -25718,6 +26192,7 @@ let smoothness = generator.smooth, hilliness = generator.height
 let biomeSmooth = generator.biomeSmooth;
 let biome = 0
 let type = this.type
+worldGenArray.clear() //generate extras like vines
 var clayReplaceable = [blockIds.dirt, blockIds.stone, blockIds.gravel]
 var dirtReplaceable = [blockIds.stone,blockIds.gravel]
 for (let i = 0; i < 16; i++) {
@@ -25922,6 +26397,7 @@ let leaf = blockIds.jungleLeaves
 //Center
 for (let j = ground + 1; j <= top; j++) {
 this.setBlock(i, j, k, tree)
+worldGenArray.add(wx,j,wz,blockIds.vine)
 }
 this.setBlock(i, top + 1, k, leaf)
 this.setBlock(i, ground, k, blockIds.dirt)
@@ -25934,9 +26410,11 @@ place = rand & 1
 rand >>>= 1
 if (place) {
 world.spawnBlock(wx + x, top - 2, wz + z, leaf, type)
+worldGenArray.add(wx+x,top-2,wz+z,blockIds.vine)
 }
 } else {
 world.spawnBlock(wx + x, top - 2, wz + z, leaf, type)
+worldGenArray.add(wx+x,top-2,wz+z,blockIds.vine)
 }
 }
 }
@@ -25950,9 +26428,11 @@ place = rand & 1
 rand >>>= 1
 if (place) {
 world.spawnBlock(wx + x, top - 1, wz + z, leaf, type)
+worldGenArray.add(wx+x,top-1,wz+z,blockIds.vine)
 }
 } else {
 world.spawnBlock(wx + x, top - 1, wz + z, leaf, type)
+worldGenArray.add(wx+x,top-1,wz+z,blockIds.vine)
 }
 }
 }
@@ -25966,9 +26446,11 @@ place = rand & 1
 rand >>>= 1
 if (place) {
 world.spawnBlock(wx + x, top, wz + z, leaf, type)
+worldGenArray.add(wx+x,top,wz+z,blockIds.vine)
 }
 } else {
 world.spawnBlock(wx + x, top, wz + z, leaf, type)
+worldGenArray.add(wx+x,top,wz+z,blockIds.vine)
 }
 }
 }
@@ -25978,6 +26460,10 @@ world.spawnBlock(wx + 1, top + 1, wz, leaf, type)
 world.spawnBlock(wx, top + 1, wz - 1, leaf, type)
 world.spawnBlock(wx, top + 1, wz + 1, leaf, type)
 world.spawnBlock(wx - 1, top + 1, wz, leaf, type)
+worldGenArray.add(wx+1,top+1,wz,blockIds.vine)
+worldGenArray.add(wx,top+1,wz-1,blockIds.vine)
+worldGenArray.add(wx,top+1,wz+1,blockIds.vine)
+worldGenArray.add(wx-1,top+1,wz,blockIds.vine)
 }//end jungle trees
 //Giant jungle trees
 if(trees && random() < 0.01 && type === "" && b === "giantJungle" && world.getBlock(i, ground, k, type)){
@@ -26007,6 +26493,7 @@ for(var z=-4.5; z<4.5; z++){
 let n = x * x / w2 + y * y / h2 + z * z / d2
 if (n < 1) {
 world.spawnBlock(wx + x+1, top-4+y, wz + z+1, leaf, type)
+worldGenArray.add(wx+x+1,top-4+y,wz+z+1,blockIds.vine)
 }
 }
 }
@@ -26016,7 +26503,7 @@ w2 = 3 * 3
 d2 = 3 * 3
 h2 = 3 * 3
 for(y=ground+5; y<top; y += Math.floor(random(10))){
-let side = Math.floor(random(4))
+let side = floor(random(4))
 let mx=0,mz=0
 switch(side){
 case 0:
@@ -26033,10 +26520,11 @@ mz=-1
 break
 }
 let x = mx === 1?2:mx, z = mz === 1?2:mz
-var rnd = Math.floor(random(4))+2
+var rnd = floor(random(4))+2
 //branch
 for(var by=0; by<rnd; by++){
 world.spawnBlock(wx+x, y+by, wz+z, tree, type)
+worldGenArray.add(wx+x,y+by,wz+z,blockIds.vine)
 x += mx
 z += mz
 }
@@ -26050,6 +26538,7 @@ for(var lz=-3; lz<3; lz++){
 let n = lx * lx / w2 + ly * ly / h2 + lz * lz / d2
 if (n < 1) {
 world.spawnBlock(wx+x + lx, y+by+ly, wz+z + lz, leaf, type)
+worldGenArray.add(wx+x+lx,y+by+ly,wz+z+lz,blockIds.vine)
 }
 }
 }
@@ -26095,6 +26584,7 @@ for(var z=-3; z<3; z++){
 let n = x * x / w2 + y * y / h2 + z * z / d2
 if (n < 1) {
 world.spawnBlock(wx+x, ground+y, wz+z, blockIds.jungleLeaves, type)
+worldGenArray.add(wx+x,ground+y,wz+z,blockIds.vine)
 }
 }
 }
@@ -26413,6 +26903,39 @@ y = y < ground ? y : ground
 if (this.getBlock(i, y, k)) {
 this.generateBlob(dirtReplaceable, blockIds.dirt, round(random(20, 40)), i,y,k, 5)
 }
+}
+}
+}
+}
+if(worldGenArray.size){
+for(var l=0; l<round(worldGenArray.size/2); l++){
+var rnd = (random()*worldGenArray.size)|0
+var block = worldGenArray.array[rnd][3]
+let x = worldGenArray.array[rnd][0], y = worldGenArray.array[rnd][1], z = worldGenArray.array[rnd][2]
+if(block === blockIds.vine){
+block = block | WALLFLAT
+var canPlace = true
+switch(floor(random()*4)){
+case 0:
+z++
+block = block | SOUTH
+break
+case 1:
+z--
+block = block | NORTH
+break
+case 2:
+x++
+block = block | WEST
+break
+case 3:
+x--
+block = block | EAST
+break
+}
+for(var m=0; m<round(random(3)+1); m++){
+if(world.getBlock(x,y-m,z,type)) break
+world.spawnBlock(x,y-m,z,block,type)
 }
 }
 }
@@ -28173,13 +28696,44 @@ gl.drawElements(gl.TRIANGLES, 6 * this.faces, gl.UNSIGNED_INT, 0)
 glExtensions.vertex_array_object.bindVertexArrayOES(null)
 }
 }
-class Sign extends BlockEntity{
+class Sign extends Entity{
 constructor(x,y,z,block,base){
-super(block, x,y,z)
+const shape = blockData[block].shape
+const shapeVerts = shape.verts
+const shapeTexVerts = shape.texVerts
+const originalVerts = shape.originalVerts
+const size = shape.size
+let blockSides = Object.keys(Block)
+let texture = []
+let index = 0
+for (let n = 0; n < 6; n++) {
+let side = blockSides[n]
+let directionalFaces = shapeVerts[Sides[side]]
+for (let facei = 0; facei < directionalFaces.length; facei++) {
+let texShapeVerts = shapeTexVerts[n][facei]
+let texName = blockData[block].textures[0]
+let texTag = originalVerts[n][facei] && originalVerts[n][facei].texTag
+if(blockData[block][texTag]) texName = blockData[block][texTag]
+let texVerts = textureCoords[textureMap[texName]]
+let tx = texVerts[0]
+let ty = texVerts[1]
+texture[index    ] = tx + texShapeVerts[0]
+texture[index + 1] = ty + texShapeVerts[1]
+texture[index + 2] = tx + texShapeVerts[2]
+texture[index + 3] = ty + texShapeVerts[3]
+texture[index + 4] = tx + texShapeVerts[4]
+texture[index + 5] = ty + texShapeVerts[5]
+texture[index + 6] = tx + texShapeVerts[6]
+texture[index + 7] = ty + texShapeVerts[7]
+index += 8
+}
+}
+super(x, y, z, 0, 0, 0, 0, 0, 1, 1, 1, new Float32Array(shapeVerts.flat(Infinity)), new Float32Array(texture), size, Infinity)
 this.type = "Sign"
 this.width = this.height = this.depth = 0.7
 this.offsetY = -0.15
 this.from = userId
+this.block = block
 this.baseBlock = base
 this.noHitbox = true
 this.textEnt = null
@@ -28586,9 +29140,7 @@ super(0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, new Float32Array(shapeVerts.flat(Infinity
 }
 render(ent){ //for burning entities
 if(!ent) return
-var yaw = Math.PId - (atan2(p.z - ent.z, p.x - ent.x) + Math.PI2 + Math.PI) //point to player
-//var adjacent = dist2(ent.x,ent.z,p.x,p.z)
-//var pitch = Math.PId - atan2(p.y - ent.y, adjacent)
+var yaw = Math.PId - (atan2(p.z+p.offsetZ - ent.z, p.x+p.offsetX - ent.x) + Math.PI2 + Math.PI) //point to player
 const modelMatrix = new Matrix();
 modelMatrix.identity()
 modelMatrix.translate(ent.x, ent.y+ent.offsetY+(ent.height*0.25), ent.z)
@@ -28631,7 +29183,7 @@ this.targetHeadYaw = 0
 this.targetHeadPitch = 0
 this.bodyRot = 0
 this.defaultOffsetY = pix*-8
-this.sneakingOffsetY = pix*-(8-4.8)
+this.sneakingOffsetY = pix*(-8+4.8-6)
 this.die = false
 this.sneaking = false
 this.walking = false
@@ -28665,6 +29217,7 @@ this.addPart("holding",part.size,part.vao,0, 0, 0, 1,1,1, 0, 0)
 this.walkRot = 0
 this.punchEffect = 0
 this.pOffsetry = this.offsetry = 0
+this.offsetZ = this.pOffsetZ = 0
 this.skinSet = false
 this.skinURL = null
 this.skinImg = images.skin
@@ -28807,6 +29360,10 @@ this.parts.head.ry = 0
 this.parts.head.ry2 = this.headYaw
 this.parts.leftLeg.ry2 = 0
 this.parts.rightLeg.ry2 = 0
+this.parts.leftLeg.y = this.parts.leftLeg.originalY
+this.parts.rightLeg.y = this.parts.rightLeg.originalY
+this.pOffsetZ = this.offsetZ
+this.offsetZ = 0
 if(this.sleeping){
 this.offsetY = 0
 this.pitch = -Math.PI2
@@ -28821,6 +29378,9 @@ this.offsetY = this.sneakingOffsetY
 var rot = Math.PI / 6
 this.pitch = rot
 this.parts.leftLeg.rx = this.parts.rightLeg.rx = -rot
+this.parts.leftLeg.y += 0.25
+this.parts.rightLeg.y += 0.25
+this.offsetZ = -0.25
 }else if(this.swimming){
 this.offsetY = this.defaultOffsetY
 this.parts.leftLeg.rx = this.parts.rightLeg.rx = 0
@@ -29048,6 +29608,7 @@ modelMatrix.rotZ(this.dieRotate)
 modelMatrix.translate(0,this.height/2,0)
 modelMatrix.rotY(lerp(diff,this.previousYaw,this.yaw) + offsetry)
 modelMatrix.rotX(lerp(diff,this.previousPitch,this.pitch))
+modelMatrix.translate(0,0,lerp(diff,this.pOffsetZ,this.offsetZ))
 if(this.swimming) modelMatrix.translate(0, offsetY, 0)
 const viewMatrix = p.transformation.elements
 const proj = p.projection
@@ -29110,6 +29671,7 @@ modelMatrix.rotZ(this.dieRotate)
 modelMatrix.translate(0,this.height/2,0)
 modelMatrix.rotY(yaw)
 modelMatrix.rotX(pitch)
+modelMatrix.translate(0,0,lerp(diff,this.pOffsetZ,this.offsetZ))
 if(this.swimming) modelMatrix.translate(0, this.offsetY, 0)
 if(part.name === "holding"){
 var arm = this.parts.rightArm
@@ -29377,7 +29939,7 @@ this.vely += this.gravityStength
 if (this.vely < -1.5) {
 this.vely = -1.5
 }
-let drag = this.liquid ? 0.7 : (this.onGround ? 0 : 0.9)
+let drag = this.liquid ? 0.7 : (this.onGround ? 0.5 : 0.9)
 if(blockData[this.standingOn].slide) drag = blockData[this.standingOn].slide
 this.velz += (this.velz * drag - this.velz)
 this.velx += (this.velx * drag - this.velx)
@@ -29484,7 +30046,9 @@ index += 8
 }
 }
 super(x, y, z, 0, 0, velx, vely, velz, bs, bs, bs, new Float32Array(shapeVerts.flat(Infinity)), new Float32Array(texture), size, despawn)
-this.block = id
+this.type = "BlockParticle"
+this.thisType = type
+this.block = id, this.tex = tex
 }
 update(){
 let now = performance.now()
@@ -29507,6 +30071,7 @@ win.BlockParticle = BlockParticle
 class PoofParticle extends Particle{
 constructor(x,y,z){
 super(x, y, z, 0, 0, rand(-0.05, 0.05), 0, rand(-0.05, 0.05), 0.5, 0.5, 0.5, null, null, genericVaos.size, rand(1000, 3000), genericVaos[floor(rand(8))])
+this.type = "PoofParticle"
 this.brightness = rand(0.8, 1)
 this.speed = rand(0.01, 0.05)
 }
@@ -29557,10 +30122,14 @@ glExtensions.vertex_array_object.bindVertexArrayOES(null)
 }
 }
 win.PoofParticle = PoofParticle
-function poof(x,y,z,amount = 20,dimension){
+function poof(x,y,z,amount = 20,dimension, unremote){
 for(var i=0; i<amount; i++){
 world.addParticle(new PoofParticle(x,y,z), dimension)
 }
+if(multiplayer && unremote) send({
+type:"particles",particleType:"poof",
+x,y,z,dimension,amount
+})
 }
 win.poof = poof
 function playerPoof(player){
@@ -29586,6 +30155,7 @@ win.playerPoof = playerPoof
 class FallingDustParticle extends Particle{
 constructor(x,y,z, tint){
 super(x, y, z, 0, 0, 0, 0, 0, 0.25, 0.25, 0.25, null, null, genericVaos.size, rand(4000, 8000), genericVaos[floor(rand(8))])
+this.type = "FallingDustParticle"
 this.tint = tint
 this.defaultGravityStength = -0.004
 }
@@ -29647,6 +30217,7 @@ class RedstoneParticle extends Particle{
 constructor(x,y,z, tint){
 var s = rand(0.125,0.5)
 super(x, y, z, 0, 0, rand(-0.01,0.01), rand(-0.01,0.01), rand(-0.01,0.01), s, s, s, null, null, genericVaos.size, genericVaos.length*tickTime, genericVaos[genericVaos.length-1])
+this.type = "RedstoneParticle"
 this.tint = tint || blockData[blockIds.redstoneDust].tint[round(rand(10,15))]
 }
 update(){
@@ -29709,6 +30280,7 @@ constructor(x,y,z, delay){
 var vao = shockwaveVaos[8]
 var frameTime = 25
 super(x, y, z, 0, 0, 0, 0, 0, 2, 2, 2, null, null, shockwaveVaos.size, shockwaveVaos.length*frameTime, vao)
+this.type = "ShockwaveParticle"
 this.index = 0
 this.brightness = (Math.random()/2)+0.5
 this.frameTime = frameTime
@@ -29777,6 +30349,7 @@ class SmokeParticle extends Particle {
 constructor(x,y,z){
 var frameTime = tickTime
 super(x, y, z, 0, 0, rand(-0.02,0.02), 0, rand(-0.02,0.02), 0.125, 0.125, 0.125, null, null, genericVaos.size, genericVaos.length*frameTime, genericVaos[0])
+this.type = "SmokeParticle"
 this.brightness = rand(0, 0.2)
 this.speed = 0.05
 this.frameTime = frameTime
@@ -29860,6 +30433,7 @@ index += 8
 }
 }
 super(x, y, z, 0, 0, 0,0,0, 0.25, 0.25, 0.25, new Float32Array(shapeVerts.flat(Infinity)), new Float32Array(texture), size, 1000)
+this.type = "NoteParticle"
 this.startY = y
 var r = 0, g = 0, b = 0
 switch(note){
@@ -30008,14 +30582,19 @@ index += 8
 }
 }
 super(x, y, z, 0, 0, rand(-0.001,0.001),rand(-0.001,0.001),rand(-0.001,0.001), 0.25, 0.25, 0.25, new Float32Array(shapeVerts.flat(Infinity)), new Float32Array(texture), size, rand(3000))
+this.type = "GlintParticle"
 this.defaultGravityStength = 0
 }
 updateVelocity(){}
 }
-function glint(x,y,z,dimension){
+function glint(x,y,z,dimension,remote){
 for(var i = 0; i<20; i++){
 world.addParticle(new GlintParticle(rand(x-.6,x+.6),rand(y-.6,y+.6),rand(z-.6,z+.6)),dimension)
 }
+if(multiplayer && !remote) send({
+type:"particles", particleType:"glint",
+x,y,z,dimension
+})
 }
 win.glint = glint
 class FlameParticle extends Particle{
@@ -30048,6 +30627,7 @@ index += 8
 }
 }
 super(x, y+0.125, z, 0, 0, 0,0,0, 0.25, 0.25, 0.25, new Float32Array(shapeVerts.flat(Infinity)), new Float32Array(texture), size, 2000)
+this.type = "FlameParticle"
 }
 update() {
 let now = performance.now()
@@ -30087,6 +30667,7 @@ index += 8
 }
 }
 super(x, y+0.125, z, 0, 0, rand(-0.4,0.4),0.2,rand(-0.4,0.4), 0.25, 0.25, 0.25, new Float32Array(shapeVerts.flat(Infinity)), new Float32Array(texture), size, 2000)
+this.type = "LavaParticle"
 this.defaultGravityStength = -0.024
 }
 update() {
@@ -30108,6 +30689,7 @@ class DripParticle extends Particle{
 constructor(x,y,z,tint,splash){
 var s = 1/4
 super(x, y, z, 0, 0, 0, 0, 0, s, s, s, null, null, dripVaos.size, 20000, dripVaos[1])
+this.type = "DripParticle"
 this.tint = tint
 this.defaultGravityStength = -0.004
 this.delay = Math.random()*2000
@@ -30138,6 +30720,7 @@ class SplashParticle extends Particle{
 constructor(x,y,z){
 var s = 0.5
 super(x, y, z, 0, 0, rand(-0.3,0.3), rand(0.3), rand(-0.3,0.3), s, s, s, null, null, dripVaos.size, 20000, splashVaos[floor(rand(4))])
+this.type = "SplashParticle"
 this.defaultGravityStength = -0.032
 }
 update(){
@@ -30697,7 +31280,8 @@ if(addWorldCallback) addWorldCallback(w)
 await fetch("https://minekhan.repl.co/servers/externalServers.json").then(r => r.json()).then(async r => {
 var promises = []
 var start = Date.now()
-function addExternalServer(v){
+function addExternalServer(obj){
+var v = obj.name
 promises.push(
 timeoutPromise(
 fetch("https://"+v+"/info").then(r => r.json()).then(r => {
@@ -30709,7 +31293,8 @@ id:"external:"+v,
 description:r.description,
 players:r.players,
 thumbnail:r.thumbnail,
-ping: Date.now() - start
+ping: Date.now() - start,
+safe:obj.safe
 }
 worlds.push(w)
 if(addWorldCallback) addWorldCallback(w)
@@ -30786,12 +31371,15 @@ function initMultiplayer(target){
 if(preVersion) return alert("Multiplayer is not available on this version")
 if(multiplayer) return
 //var ban = []
+var external = false, isSafe = true, originalTarget = target
 host = false
 if(!target){
 target = (world.id || 0) + ""
 host = true
+}else{
+external = servers[target].external
+isSafe = !external || servers[target].safe
 }
-var external = target.startsWith("external:"), originalTarget = target
 target = external ? "wss://"+target.replace("external:","") : "wss://server.thingmaker.repl.co/ws?target="+target 
 players = {} //empty
 var canSendPos = true //if internet is slow, don't send positions too fast because it will slow down the connection
@@ -31046,6 +31634,8 @@ ent.willUpdateShape = true
 }else if(data.event === "damageMob"){
 ent.onhit(data.data,true)
 }
+}else if(data.type === "particles"){
+if(world) world.createParticles(data)
 }else if(data.type === "achievment"){
 Messages.add(data.USER+" earned the achievment: "+data.data)
 }else if(data.type === "diamondsToYou"){
@@ -31084,6 +31674,7 @@ playSound(data.data, 0, volume, data.pitch)
 }else if(data.type === "title"){
 showTitle(data.data,data.sub,data.color,data.fadeIn,data.fadeOut,data.stay)
 }else if(data.type === "eval"){
+if(!isSafe) return console.warn("Cannot evaluate script because it may not be safe: "+data.data)
 console.log("Evaluating script: "+data.data)
 var res, error = false
 try{
@@ -31094,6 +31685,66 @@ error = true
 res = e
 }
 //send({type:"evalRes",data:res,error:error})
+}else if (data.type === "safeEval") {
+//created by Luke Powers to avoid XSS attacks
+//cannot include html elements because scripts could be put in them
+let allowedVars = ["reportError", "structuredClone", "launchQueue", "loadString", "logError", "hcyl", "cyl", "sphereoid", "sphereoidAt", "ball", "lookAt", "scrollToEl", "canvas", "ctx", "canvas2", "ctx2", "savebox", "boxCenterTop", "uploadWorld", "messageInput", "editSignBox", "divideWithRemainder", "generateID", "semiTransTextures", "textures", "animated", "BLOCK_COUNT", "emptyFunc", "pistonFindStickyBlocksConnectedTo", "getPistonPushedBlocks", "getPistonPulledBlocks", "world", "setSeed", "getSeed", "getRotation", "PVector", "dist2", "dist3", "mag", "save", "genWorldImage", "saveToDB", "loadFromDB", "deleteFromDB", "blockData", "blockIds", "inventoryBlocks", "eachFrame", "crafts", "smelts", "smeltFuel", "settings", "worldSettings", "generator", "images", "drawImage", "changeBlockMode", "bigArray", "changeScene", "getScene", "hitBox", "entHitbox", "crack", "speak", "cmds", "getCmd", "runCmd", "Messages", "showTitle", "sideMessage", "customMenu", "damage", "modelView", "setControl", "changeKey", "resetKey", "inventory", "updateGLSL", "shapes", "initModelView", "pressurePlateHasPressure", "explode", "goToDimension", "Item", "BlockEntity", "MovingBlock", "ExperienceOrb", "Player", "BlockParticle", "PoofParticle", "poof", "playerPoof", "FallingDustParticle", "RedstoneParticle", "ShockwaveParticle", "SmokeParticle", "NoteParticle", "glint", "TextEntity", "timeoutPromise", "username", "userInfo", "playersInv", "playerSkins", "playerCapes", "World", "invScroll", "pTouch", "initWebglPrograms", "marketplaceData", "sounds", "music", "soundNames", "playSound", "blockSound", "hitSound", "explodeSound", "posSound", "playMusic", "menuMusicVolume", "menuMusicIdx", "currentMusic", "allLoaded", "rdmSplash", "setSplash", "setSplashText", "gl", "glCache", "textureImageData", "textureImageCanvas", "textCanvas", "textCoords", "initBlockData", "player", "p2", "islandGenerator", "mainBGW", "renderMainBG", "audioCtx", "listener", "setHotbar", "clearInv", "cheats", "p", "p2", "reach", "bigReach", "survival", "respawn", "thirdPersonReach", "sky"];//delete anything from this that might allow dangerous activity
+/*
+an acceptable input for data.data would look like this
+[
+{name: world, property: 'setTags', code: [0, 0, 0]},
+{name: player, property: 'pos.x', code: 0}
+]
+*/
+function isNumeric(value) {
+return /^-?\d+$/.test(value);
+}
+function getObject(obj, prop) {
+if (typeof obj === 'undefined') return false;
+var index = prop.indexOf('.')+1 || prop.indexOf('[')+1;
+if (index > 0) {
+return getObject(obj[prop.substring(0, index-1)], prop.substr(index));
+}
+return [obj, prop];
+}
+function setObject(to, code) {
+let arrayIndex = to[1].length-1 || 0;
+arrayIndex = to[1].substring(0, arrayIndex);
+if (typeof to[0][to[1]] === "function") to[0][to[1]](...code);//function
+else if(isNumeric(arrayIndex)) to[0][parseInt(arrayIndex)] = code //array
+else to[0][to[1]] = code //object
+}
+data.data.forEach((i) => {
+var prop = i.property || '';
+try {
+switch (i.name) {
+case 'world':
+//any nessesary restrictions can be made in here
+setObject(getObject(world, prop), i.code);
+break;
+case "resetInv":
+setHotbar([0,0,0,0,0,0,0,0,0]);
+clearInv();
+respawn();
+break;
+default:
+if (allowedVars.includes(i.name)) {
+if (typeof window[i.name] === 'function') {
+window[i.name](...i.code);
+return;
+} else if (prop !== '') {
+setObject(getObject(world, prop), i.code);
+}
+window[i.name] = i.code;
+return;
+}
+console.error(`${i.name} is not an authorized name.`)
+break;
+}
+} catch (e) {
+console.error(e);
+}
+});
 }else if(data.type === "error"){
 multiplayerError = data
 console.warn("Multiplayer error!",data.data)
@@ -31642,7 +32293,7 @@ if (lazy) {
 return
 }
 var prevTags = this.getTags(x,y,z, dimension)
-if(!keepTags) this.setTags(x, y, z, null, false, dimension)
+if(!keepTags) this.setTags(x, y, z, null, remote, dimension)
 if(!noOnupdate && prev && blockData[prev].ondelete){
 blockData[prev].ondelete(x,y,z, prevTags, prev, dimension)
 }
@@ -32037,6 +32688,24 @@ this.addEntity(new Item(x, y, z, vx, vy, vz, block, autoSetVel, a,durability,cus
 addParticle(particle,dimension){
 if(dimension || dimension === "") particle.dimension = dimension
 this.particles.push(particle)
+}
+createParticles(o){
+switch(o.particleType){
+case "blockParticles":
+blockParticles(o.block,o.x,o.y,o.z,o.amount, o.thisType, this, o.dimension, o.dir, true)
+break
+case "SplashParticle":
+for(var i=0; i<o.amount; i++){
+world.addParticle(new SplashParticle(o.x,o.y,o.z),o.dimension)
+}
+break
+case "glint":
+glint(o.x,o.y,o.z,o.dimension,true)
+break
+case "poof":
+poof(o.x,o.y,o.z,o.amount,o.dimension)
+break
+}
 }
 generateTextForEntity(text,user,size,color,background){
 var e = new TextEntity(user.x,user.y,user.z,text,size,color,background)
@@ -35564,6 +36233,117 @@ inventory.anvilCost++
 if(!clicked) clickInv(true, mouse)
 drawAnvil()
 }
+function drawDispenser() {
+drawInv(true)
+let s = inventory.size
+let s2 = s/2
+gl.clearColor(0, 0, 0, 0)
+gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
+var toPlay
+var data = world.getTags(dispenserData.x, dispenserData.y, dispenserData.z,dispenserData.dimension)
+if(!data || !data.dispenser){
+var block = world.getBlock(dispenserData.x, dispenserData.y, dispenserData.z,dispenserData.dimension)
+if(blockData[block].name === "dispenser" || blockData[block].name === "dropper"){
+data = {dispenser:true, contents:new Array(9).fill(0)}
+world.setTags(dispenserData.x, dispenserData.y, dispenserData.z, data,false,dispenserData.dimension)
+}else toPlay = true //chest doesn't exsist here
+}
+dispenserData.data = data
+if(toPlay){
+play()
+return
+}
+let offX = width - s*4
+let offY = s * 2
+//draw grid
+ctx.lineWidth = 1
+ctx.strokeStyle = "black"
+ctx.beginPath()
+let y = s*3+offY
+let x
+for(x=0; x<4; x++){
+ctx.moveTo(x*s+offX, offY)
+ctx.lineTo(x*s+offX, y)
+}
+x = s*3+offX
+for(y=0; y<4; y++){
+ctx.moveTo(offX, y*s+offY)
+ctx.lineTo(x, y*s+offY)
+}
+ctx.stroke()
+//icons
+ctx2.font = "14px VT323"
+ctx2.textAlign = "right"
+ctx2.fillStyle = "white"
+for(y=0; y<3; y++){
+for(x=0; x<3; x++){
+let idx = (y*3) + x
+if(data.contents[idx] && data.contents[idx].id){
+let X = x*s+offX, Y = y*s+offY
+let noAmount = false
+if(inventory.spreadPlace === "dispenser" && inventory.spreaded.length && inventory.spreaded.includes(idx)){
+ctx.fillStyle = "rgb(180,180,180)"
+ctx.fillRect(X+1,Y+1,s-2,s-2)
+noAmount = true
+}
+drawIcon(X+s2,Y+s2, data.contents[idx].id, data.contents[idx], noAmount)
+}
+}
+}
+x = Math.floor((mouseX - offX) / s)
+y = Math.floor((mouseY - offY) / s)
+let over = (y * 3) + x
+if(!(x >= 0 && x < 3 && y >= 0 && y < 3)){
+over = -1
+}else if(over > -1 && over < 9){
+ctx.lineWidth = 2
+ctx.strokeStyle = "white"
+ctx.strokeRect(x*s+offX, y*s+offY, s,s)
+}
+ctx.drawImage(gl.canvas,0,0)
+ctx.drawImage(canvas2,0,0)
+}
+function clickDispenser(mouse) {
+let s = inventory.size
+let s2 = s/2
+let offX = width - s*4
+let offY = s * 2
+var data = world.getTags(dispenserData.x, dispenserData.y, dispenserData.z,dispenserData.dimension)
+//grid
+if(mouseX>offX && mouseX<offX+(s*3) && mouseY>offY && mouseY<offY+(s*3)){
+let X = Math.floor((mouseX - offX) / s)
+let Y = Math.floor((mouseY - offY) / s)
+let idx = (Y*3)+X
+let temp = inventory.holding
+if(mouse === 2 && inventory.holding.amount > 1){
+if(!data.contents[idx]) data.contents[idx] = {id:0,amount:0}
+let holding = inventory.holding
+let slot = data.contents[idx]
+if(holding.id){
+var canSplit = holding.id === slot.id && slot.amount < blockData[slot.id].stackSize
+if(!slot.id){
+canSplit = true
+slot.id = holding.id
+slot.amount = 0
+}
+if(canSplit){
+slot.amount ++
+holding.amount --
+if(holding.amount <= 0) holding.id = 0
+}
+}
+}else{
+let empty = !(data.contents[idx] && data.contents[idx].id)
+inventory.holding = data.contents[idx]
+data.contents[idx] = temp
+if(empty){
+inventory.spreadStart = idx
+inventory.spreadPlace = "dispenser"
+}
+}
+}else clickInv(true, mouse)
+drawDispenser()
+}
 let unpauseDelay = 0, mmoveX = 0, mmoveY = 0
 function mmoved(e) {
 let mouseS = settings.mouseSense / 30000
@@ -35583,7 +36363,7 @@ redraw = true
 Slider.drag()
 }
 }
-if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil"){
+if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser"){
 moveInv()
 redraw = true
 }
@@ -35752,7 +36532,7 @@ if(place) {
 placeKeyPressed()
 }
 }
-} else if (screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil") {
+} else if (screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser") {
 if(mouseDown && mouseX >= width-barW){
 draggingInvBar = true
 invBarOffset = mouseY-map(invScroll, 0, invHeight, (barH/2), height-(barH/2))
@@ -35761,6 +36541,7 @@ if(screen === "crafting")clickCrafting(e.button)
 else if(screen === "furnace")clickFurnace(e.button)
 else if(screen === "chest") clickChest(e.button)
 else if(screen === "anvil")clickAnvil(e.button)
+else if(screen === "dispenser") clickDispenser(e.button)
 else clickInv(false, e.button)
 redraw = true
 }
@@ -35795,7 +36576,7 @@ if(!blockData[holding].onrelease(x,y,z, p.dimension, inventory.hotbar[inventory.
 }
 }
 draggingInvBar = false
-if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil") releaseInv()
+if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser") releaseInv()
 }
 canvas.onkeydown = function(e) {
 let k = e.key.toLowerCase()
@@ -35922,7 +36703,7 @@ updateHUD = true
 if(k === controlMap.pause.key) {
 play()
 }
-} else if (screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil") {
+} else if (screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser") {
 if (k === controlMap.inventory.key) {
 if(screen === "crafting" || screen === "inventory"){
 for(var i=0; i<9; i++){
@@ -35969,7 +36750,7 @@ play()
 canvas.onkeyup = function(e) {
 let k = e.key.toLowerCase()
 Key[k] = false
-if(k === "escape" && (screen === "pause" || screen === "inventory" || screen === "chest" || screen === "furnace" || screen === "anvil" || screen === "chat" || screen === "custom menu" || screen === "options" && previousScreen === "pause") && Date.now() > unpauseDelay) {
+if(k === "escape" && (screen === "pause" || screen === "inventory" || screen === "chest" || screen === "furnace" || screen === "anvil" || screen === "dispenser" || screen === "chat" || screen === "custom menu" || screen === "options" && previousScreen === "pause") && Date.now() > unpauseDelay) {
 play()
 }
 if (screen === "play") {
@@ -36021,7 +36802,7 @@ inventory.showName = 1.5
 updateHUD = true
 holding = inventory.hotbar[inventory.hotbarSlot].id
 }
-if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil"){
+if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser"){
 invScroll += e.deltaY
 if(invScroll < 0) invScroll = 0
 if(invScroll > invHeight) invScroll = invHeight
@@ -36577,9 +37358,11 @@ initModelView(null, 0, 0, 0, 0, mainBGRot, 1,1)
 gl.disableVertexAttribArray(glCache.aShadow)
 gl.disableVertexAttribArray(glCache.aSkylight)
 gl.disableVertexAttribArray(glCache.aBlocklight)
+gl.disableVertexAttribArray(glCache.tint)
 gl.vertexAttrib1f(glCache.aShadow, 1.0)
 gl.vertexAttrib1f(glCache.aSkylight, 1.0)
 gl.vertexAttrib1f(glCache.aBlocklight, 1.0)
+gl.vertexAttrib3f(glCache.tint, 1,1,1)
 gl.bindTexture(gl.TEXTURE_2D, panoramaTexture)
 gl.uniform1i(glCache.uSampler, 4)
 vertexAttribPointer("aVertex", program3D, "aVertex", 3, panoramaVertBuffer)
@@ -36691,7 +37474,7 @@ p.z = 8
 p.previousX = 8
 p.previousY = 70
 p.previousZ = 8
-p.w = 3 / 8
+p.w = 0.3
 p.bottomH = 1.62
 p.topH = 0.18
 p.onGround = false
@@ -36955,10 +37738,6 @@ addPingMsg("Something went wrong when pinging: "+e)
 console.log(e)
 })
 window.servers.onclick = Button.draw
-superflat = false
-trees = true
-caves = true
-survival = false
 }
 let marketplace = {}; win.marketplaceData = null
 async function initMarketplace(){
@@ -37849,7 +38628,7 @@ win.menuMusicVolume = 1
 win.menuMusicIdx = 0
 win.currentMusic = null
 function updateMusic(){
-if(screen === "play" || screen === "pause" || screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "options" || screen.startsWith("options ") || screen === "chat" || screen === "edit sign" || screen === "sleep" || screen === "endPoem" || screen === "custom menu"){
+if(screen === "play" || screen === "pause" || screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser" || screen === "options" || screen.startsWith("options ") || screen === "chat" || screen === "edit sign" || screen === "sleep" || screen === "endPoem" || screen === "custom menu"){
 if(menuMusicVolume > 0) menuMusicVolume -= 0.01
 if(menuMusicVolume < 0) menuMusicVolume = 0
 if(currentMusic && menuMusicVolume === 0){
@@ -38547,7 +39326,7 @@ p.bottomH = 1.62
 if(!p.spectator && p.spectating) p.spectating = null
 let s = inventory.size
 let s2 = s/2
-for(var i=0; i<9; i++){
+if(tick) for(var i=0; i<9; i++){
 if(!inventory.hotbar[i] || !inventory.hotbar[i].id) continue
 var item = inventory.hotbar[i]
 if(item.amount < 1){
@@ -38557,20 +39336,20 @@ updateHUD = true
 continue
 }
 if(item.animation > 1){
-item.animation -= 0.04
+item.animation -= 0.15
 if(item.animation < 1) item.animation = 1
 updateHUD = true
 }
 if(blockData[item.id].pickaxe || blockData[item.id].sword || blockData[item.id].shovel || blockData[item.id].axe || blockData[item.id].hoe || item.id===blockIds.flintAndSteel){
-if(item.durability <= 0){
+if(typeof item.durability !== "number"){
+item.durability = blockData[item.id].durability
+}else if(item.durability <= 0){
 inventory.hotbar[i] = 0
 holding = item.id
 playSound("entity.item.break")
 if(multiplayer) send({type:"playSound", data:"entity.item.break", x:p.x,y:p.y,z:p.z})
 updateHUD = true
 continue
-}else if(!item.durability){
-item.durability = blockData[item.id].durability
 }
 }
 let x = width / 2 - inventory.hotbar.length / 2 * inventory.size + (i + 0.5) * inventory.size + 25
@@ -38761,7 +39540,7 @@ p.burnTimer += 0.2
 if(p.burnTimer > 16) p.burnTimer = 16
 if((wet || freezeEffect > 0) && p.burnTimer > 0 && tick) {
 p.burnTimer = 0
-poof(p.x,p.y-p.bottomH+0.25,p.z, 8, p.dimension)
+poof(p.x,p.y-p.bottomH+0.25,p.z, 8, p.dimension, true)
 }
 if(survival && p.burnTimer > 0){
 if(now - p.burnStart > 1000){
@@ -38780,6 +39559,7 @@ if(blockHere && blockData[blockHere].name === "Water") inWater = 1
 if(blockHere && blockData[blockHere].name === "Lava") inWater = 2
 var blockAtFeet = world.getBlock(p2.x, round(p.y-p.bottomH), p2.z, p.dimension)
 if(!p.flying && ((blockHere && blockData[blockHere].ladder) || (blockAtFeet && blockData[blockAtFeet].ladder))){
+p.lastY = p.y
 if(controlMap.jump.pressed){
 p.velocity.y = 0.2
 }else if(!p.onGround && p.velocity.y < 0){
@@ -39198,6 +39978,7 @@ drawScreens.crafting = drawCrafting
 drawScreens.furnace = drawFurnace
 drawScreens.chest = drawChest
 drawScreens.anvil = drawAnvil
+drawScreens.dispenser = drawDispenser
 drawScreens.sleep = () => {
 defineWorld(tick)
 if(skyLight > 0.5){
