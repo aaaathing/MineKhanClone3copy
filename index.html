@@ -3444,6 +3444,10 @@ dispenserFrontVertical: "0g0g9Á)Z;ŊYËÒYÖĎYâľHðoHJPWwíWgTW00g0hgh02O>UO
 dispenserFront: "0g0geÁ)Z;ŊYËÒYÖĎYâľHðoHJPWĮsHĚĲWĒĒYĆåZgTWwíWéŞZ00g0hgh02O>UOQOw2@yNÄOQS3VGA?GA(4ÅIá[Iáxk,ëî-8àx3ÕÐÔã+ðwkåďðÕæÿTjæĀØġòď(9òðģĤäĀùađóĲĳäĂĉqþĐŃĮóÖKmđĒÿæĎĒKd×ÓđÓÓĎķ3)>|ńQO(00g0hh00",
 dropperFrontVertical: "0g0g9Á)Z;ŊYËÒYÖĎYâľHðoHJPWwíWgTW00g0hgh02O>UOQOw2@yNÄOQS3VÓA?ÄA(4VUz?V)xkONyyBOx3ÓxGGâÓwkVDIIãVTkUDIImUS4VDGÞmQw4?*ÓÓÂyMj?>ÒVÄBSjAN??>Ã(3yBA)O>(2zUÂzNOw00g0hh00",
 dropperFront: "0g0geÁ)Z;ŊYËÒYÖĎYâľHðoHJPWĮsHĚĲWĒĒYĆåZwíWgTWéŞZ00g0hgh02O>UOQOw2@yNÄOQS3VGA?GA(4ÅIá[Iáxk,ëî-8àx3ÕÐÔã+ðwkåďðÕæÿTjæĀÖāòď(9òôĳĲğĀùađóĤģäĂĉqþĐłğóÖKmđĒÿæĎĒKd×ÓđÓÓĎķ3)>|ńQO(00g0hh00",
+hopperInside: "0g0g4;śW)ĺY$ěWAJY00U05VčÀlĒĂÑm×őČÈģťüÄZZüÈZZČ×ZZŋrZZŌqZZđmYZčmŖŕülĖĎÑm×ÇU5ÇVÀ01V0",
+hopperOutside: "0g0g7ÒðWÇÒY|)ZPAY;śW$ěW)ĺY4ë00g]ByPAJP]JóFy^ÚĜÂPiûP+łÚĎăÛPAJPAĞłĞĽŒĝŁ|AûPCÚįłÚĜăõĎŋ|ĊōĹ]łÚİ+łÚĞłÚĞĞłÚĞłÚJ|ČûÚsă@ōŁÚĜĞłÚĞłÚ",
+hopperTop: "0g0g7PAY|)ZÇÒYÒðW)ĺY;śW0004ČăÚy]w00001yÉÚĞł1yŔĞłÚTRŔĞłÚRRŔĞłÚRÏŔĞłÚ>ÏŔĞłÚ>ÏŔĞłÚ>ÏŔĞłÚ>RŔĞłÚRRŔĞłÚRRŔĞłÚRyÉÚĞł1w000014ČăÚy]",
+hopperIcon: "0g0g8000P)Y;ŚZ-ŊYTkWÁVW(ĪWÎðW00000000000002PAù01młÚě0ağĞł,Ý9ÉĞŁÈù1FZťĳë0yJP{004ÚNK005HōK000Yď0000ėŚ0000n-0000lĀ00002ħ00000000",
 //pretty: "0g0g40001blc009d4hc009efw01ulak1c3300022112200033333022111122033303332112211233300033312222133300022333222233322022113330033311222112233333322112112220333302221111222033330222112112233333322112221133300333112202233322223332200033312222133300033321122112333033302211112203333300222112200033",
 //pigFace: "0g0gr000006w14172ew1hejb3s1heul881luzbw81lvx4oo1o2w1dk1qb44541qbfcoo1sj0ws81sjc3qw1sjc5bs1sjndvc1sjnfg81sjynzs1sjypko1sk9y481skl9tk1ur8we01urk6ig1urvf201urvgmw1urvi7s1us6p6g1us6qrc1ustb081x2x0xkaa669999ddddbbddaa669999ddddbbdd7766ccii99kknnnn7766ccii99kknnnn88cceeeeddddeenn88cceeeeddddeenn00qqbbbbjjjjqq0000qqbbbbjjjjqq0099ddhhppppppggdd99ddhhppppppggddcccc11ddff11llllcccc11ddff11llll999922335544oomm999922335544oommbbbbddeellffffnnbbbbddeellffffnn",
 /*
@@ -3742,7 +3746,7 @@ glassSound: true
 { name: "goldBlock", Name:"Block of Gold", breakTime:15, type:"metal3",category:"build", stoneSound:true},
 { name: "diamondBlock", Name:"Block of Diamond", breakTime:25, type:"metal3",category:"build", stoneSound:true},
 {
-name: "redstoneBlock", Name:"Block of Redstone", breakTime:25, type:"metal1",category:"build", stoneSound:true,
+name: "redstoneBlock", Name:"Block of Redstone", breakTime:25, type:"metal1",category:"redstone", stoneSound:true,
 onset:function(x,y,z,dimension){
 world.setPower(x,y,z,16,false,dimension)
 world.spreadPower(x,y,z, 16,dimension)
@@ -4305,7 +4309,7 @@ world.unspreadPower(x,y,z,15,true,dimension)
 }
 }
 },
-connectables: ["redstoneDust", "redstoneBlock", "redstoneLamp", "tnt", "redstoneTorch", "lever", "redstoneConnector","is:button", "piston","pistonSticky","is:pressurePlate"],
+connectables: ["redstoneDust", "redstoneBlock", "redstoneLamp", "tnt", "redstoneTorch", "lever", "redstoneConnector","is:button", "piston","pistonSticky","is:pressurePlate","dropper","dispenser"],
 connectable: function(x,y,z, d,dimension) {
 var id = world.getBlock(x,y,z,dimension)
 if(!id) return false
@@ -6420,10 +6424,10 @@ Name:"Furnace",
 textures: ["furnaceTop","furnaceTop","furnaceSide","furnaceFront","furnaceSide","furnaceSide"],
 rotate: true,
 onclick: (x,y,z,dimension) => {
-furnaceData.x = x
-furnaceData.y = y
-furnaceData.z = z
-furnaceData.dimension = dimension
+containerData.x = x
+containerData.y = y
+containerData.z = z
+containerData.dimension = dimension
 changeScene("furnace")
 releasePointer()
 },
@@ -9529,11 +9533,16 @@ Name:"Chest",
 textures:/*"christmasChestSide",//*/"chestFront",//christmas
 transparent:true,
 chest:true,
+setContents:function(x,y,z,dimension){
+let data = {chest:true, contents:new Array(27).fill(0)}
+world.setTags(x, y, z, data,false,dimension)
+return data
+},
 onclick:function(x,y,z,dimension){
-chestData.x = x
-chestData.y = y
-chestData.z = z
-chestData.dimension = dimension
+containerData.x = x
+containerData.y = y
+containerData.z = z
+containerData.dimension = dimension
 changeScene("chest")
 releasePointer()
 },
@@ -10945,6 +10954,7 @@ piston:true,
 headSideTexture:"pistonHeadSide",
 frontOpenTexture:"pistonFrontOpen",
 headBackTexture:"pistonFront",
+category:"redstone",
 onpowerupdate: function(x,y,z,sx,sy,sz,blockPowerChanged,dimension){
 var block = world.getBlock(x,y,z,dimension)
 var extended = false, facing, attachedHead = false
@@ -12751,6 +12761,11 @@ upTextures:fillTextureArray(["furnaceTop","dropperFrontVertical","furnaceTop"]),
 downTextures:fillTextureArray(["dropperFrontVertical","furnaceTop","furnaceTop"]),
 stoneSound:true,
 category:"redstone",
+setContents:function(x,y,z,dimension){
+let data = {dispenser:true, contents:new Array(9).fill(0)}
+world.setTags(x, y, z, data,false,dimension)
+return data
+},
 onclick:function(x,y,z,dimension){
 dispenserData.x = x
 dispenserData.y = y
@@ -12785,34 +12800,42 @@ var items = tags.contents.filter(r => r && r.id)
 var idx = floor(rand(items.length))
 if(!items[idx] || !items[idx].id) return
 idx = tags.contents.indexOf(items[idx]), items = tags.contents
-var vx = 0, vy = 0, vz = 0, ix = x, iy = y, iz = z
+var vx = 0, vy = 0, vz = 0, ix = x, iy = y, iz = z, tx = x, ty = y, tz = z
 switch(block){
 case me.id | NORTH:
 vz = -0.25
 iz -= 0.75
+tz--
 break
 case me.id | SOUTH:
 vz = 0.25
 iz += 0.75
+tz++
 break
 case me.id | EAST:
 vx = -0.25
 ix -= 0.75
+tx--
 break
 case me.id | WEST:
 vx = 0.25
 ix += 0.75
+tx++
 break
 case me.id | SLAB:
 vy = 0.25
 iy += 0.75
+ty++
 break
 case me.id | STAIR:
 vy = -0.25
 iy -= 0.75
+ty--
 break
 }
+if(!putItemInContainer(tx,ty,tz,dimension,items[idx].id,items[idx].durability,items[idx].customName)){
 world.addItems(ix,iy,iz,dimension,vx,vy,vz,items[idx].id, false, 1, items[idx].durability, items[idx].customName)
+}
 items[idx].amount--
 if(items[idx].amount <= 0) items[idx] = 0
 world.setTags(x,y,z,tags,false,dimension)
@@ -12834,6 +12857,11 @@ stoneSound:true,
 category:"redstone",
 breakTime:17.5,
 type:"rock2",
+setContents:function(x,y,z,dimension){
+let data = {dispenser:true, contents:new Array(9).fill(0)}
+world.setTags(x, y, z, data,false,dimension)
+return data
+},
 onclick:function(x,y,z,dimension){
 dispenserData.x = x
 dispenserData.y = y
@@ -12896,7 +12924,7 @@ iy--
 break
 }
 var front = world.getBlock(ix,iy,iz,dimension)
-if(front && front.solid) return
+if(front && blockData[front].solid) return
 var data = blockData[items[idx].id]
 var minus = true
 if(data.name === "arrow") world.addEntity(new Arrow(ix,iy,iz,vx*4,vy*4,vz*4),false,dimension)
@@ -12926,7 +12954,156 @@ world.setTags(x,y,z,tags,false,dimension)
 onset:function(x,y,z,dimension){
 this.onpowerupdate(x,y,z,null,null,null,null,dimension)
 },
+},
+{
+name:"hopper",
+Name:"Hopper that doesn't jump",
+textures:"hopperOutside",
+flatIcon:true,
+iconTexture:"hopperIcon",
+blastResistance:4.8,
+transparent:true,
+breakTime:15,
+type:"metal2",
+stoneSound:true,
+category:"redstone",
+setContents:function(x,y,z,dimension){
+let data = {hopper:true, contents:new Array(5).fill(0)}
+world.setTags(x, y, z, data,false,dimension)
+return data
+},
+onclick:function(x,y,z,dimension){
+containerData.x = x
+containerData.y = y
+containerData.z = z
+containerData.dimension = dimension
+changeScene("hopper")
+releasePointer()
+},
+onbreak:function(x,y,z, block, data,dimension){
+if(!(data && data.hopper && data.contents)) return
+data = data.contents
+for(var i=0; i<data.length; i++){
+if(data[i] && data[i].id){
+world.addItems(x,y,z,dimension,0,0,0,data[i].id, true, data[i].amount, data[i].durability, data[i].customName)
 }
+}
+},
+pushItem:function(x,y,z,dimension,tags){
+var tx = x, ty = y, tz = z, top
+switch(world.getBlock(x,y,z,dimension)){
+case this.id:
+ty--
+top = true
+break
+case this.id | SLAB | NORTH:
+tz++
+break
+case this.id | SLAB | SOUTH:
+tz--
+break
+case this.id | SLAB | EAST:
+tx++
+break
+case this.id | SLAB | WEST:
+tz--
+break
+}
+var to = world.getBlock(tx,ty,tz,dimension)
+if(!to) return
+for(var i=0; i<tags.contents.length; i++){
+var item = tags.contents[i]
+if(!item || !item.id) continue
+var put
+if(blockData[to].name === "furnace"){
+var toTags = world.getTags(tx,ty,tz,dimension), toTagName
+if(top) toTagName = "input"
+else toTagName = "fuel"
+var toTag = toTags[toTagName]
+if(!toTag){
+toTag = {id:item.id,amount:1,durability:item.durability,customName:item.customName}
+put = true
+}else if(toTag.id === item.id && (!toTag.customName && !item.customName || toTag.customName === item.customName) && toTag.amount < blockData[toTag.id].stackSize){
+toTag.amount++
+put = true
+}
+if(put){
+toTags[toTagName] = toTag
+world.setTags(tx,ty,tz,toTags,false,dimension)
+}
+}else if(putItemInContainer(tx,ty,tz,dimension,item.id,item.durability,item.customName)){
+put = true
+}
+if(put){
+item.amount--
+if(!item.amount) tags.contents[i] = 0
+return true
+}
+}
+},
+pullItem:function(x,y,z,dimension,myTags){
+var block = world.getBlock(x,y+1,z,dimension)
+var tags = world.getTags(x,y+1,z,dimension)
+if(!tags) return
+if(blockData[block].name === "furnace"){
+var item = tags.output
+if(item && item.id){
+if(!putItemInContainer(x,y,z,dimension,item.id,item.durability,item.customName,true)) return
+item.amount--
+if(!item.amount) tags.output = 0
+return true
+}
+}else if(tags.contents) for(var i=0; i<tags.contents.length; i++){
+var item = tags.contents[i]
+if(item && item.id){
+if(!putItemInContainer(x,y,z,dimension,item.id,item.durability,item.customName,true)) return
+item.amount--
+if(!item.amount) tags.contents[i] = 0
+return true
+}
+}
+},
+update:function(x,y,z,dimension){
+if(this.isLocked(x,y,z,dimension)) return
+var tags = world.getTags(x,y,z,dimension)
+if(!tags) tags = this.setContents(x,y,z,dimension)
+var u = false
+if(this.pushItem(x,y,z,dimension,tags)) u = true
+if(this.pullItem(x,y,z,dimension,tags)) u = true
+if(u) world.setTags(x,y,z,tags,false,dimension)
+},
+onupdate:function(x,y,z,block,world,sx,sy,sz,dimension){
+for(var i=0; i<world.timeoutQueue.length; i++){
+var t = world.timeoutQueue[i]
+if(t.x === x && t.y === y && t.z === z && t.d === dimension){
+world.timeoutQueue.splice(i,1)
+i--
+}
+}
+var me = this
+var t = () => me.update(x,y,z,dimension)
+t.x = x, t.y = y, t.z = z, t.d = dimension
+world.setTimeout(t, tickTime*8)
+},
+onpowerupdate:function(x,y,z,sx,sy,sz,blockPowerChanged,dimension){
+this.onupdate(x,y,z,null,world,sx,sy,sz,dimension)
+},
+ontagsupdate:function(x,y,z,dimension,tags){
+this.onupdate(x,y,z,null,world,null,null,null,dimension)
+},
+isLocked:function(x,y,z,dimension){
+return world.getRedstonePower(x,y,z,dimension) || world.getSurroundingBlockPower(x,y,z,dimension)
+},
+itemOnTop(x,y,z,dimension,ent){
+if(this.isLocked(x,y,z,dimension)) return
+var amount = ent.amount
+while(amount){
+if(!putItemInContainer(x,y,z,dimension,ent.block,ent.durability,ent.name)) break
+amount--
+}
+return amount
+}
+},
 /*
 { name: "pigFace" },
 { 
@@ -13125,7 +13302,7 @@ holding = inventory.hotbar[inventory.hotbarSlot].id
 }
 return true
 }
-if(inventory.hotbar[i].id === id && inventory.hotbar[i].amount < blockData[inventory.hotbar[i].id].stackSize){
+if(inventory.hotbar[i].id === id && (!inventory.hotbar[i].customName && !name || inventory.hotbar[i].customName === name) && inventory.hotbar[i].amount < blockData[inventory.hotbar[i].id].stackSize){
 inventory.hotbar[i].amount ++;
 inventory.hotbar[i].animation = 1.5
 return true
@@ -13136,7 +13313,7 @@ if(!(invItems[i] && invItems[i].id)){
 invItems[i] = {id:id, durability:durability, customName:name, amount:1}
 return true
 }
-if(invItems[i].id === id && invItems[i].amount < blockData[invItems[i].id].stackSize){
+if(invItems[i].id === id && (!invItems[i].customName && !name || invItems[i].customName === name) &&invItems[i].amount < blockData[invItems[i].id].stackSize){
 invItems[i].amount ++;
 return true
 }
@@ -13501,7 +13678,8 @@ const crafts = {
 "blueWool,blueWool,blueWool,_planks,_planks,_planks":{name:"blueBed"},
 "_planks,air,air,_planks,_planks,_planks,_planks,air,_planks":{name:"chair"},
 "_stone,_stone,_stone,_stone,air,_stone,_stone,redstone,_stone":{name:"dropper"},
-"_stone,_stone,_stone,_stone,bow,_stone,_stone,redstone,_stone":{name:"dropper"},
+"_stone,_stone,_stone,_stone,bow,_stone,_stone,redstone,_stone":{name:"dispenser"},
+"ironIngot,air,ironIngot,ironIngot,chest,ironIngot,air,ironIngot":{name:"hopper"}
 }
 //replace anything in crafts starting with _
 var craftTypes = {
@@ -14269,26 +14447,40 @@ if(ctx.ellipse){
 ctx.ellipse(x,y,w,h,0, 0,Math.PI*2)
 }
 }
-function text(txt, x, y, h) {
+function text(txt, x, y, h, hoverbox) {
 h = h || 0
+for(var obj of Messages.remove){ //remove bad words
+txt = txt.replace(obj.replace, obj.with)
+} //if you change this, change the one in Messages.format and TextEntity
 let lines = txt.split("\n")
 for (let i = 0; i < lines.length; i++) {
-if(lines[i].includes("§")){
-var textAlign = ctx.textAlign
+let textAlign = ctx.textAlign
 ctx.textAlign = "left"
-var fillStyle = ctx.fillStyle
+let fillStyle = ctx.fillStyle
+let baseline = ctx.textBaseline
+ctx.textBaseline = "top"
+let px = x
 let tw = ctx.measureText(lines[i].replace(/§./g, "")).width
 let m2 = tw / 2
 switch(textAlign){
 case "right":
-x -= m2
+x -= tw
+if(hoverbox === 1) x -= 10
 break
 case "center":
+x -= m2
 break
 default:
-x += m2
+if(hoverbox === 1) x += 10
 break
 }
+if(hoverbox){
+ctx.fillStyle = "black"
+if(hoverbox === 2) ctx.fillRect(x-10,y-10,tw+20,h+20)
+else if(hoverbox === 1) ctx.fillRect(x-10, y, tw+20, h);
+ctx.fillStyle = fillStyle
+}
+if(lines[i].includes("§")){
 let codes = lines[i].split("§")
 ctx.fillText(codes[0], x-m2, y + h * i)
 var xStr = codes[0]
@@ -14297,17 +14489,25 @@ for(var j=1; j<codes.length; j++){
 let str = codes[j]
 ctx.fillStyle = colors.css[str.substring(0,1)]
 str = str.substring(1)
-ctx.fillText(str, x+tx-m2, y+h*i)
+ctx.fillText(str, x+tx, y+h*i)
 xStr += str
 tx = ctx.measureText(xStr).width
 }
+}else ctx.fillText(lines[i], x, y + h * i)
 ctx.textAlign = textAlign
 ctx.fillStyle = fillStyle
-}else{
-ctx.fillText(lines[i], x, y + h * i)
+ctx.textBaseline = baseline
+x = px
 }
 }
-}
+/*ctx.textAlign = "left"
+ctx.font = "16px VT323";
+var w = ctx.measureText(name).width;
+fill(0)
+ctx.fillRect(mouseX, mouseY, w+20, 20);
+fill(255);
+text(name, mouseX+10, mouseY+13+2);
+*/
 function textSize(size) {
 ctx.font = size + 'px VT323' // VT323
 }
@@ -15916,19 +16116,17 @@ hintIdx: -1,
 history: [],
 remove: (function(){
 var arr = [
-["k","c","u","f"].reverse().join(""), ["t","n","u","c"].reverse().join(""), "stupid",
-{replace:"blood",with:"red liquid"},
-"dumb",
+["k","c","u","f"].reverse().join(""), ["t","n","u","c"].reverse().join(""), "stupid", "dumb", "dummy",
 {replace:"bitch",with:"female dog, wolf, fox, or otter"},
-{replace:"shit",with:"poo poo"},
-{replace:"discord",with:"that chating app"},
-{replace:"crap",with:"something of extremely poor quality"}
+{replace:"shit",with:"poo poo",noStart:"[a-zA-Z]"},
+{replace:"crap",with:"something of extremely poor quality",noStart:"s"}
 ]
 var between = "[THELETTER \*.,|`~\/\\!&]*" //there might be characters between, like this: b.a.d
 arr.forEach((obj, i) => {
 var str = "", value, witH
 if(typeof obj === "string") value = obj, witH = "bad"
 else value = obj.replace, witH = obj.with
+if(obj.noStart) str += "(?<!"+obj.noStart+")" //negative look behind
 for(var j=0; j<value.length; j++){
 if(j+1 === value.length) str += value[j]
 else str += value[j] + between.replace("THELETTER",value[j])
@@ -16180,7 +16378,7 @@ str = str.substring(i,str.length)
 return main
 },
 formatSafeElements: ["h1","h2","h3","h4","h5","h6","p","img","video","audio","a","ul","ol","li","pre","code","br","b","i","big","center","small","span","strike","strong","sub","sup","table","tbody","td","tfoot","th","thead","tr","hr"],
-formatSafeAttributes: ["align","alt","width","height","href","src","media","title","style"],
+formatSafeAttributes: ["align","alt","width","height","href","src","media","title","style","target"],
 formatUnclosedElements: ["img","br","hr"],
 formatUnparsedElements: ["pre","code"],
 formatConvertToSafeHtml:function(elements){
@@ -16209,7 +16407,7 @@ format(str){
 str = this.formatConvertToSafeHtml(this.formatGetElementsInString(str))
 for(var obj of this.remove){ //remove bad words
 str = str.replace(obj.replace, "<span style='color:red; background:black;'>"+obj.with+"</span>")
-}
+} //if you change this change it at canvas text
 if(str.includes("§")){
 var arr = str.split("§")
 var res = "<span>"+arr[0]
@@ -16613,21 +16811,13 @@ spreaded: [],
 spreadPlace: "", //inventory, crafting, etc
 spreadStart: -1,
 spreading: false,
-furnaceData: {
-x:0,y:0,z:0,dimension:"",
-data:null
-},
-chestData:{
-x:0,y:0,z:0,dimension:"",
-data:null
-},
-dispenserData:{
+containerData: {
 x:0,y:0,z:0,dimension:"",
 data:null
 },
 category:0
 }
-let {furnaceData, chestData, dispenserData} = inventory
+let containerData = inventory.containerData
 win.inventory = inventory
 //}
 for(var i=0; i<9; i++){
@@ -19243,6 +19433,43 @@ east: 0,
 west: 0
 }
 },
+hopper:{
+verts:[
+[objectify(0,10,0,16,16,-16,0),objectify(4,4,4,8,8,-12,4),objectify(6,0,6,4,4,-10,6)],
+[objectify(0,16,16,13,3,19,0),objectify(0,10,16,16,16,-16,0),objectify(3,16,3,13,3,16,13),objectify(0,16,13,3,13,29,3),objectify(13,16,16,3,13,16,0)],
+[objectify(16,16,16,16,6,0,0),objectify(12,10,12,8,6,4,6),objectify(10,4,10,4,4,6,12),objectify(13,16,3,10,6,3,0)],
+[objectify(0,16,0,16,6,0,0),objectify(4,10,4,8,6,4,6),objectify(6,4,6,4,4,6,12),objectify(3,16,13,10,6,3,0)],
+[objectify(16,16,0,16,6,0,0),objectify(12,10,4,8,6,4,6),objectify(10,4,6,4,4,6,12),objectify(3,16,3,10,6,3,0)],
+[objectify(0,16,16,16,6,0,0),objectify(4,10,12,8,6,4,6),objectify(6,4,10,4,4,6,12),objectify(13,16,13,10,6,3,0)]
+],
+cull: {
+top: 3,
+bottom: 0,
+north: 0,
+south: 0,
+east: 0,
+west: 0
+}
+},
+hopperWall:{
+verts:[
+[objectify(0,10,0,16,16,-16,0),objectify(4,4,4,8,8,-12,4),objectify(6,4,12,4,4,-10,6)],
+[objectify(0,16,16,13,3,19,0),objectify(0,10,16,16,16,-16,0),objectify(3,16,3,13,3,16,13),objectify(0,16,13,3,13,29,3),objectify(13,16,16,3,13,16,0),objectify(6,8,16,4,4,6,12)],
+[objectify(16,16,16,16,6,0,0),objectify(12,10,12,8,6,4,6),objectify(13,16,3,10,6,3,0),objectify(10,8,16,4,4,6,12)],
+[objectify(0,16,0,16,6,0,0),objectify(4,10,4,8,6,4,6),objectify(3,16,13,10,6,3,0)],
+[objectify(16,16,0,16,6,0,0),objectify(12,10,4,8,6,4,6),objectify(10,8,12,4,4,6,12),objectify(3,16,3,10,6,3,0)],
+[objectify(0,16,16,16,6,0,0),objectify(4,10,12,8,6,4,6),objectify(6,8,16,4,4,6,12),objectify(13,16,13,10,6,3,0)]
+],
+cull: {
+top: 0,
+bottom: 0,
+north: 0,
+south: 0,
+east: 0,
+west: 0
+},
+rotate:true
+},
 sun:{
 verts:[
 [],[],[],
@@ -20923,6 +21150,10 @@ if(baseBlock.name === "dropper" || baseBlock.name === "dispenser"){
 baseBlock.shape = shapes.rotate
 makeBlock(baseBlock.upTextures, shapes.cube, slabBlock)
 makeBlock(baseBlock.downTextures, shapes.cube, stairBlock)
+}
+if(baseBlock.name === "hopper"){
+baseBlock.shape = shapes.hopper
+makeBlock(baseBlock.textures, shapes.hopperWall, slabBlock, baseBlock)
 }
 blockData[i | SLAB] = slabBlock
 blockData[i | STAIR] = stairBlock
@@ -23751,6 +23982,10 @@ if(hitBox.face === "top") blockMode = SLAB
 else if(hitBox.face === "bottom") blockMode = STAIR
 else blockMode = CUBE
 }
+if(blockData[holding].name === "hopper"){
+if(side) blockMode = SLAB
+else blockMode = CUBE
+}
 if(side && blockIds[blockData[block].name+"SW"]){
 block = blockIds[blockData[block].name+"SW"]
 }
@@ -24116,6 +24351,26 @@ if(multiplayer && !remote) send({
 type:"particles", particleType:"blockParticles",
 block,x,y,z,amount,dimension,thisType:type,dir
 })
+}
+function putItemInContainer(x,y,z,dimension,id,durability,customName,lazy){
+var tags = world.getTags(x,y,z,dimension)
+if(!tags || !tags.contents){
+var block = world.getBlock(x,y,z,dimension)
+if(blockData[block].setContents) tags = blockData[block].setContents(x,y,z,dimension)
+else return false
+}
+for(var i=0; i<tags.contents.length; i++){
+if(!tags.contents[i] || !tags.contents[i].id){
+tags.contents[i] = {id,amount:1,durability,customName}
+if(!lazy) world.setTags(x,y,z,tags,false,dimension)
+return true
+}else if(tags.contents[i].id === id && (!tags.contents[i].customName && !customName || tags.contents[i].customName === customName) && tags.contents[i].amount < blockData[id].stackSize){
+tags.contents[i].amount++
+if(!lazy) world.setTags(x,y,z,tags,false,dimension)
+return true
+}
+}
+return false
 }
 function goToDimension(d){
 d = d || ""
@@ -26398,6 +26653,7 @@ let leaf = blockIds.jungleLeaves
 for (let j = ground + 1; j <= top; j++) {
 this.setBlock(i, j, k, tree)
 worldGenArray.add(wx,j,wz,blockIds.vine)
+worldGenArray.add(wx,j,wz,blockIds.cocoa)
 }
 this.setBlock(i, top + 1, k, leaf)
 this.setBlock(i, ground, k, blockIds.dirt)
@@ -26914,7 +27170,6 @@ var block = worldGenArray.array[rnd][3]
 let x = worldGenArray.array[rnd][0], y = worldGenArray.array[rnd][1], z = worldGenArray.array[rnd][2]
 if(block === blockIds.vine){
 block = block | WALLFLAT
-var canPlace = true
 switch(floor(random()*4)){
 case 0:
 z++
@@ -26937,6 +27192,34 @@ for(var m=0; m<round(random(3)+1); m++){
 if(world.getBlock(x,y-m,z,type)) break
 world.spawnBlock(x,y-m,z,block,type)
 }
+}else if(block === blockIds.cocoa){
+switch(floor(random(3))){
+case 1:
+block |= SLAB
+break
+case 2:
+block |= STAIR
+break
+}
+switch(floor(random(4))){
+case 0:
+z++
+block = block | SOUTH
+break
+case 1:
+z--
+block = block | NORTH
+break
+case 2:
+x++
+block = block | WEST
+break
+case 3:
+x--
+block = block | EAST
+break
+}
+world.spawnBlock(x,y,z,block,type)
 }
 }
 }
@@ -27155,6 +27438,7 @@ this.hasCollided = false
 this.gravityStength = -0.048
 this.defaultGravityStength = -0.048
 this.standingOn = 0
+this.insideBlock = 0
 this.despawns = despawns
 this.spawn = this.lastUpdate
 this.canDespawn = false
@@ -27272,7 +27556,8 @@ glExtensions.vertex_array_object.bindVertexArrayOES(null)
 return {vao, size}
 }
 updateVelocity(now) {
-this.standingOn = world.getBlock(this.x, round(this.y-this.height-1), this.z)
+this.standingOn = world.getBlock(round(this.x), round(this.y-this.height-1), round(this.z))
+this.insideBlock = world.getBlock(round(this.x),round(this.y),round(this.z))
 if (this.liquid){
 this.gravityStength = -0.015
 this.vely *= 0.9
@@ -27477,12 +27762,19 @@ var dist = dist3(this.x/rw,this.y/rh,this.z/rd,x/rw,y/rh,z/rd)
 var aDist = abs(dist)
 if(aDist > 1) return
 var iDist = 1 - aDist //inverted distance
-var toX = lerp(iDist, this.x, x)
+var velx = x-this.x
+var vely = y-this.y
+var velz = z-this.z
+var mag = sqrt(velx * velx + vely * vely + velz * velz)
+this.velx = velx*iDist/mag/slowDown
+if(this.onGround) this.vely = vely*iDist/mag/slowDown
+this.velz = velz*iDist/mag/slowDown
+/*var toX = lerp(iDist, this.x, x)
 var toY = lerp(iDist, this.y, y)
 var toZ = lerp(iDist, this.z, z)
 this.velx = (toX - this.x) / slowDown * iDist
 if(this.onGround) this.vely = (toY - this.y) / slowDown * iDist
-this.velz = (toZ - this.z) / slowDown * iDist
+this.velz = (toZ - this.z) / slowDown * iDist*/
 /*var xd = this.x - p.x, zd = this.z - p.z;
 var x = xd; this.velx = (x-(Math.sign(x)*7.25)) / 150
 if(this.onGround) {var y = this.y - (p.y-p.bottomH); this.vely = (y-(Math.sign(y)*7.25)) / 40}
@@ -27679,7 +27971,7 @@ comeCloser = xDist > -hRange && xDist < hRange && yDist > -0.75 && yDist < 2.3 &
 if(comeCloser){
 var onGround = this.onGround
 this.onGround = true
-this.moveTowards(p.x, p.y, p.z, hRange,2.3,hRange, 0.5)
+this.moveTowards(p.x, p.y, p.z, hRange,2.3,hRange, 1)
 this.onGround = onGround
 }
 var w = p.w
@@ -27696,7 +27988,7 @@ var stackSize = blockData[this.block].stackSize
 var c = false
 for(var i=0; i<world.entities.length; i++){
 var e = world.entities[i]
-if(e.type === "Item" && e !== this && e.block === this.block && e.amount + this.amount <= stackSize){
+if(e.type === "Item" && e !== this && e.block === this.block && (!e.name && !this.name || e.name === this.name) && e.amount + this.amount <= stackSize){
 var xDist = this.x - e.x
 var yDist = this.y - e.y
 var zDist = this.z - e.z
@@ -27763,6 +28055,14 @@ var biome = world.getBiome(round(this.x),round(this.y),round(this.z),this.dimens
 var tints = blockData[id].tint
 this.tint = tints[biome] || tints.default
 this.tintGray = true
+}
+if(this.insideBlock && blockData[this.insideBlock].itemOnTop){
+var amount = blockData[this.insideBlock].itemOnTop(round(this.x),round(this.y),round(this.z),this.dimension,this)
+if(amount){
+this.amount = amount
+this.willUpdateShape = true
+if(multiplayer) send({type:"entEvent",event:"itemAmount",data:this.amount,id:this.id})
+}else if(amount === 0) this.canDespawn = true
 }
 }
 updateShape(){
@@ -28829,6 +29129,7 @@ this.type = "ItemFrame"
 this.width = this.height = this.depth = 0.5
 this.baseBlock = base
 this.noHitbox = true
+this.remote = true
 this.rz = 0
 this.offsetX = 0, this.offsetZ = 0
 var off = 7/16
@@ -30976,6 +31277,9 @@ this.background = background || [0,0,0,0]
 this.glow = false
 }
 setText(text){
+for(var obj of Messages.remove){ //remove bad words
+text = text.replace(obj.replace, obj.with)
+}//if you change this, change the one in Messages.format
 let data = new Float32Array(text.length*32)
 let lineData = []
 let x = 0, y = 0
@@ -31268,7 +31572,7 @@ async function getWorlds(addWorldCallback,pingCallback){
 if(!navigator.onLine) return "offline"
 var logged = await loggedIn()
 if(!logged){
-return "notLoggedIn"
+//return "notLoggedIn"
 }
 var worlds
 await fetch("https://server.thingmaker.repl.co/worlds").then(r => r.json()).then(r => {
@@ -31277,37 +31581,21 @@ for(var w of worlds){
 if(addWorldCallback) addWorldCallback(w)
 }
 }).catch(e => logError(e))
-await fetch("https://minekhan.repl.co/servers/externalServers.json").then(r => r.json()).then(async r => {
-var promises = []
-var start = Date.now()
-function addExternalServer(obj){
-var v = obj.name
-promises.push(
-timeoutPromise(
-fetch("https://"+v+"/info").then(r => r.json()).then(r => {
-var w = {
-external: true,
-url:v,
-name:r.name,
-id:"external:"+v,
-description:r.description,
-players:r.players,
-thumbnail:r.thumbnail,
-ping: Date.now() - start,
-safe:obj.safe
-}
-worlds.push(w)
-if(addWorldCallback) addWorldCallback(w)
-if(pingCallback) pingCallback(w.id,w.ping)
-}),
-20000
-).catch(() => {})
-)
-}
+await fetch("https://server.thingmaker.repl.co/servers").then(r => r.json()).then(r => {
 for(var v of r){
-addExternalServer(v)
+var obj = {
+external: true,
+name:v.name,
+id:v.id,
+description:v.description,
+players:v.players,
+thumbnail:v.thumbnail,
+url:v.url,
+safe:v.safe
 }
-await Promise.all(promises)
+worlds.push(obj)
+addWorldCallback(obj)
+}
 }).catch(console.error)
 if(pingCallback){
 await fetch("https://server.thingmaker.repl.co/worldsPing").then(r => r.json()).then(pings => {
@@ -31378,9 +31666,9 @@ target = (world.id || 0) + ""
 host = true
 }else{
 external = servers[target].external
-isSafe = !external || servers[target].safe
+if(external) isSafe = servers[target].safe
 }
-target = external ? "wss://"+target.replace("external:","") : "wss://server.thingmaker.repl.co/ws?target="+target 
+target = external ? "wss://server.thingmaker.repl.co/externalWs?target="+target : "wss://server.thingmaker.repl.co/ws?target="+target 
 players = {} //empty
 var canSendPos = true //if internet is slow, don't send positions too fast because it will slow down the connection
 var lastSendPos = performance.now()
@@ -31455,9 +31743,9 @@ var data = packet//.msg ? JSON.parse(packet.msg) : {}
 if(data.type === "ping"){
 send({
 type:"pong",
-data:Date.now()
+id:data.id
 })
-}else if(data.type === "getSave"){
+}else if(data.type === "connect"){
 if(host){
 /*if(ban.includes(data.USER)){
 send({
@@ -31528,7 +31816,7 @@ cheats = data.cheats
 if(data.inv){
 if(data.inv.invItems) invItems = data.inv.invItems
 if(data.inv.hotbar) inventory.hotbar = data.inv.hotbar
-if(data.inv.x){
+if(data.inv.x || data.inv.x === 0){
 p.x = data.inv.x
 p.y = data.inv.y
 p.z = data.inv.z
@@ -32327,6 +32615,10 @@ if (xm === 15 && zm === 0) { this.updateBlock(x + 1, y, z - 1, lazy, true,x,y,z,
 if (xm === 0 && zm === 15) { this.updateBlock(x - 1, y, z + 1, lazy, true,x,y,z,dimension); }
 if (xm & zm === 15) { this.updateBlock(x + 1, y, z + 1, lazy, true,x,y,z,dimension); }
 }
+tagUpdate(x,y,z,dimension,t){
+var block = this.getBlock(x,y,z,dimension)
+if(block && blockData[block].ontagsupdate) blockData[block].ontagsupdate(x,y,z,dimension,t)
+}
 tagsChanged(x,y,z, t, remote, dimension){
 /*var str = x.toString(36)+","+y.toString(36)+","+z.toString(36)
 var editedTags = dimension === "nether" ? this.netherEditedTags : (dimension === "end" ? this.endEditedTags : this.editedTags)
@@ -32337,6 +32629,13 @@ if(editedTags.includes(str)){
 editedTags.splice(editedTags.indexOf(str),1)
 }
 }*/
+this.tagUpdate(x,y,z,dimension,t)
+this.tagUpdate(x-1,y,z,dimension,t)
+this.tagUpdate(x+1,y,z,dimension,t)
+this.tagUpdate(x,y-1,z,dimension,t)
+this.tagUpdate(x,y+1,z,dimension,t)
+this.tagUpdate(x,y,z-1,dimension,t)
+this.tagUpdate(x,y,z+1,dimension,t)
 if(multiplayer && !remote){
 send({type:"setTags", x:x, y:y, z:z, data:t, dimension:dimension})
 }
@@ -32392,7 +32691,7 @@ this.tagsChanged(x,y,z,t, remote,dimension)
 }
 updateTags(x,y,z,dimension){
 var t = world.getTags(x,y,z,dimension)
-this.tagsChanged(x,y,z,t,dimension)
+this.tagsChanged(x,y,z,t,false,dimension)
 }
 getLight(x, y, z, blockLight = 0, dimension) {
 if(y < 0) return 0
@@ -32639,6 +32938,9 @@ break
 if(!ent) return
 ent.id = d.id
 this.addEntity(ent, true)
+ent.previousX = p.x
+ent.previousY = p.y
+ent.previousZ = p.z
 }
 if(!ent) return
 ent.dimension = d.dimension
@@ -33489,7 +33791,7 @@ for(let i=0; i<inventory.hotbar.length; i++){
 if(inventory.hotbar[i]){
 arr.push(inventory.hotbar[i].customName || "")
 }else{
-arr.push(0)
+arr.push("")
 }
 }
 str += arr.join(",") + "|"
@@ -33498,7 +33800,7 @@ for(i=0; i<invItems.length; i++){
 if(invItems[i]){
 arr.push(invItems[i].customName || "")
 }else{
-arr.push(0)
+arr.push("")
 }
 }
 str += arr.join(",") + "|"
@@ -33677,7 +33979,7 @@ if(inv[i]){
 invItems[i].customName = inv[i]
 }
 }
-}catch{}
+}catch(e){console.error(e)}
 }
 loadSurvivStr(str){
 let arr = str.split(",")
@@ -33885,9 +34187,9 @@ textSize(13)
 ctx.textAlign = 'center'
 let label = `${this.label}: ${value}`
 fill(0)
-text(label, this.x+2, this.y + this.h / 8 + 2)
+text(label, this.x+2, this.y + this.h / 8 + 2 - 11)
 disabled ? fill(255) : (hovering ? fill(255,255,0) : fill(255) )
-text(label, this.x, this.y + this.h / 8)
+text(label, this.x, this.y + this.h / 8 - 11)
 }
 mouseCollided(){
 return mouseX > this.x - this.w / 2 && mouseX < this.x + this.w / 2 && mouseY > this.y - this.h / 2 && mouseY < this.y + this.h / 2
@@ -34025,9 +34327,9 @@ ctx.strokeRect(this.x-this.w/2, this.y-this.h/2, this.w, this.h)
 textSize(13)
 ctx.textAlign = 'center'
 fill(0)
-text(this.labels[this.index], this.x +2, this.y + this.h / 8 +2)
+text(this.labels[this.index], this.x +2, this.y + this.h / 8 + 2 - 11)
 disabled ? fill(255) : (hovering ? fill(255,255,0) : fill(255) )
-text(this.labels[this.index], this.x, this.y + this.h / 8)
+text(this.labels[this.index], this.x, this.y + this.h / 8 - 11)
 if (hovering && hoverText) {
 hoverbox.innerText = hoverText
 hoverbox.classList.remove("hidden")
@@ -34232,12 +34534,12 @@ changeScene("multiplayer connecting")
 initMultiplayer(servers[selectedWorld].id)
 }, () => !servers[selectedWorld])
 Button.add(mid + x2, height - 75, w2, 40, "More information", "multiplayer menu", () => {
-window.open("https://"+selectedWorld.replace("external:",""), "_blank")
-}, () => !(typeof selectedWorld === "string" && selectedWorld.startsWith("external:")))
+window.open("https://"+servers[selectedWorld].url, "_blank")
+}, () => !(servers[selectedWorld] && servers[selectedWorld].url))
 Button.add(mid - 3 * x4, height - 30, w4, 40, "Reload", "multiplayer menu", initServersMenu)
 Button.add(mid + 3 * x4, height - 30, w4, 40, "Cancel", "multiplayer menu", r => changeScene("main menu"))
 //multiplayer connecting buttons
-Button.add(mid, height / 2 + 40, w2, 40, "Cancel", "multiplayer connecting", r => {multiplayer.close();changeScene("multiplayer lost")})
+Button.add(mid, height / 2 + 40, w2, 40, "Cancel", "multiplayer connecting", r => {multiplayer && multiplayer.close();changeScene("multiplayer lost")})
 //multiplayer lost buttons
 Button.add(mid, height / 2 + 40, w2, 40, "Back", "multiplayer lost", r => changeScene("multiplayer menu"))
 Button.add(mid, height - 40, w2, 40, "Back", "multiplayer lost long", r => changeScene("multiplayer menu"))
@@ -34332,16 +34634,17 @@ a.click()
 }, nothing)
 // Inventory buttons
 let hideIfSurvival = () => survival && -1
-Button.add(width - 50, 15, 60, 30, "close", ["inventory","crafting","furnace","chest","anvil"], play)
-Button.add(width - 95, height-15, 150, 30, "Inventory", ["inventory","crafting","furnace","chest","anvil"], () => {invCategory(0)}, hideIfSurvival)
-Button.add(width - 95, height-45, 150, 30, "Search", ["inventory","crafting","furnace","chest","anvil"], () => invCategory("search"), hideIfSurvival)
-Button.add(width - 95, height-75, 150, 30, "Construction", ["inventory","crafting","furnace","chest","anvil"], () => invCategory("build"), hideIfSurvival)
-Button.add(width - 95, height-105, 150, 30, "Decoration", ["inventory","crafting","furnace","chest","anvil"], () => invCategory("decoration"), hideIfSurvival)
-Button.add(width - 95, height-135, 150, 30, "Food", ["inventory","crafting","furnace","chest","anvil"], () => invCategory("food"), hideIfSurvival)
-Button.add(width - 95, height-165, 150, 30, "Items", ["inventory","crafting","furnace","chest","anvil"], () => invCategory("items"), hideIfSurvival)
-Button.add(width - 95, height-195, 150, 30, "Nature", ["inventory","crafting","furnace","chest","anvil"], () => invCategory("nature"), hideIfSurvival)
-Button.add(width - 95, height-225, 150, 30, "Redstone", ["inventory","crafting","furnace","chest","anvil"], () => invCategory("redstone"), hideIfSurvival)
-Button.add(width - 95, height-255, 150, 30, "Tools", ["inventory","crafting","furnace","chest","anvil"], () => invCategory("tools"), hideIfSurvival)
+// === "chest" //help find this with find
+Button.add(width - 50, 15, 60, 30, "close", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], play)
+Button.add(width - 95, height-15, 150, 30, "Inventory", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], () => {invCategory(0)}, hideIfSurvival)
+Button.add(width - 95, height-45, 150, 30, "Search", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], () => invCategory("search"), hideIfSurvival)
+Button.add(width - 95, height-75, 150, 30, "Construction", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], () => invCategory("build"), hideIfSurvival)
+Button.add(width - 95, height-105, 150, 30, "Decoration", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], () => invCategory("decoration"), hideIfSurvival)
+Button.add(width - 95, height-135, 150, 30, "Food", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], () => invCategory("food"), hideIfSurvival)
+Button.add(width - 95, height-165, 150, 30, "Items", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], () => invCategory("items"), hideIfSurvival)
+Button.add(width - 95, height-195, 150, 30, "Nature", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], () => invCategory("nature"), hideIfSurvival)
+Button.add(width - 95, height-225, 150, 30, "Redstone", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], () => invCategory("redstone"), hideIfSurvival)
+Button.add(width - 95, height-255, 150, 30, "Tools", ["inventory","crafting","furnace","chest","anvil","dispenser","hopper"], () => invCategory("tools"), hideIfSurvival)
 // You Died buttons
 Button.add(width / 2, 225, 300, 40, "Respawn", "dead", r => {
 respawn()
@@ -35064,7 +35367,6 @@ ctx.globalAlpha = 1
 }
 if(inventory.showName > 0){
 ctx.globalAlpha = inventory.showName > 1 ? 1 : inventory.showName
-var Y = y - (s*1.5)
 ctx.font = "16px VT323"
 var slot = inventory.hotbar[inventory.hotbarSlot]
 var id = slot && slot.id
@@ -35073,14 +35375,10 @@ id = slot.id | blockMode
 }
 var name = slot && slot.id && (slot.customName || blockData[id].Name)
 if(name){
-var w = ctx.measureText(name).width + 20
-var X = (width / 2) - (w/2)
-fill(0)
-ctx.fillRect(X,Y,w,s)
 fill(255)
-ctx.textBaseline = "Middle"
-ctx.fillText(name, X+10,Y+s2)
-ctx.textBaseline = "Alphabetic"
+ctx.textAlign = "center"
+text(name, (width/2),y-30, 16,2)
+ctx.textAlign = "left"
 }
 ctx.globalAlpha = 1
 }
@@ -35092,12 +35390,12 @@ let str = "Average Frame Time: " + analytics.displayedFrameTime + "ms\n"
 + "Tick Time: " + analytics.displayedTickTime + "ms\n"
 + "Rendered Chunks: " + renderedChunks.toLocaleString() + " / " + (p.dimension === "nether" ? world.netherLoaded : (p.dimension === "end" ? world.endLoaded : world.loaded)).length + "\n"
 + "Generated Chunks: " + generatedChunks.toLocaleString() + "\n"
-+ "FPS: " + analytics.fps//*temp*/ + "   atk-cdn_"+attackCooldown+",start_"+attackCooldownStart+",time_"+attackCooldownTime
++ "FPS: " + analytics.fps
 if (p.autoBreak) {
-text("Super breaker enabled", 5, height - 89, 12)
+text("Super breaker enabled", 5, height - 99, 12)
 }
 if (p.autoBuild) {
-text("Hyper builder enabled", 5, height - 101, 12)
+text("Hyper builder enabled", 5, height - 111, 12)
 }
 if (multiplayer) {
 let closest = Infinity
@@ -35117,15 +35415,15 @@ if(pos.spectating === userId) spectating++
 if(cname === "Yourself") closest = 0
 var info = round(closest)+" blocks away"
 if(closest === 0) info = "Right here"
-text(`Closest player: ${cname} (${info})`, 5, height - 113, 12)
+text(`Closest player: ${cname} (${info})`, 5, height - 123, 12)
 if(spectating){
-text(`${spectating} spectators spectating you.`, 5, height - 125, 12)
+text(`${spectating} spectators spectating you.`, 5, height - 135, 12)
 }
 }
 ctx.textAlign = 'right'
-text(p2.x + ", " + p2.y + ", " + p2.z, width - 10, 15, 0)
+text(p2.x + ", " + p2.y + ", " + p2.z, width - 10, 5, 0)
 ctx.textAlign = 'left'
-text(str, 5, height - 77, 12)
+text(str, 5, height - 87, 12)
 }
 window.invScroll = 0;
 let draggingInvBar = false
@@ -35317,11 +35615,8 @@ let name = blockData[inventory.craftingRes.id].Name
 if(name !== "" && over){
 ctx.textAlign = "left"
 ctx.font = "16px VT323";
-var w = ctx.measureText(name).width;
-fill(0)
-ctx.fillRect(mouseX, mouseY, w+20, 20);
-fill(255);
-ctx.fillText(name, mouseX+10, mouseY+13+2);
+fill(255)
+text(name, mouseX, mouseY, 16, 1);
 }
 }
 }
@@ -35343,11 +35638,8 @@ name = blockData[idx] ? blockData[idx].Name : "";
 }
 if((name !== "") && mouseY<s*9.5){
 ctx.font = "16px VT323";
-var w = ctx.measureText(name).width;
-fill(0)
-ctx.fillRect(mouseX, mouseY, w+20, 20);
-fill(255);
-ctx.fillText(name, mouseX+10, mouseY+13+2);
+fill(255)
+text(name, mouseX, mouseY, 16, 1);
 }
 }
 //show name on hover for hotbar
@@ -35359,11 +35651,8 @@ let name = slot && slot.id && (slot.customName || blockData[slot.id].Name)
 name = name || ""
 if(name !== ""){
 ctx.font = "16px VT323";
-var w = ctx.measureText(name).width;
-fill(0)
-ctx.fillRect(mouseX, mouseY, w+20, 20);
-fill(255);
-ctx.fillText(name, mouseX+10, mouseY+13+2);
+fill(255)
+text(name, mouseX, mouseY, 16, 1);
 }
 }
 if(!nodraw)ctx.drawImage(canvas2, 0,0)
@@ -35393,10 +35682,11 @@ if(mouse === 2 && inventory.holding.amount > 1){
 let holding = inventory.holding
 let slot = invItems[over]
 if(holding.id){
-var canSplit = holding.id === slot.id && slot.amount < blockData[slot.id].stackSize
+var canSplit = holding.id === slot.id && (!holding.customName && !slot.customName || holding.customName === slot.customName) && slot.amount < blockData[slot.id].stackSize
 if(!slot.id){
 canSplit = true
 slot.id = holding.id
+slot.customName = holding.customName
 slot.amount = 0
 }
 if(canSplit){
@@ -35408,7 +35698,7 @@ if(holding.amount <= 0) holding.id = 0
 }else{
 if(invItems[over] && invItems[over].id){
 let temp = inventory.holding
-if(temp.id === invItems[over].id && temp.amount < blockData[temp.id].stackSize && invItems[over].amount < blockData[invItems[over].id].stackSize){ //stacking together
+if(temp.id === invItems[over].id && (!temp.customName && !invItems[over].customName || temp.customName === invItems[over].customName) && temp.amount < blockData[temp.id].stackSize && invItems[over].amount < blockData[invItems[over].id].stackSize){ //stacking together
 let stackSize = blockData[invItems[over].id].stackSize
 while(temp.amount > 0){
 temp.amount--
@@ -35444,10 +35734,11 @@ if(!inventory.crafting[idx]) inventory.crafting[idx] = {id:0,amount:0}
 let holding = inventory.holding
 let slot = inventory.crafting[idx]
 if(holding.id){
-var canSplit = holding.id === slot.id && slot.amount < blockData[slot.id].stackSize
+var canSplit = holding.id === slot.id && (!holding.customName && !slot.customName || holding.customName === slot.customName) && slot.amount < blockData[slot.id].stackSize
 if(!slot.id){
 canSplit = true
 slot.id = holding.id
+slot.customName = holding.customName
 slot.amount = 0
 }
 if(canSplit){
@@ -35597,7 +35888,7 @@ r=floor(r*b)//sometimes not precise so use floor
 //n = result   r = remainder
 var id = invItems[inventory.spreadStart].id
 for(var i=0; i<inventory.spreaded.length; i++){
-invItems[inventory.spreaded[i]] = {id:id, amount:n}
+invItems[inventory.spreaded[i]] = {id:id, amount:n, customName:invItems[inventory.spreadStart].customName}
 }
 if(r) inventory.holding = {id:id, amount:r}
 inventory.spreaded = []
@@ -35623,7 +35914,7 @@ r=floor(r*b)//sometimes not precise so use floor
 //n = result   r = remainder
 var id = c[inventory.spreadStart].id
 for(var i=0; i<inventory.spreaded.length; i++){
-c[inventory.spreaded[i]] = {id:id, amount:n}
+c[inventory.spreaded[i]] = {id:id, amount:n, customName:c[inventory.spreadStart].customName}
 }
 if(r) inventory.holding = {id:id, amount:r}
 inventory.spreaded = []
@@ -35701,11 +35992,8 @@ let name = blockData[inventory.craftingRes.id].Name
 if(name !== "" && over){
 ctx.textAlign = "left"
 ctx.font = "16px VT323";
-var w = ctx.measureText(name).width;
-fill(0)
-ctx.fillRect(mouseX, mouseY, w+20, 20);
-fill(255);
-ctx.fillText(name, mouseX+10, mouseY+13+2);
+fill(255)
+text(name, mouseX, mouseY, 16, 1);
 }
 }
 ctx.drawImage(canvas2,0,0)
@@ -35763,10 +36051,11 @@ if(!inventory.crafting[idx]) inventory.crafting[idx] = {id:0,amount:0}
 let holding = inventory.holding
 let slot = inventory.crafting[idx]
 if(holding.id){
-var canSplit = holding.id === slot.id && slot.amount < blockData[slot.id].stackSize
+var canSplit = holding.id === slot.id && (!holding.customName && !slot.customName || holding.customName === slot.customName) && slot.amount < blockData[slot.id].stackSize
 if(!slot.id){
 canSplit = true
 slot.id = holding.id
+slot.customName = holding.customName
 slot.amount = 0
 }
 if(canSplit){
@@ -35849,20 +36138,20 @@ let s2 = s/2
 gl.clearColor(0, 0, 0, 0)
 gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 var toPlay
-var data = world.getTags(furnaceData.x, furnaceData.y, furnaceData.z,furnaceData.dimension)
+var data = world.getTags(containerData.x, containerData.y, containerData.z,containerData.dimension)
 if(!data || !(data&&data.furnace)){
-var block = world.getBlock(furnaceData.x, furnaceData.y, furnaceData.z,furnaceData.dimension)
+var block = world.getBlock(containerData.x, containerData.y, containerData.z,containerData.dimension)
 if(blockData[block].name === "furnace"){
 data = {furnace:true, input:0, fuel:0, output:0, smeltStart:0, burnStart:0, canBurn:false, smelting:false, xp:0}
-world.setTags(furnaceData.x, furnaceData.y, furnaceData.z, data,false,furnaceData.dimension)
+world.setTags(containerData.x, containerData.y, containerData.z, data,false,containerData.dimension)
 }else toPlay = true //furnace doesn't exsist here
 }
-furnaceData.data = data
+containerData.data = data
 if(toPlay){
 play()
 return
 }
-updateFurnace(data, furnaceData.x,furnaceData.y,furnaceData.z,furnaceData.dimension)
+updateFurnace(data, containerData.x,containerData.y,containerData.z,containerData.dimension)
 let offX = width - s*4
 let offY = s * 2
 ctx.font = "24px VT323"
@@ -35929,13 +36218,10 @@ ctx.drawImage(gl.canvas,0,0)
 if(over && data.output && data.output.id){ //this is right aligned so you can see it
 let name = blockData[data.output.id].Name
 if(name !== "" && over){
-ctx.textAlign = "left"
+ctx.textAlign = "right"
 ctx.font = "16px VT323";
-var w = ctx.measureText(name).width;
-fill(0)
-ctx.fillRect(mouseX-w-20, mouseY, w+20, 20);
-fill(255);
-ctx.fillText(name, mouseX+10-w-20, mouseY+13+2);
+fill(255)
+text(name, mouseX, mouseY, 16, 1);
 }
 }
 ctx.drawImage(canvas2,0,0)
@@ -35945,7 +36231,7 @@ let s = inventory.size
 let s2 = s/2
 let offX = width - s*4
 let offY = s * 2
-var data = furnaceData.data //inventory.furnaceData.data
+var data = containerData.data
 let temp
 var clicked
 //input
@@ -35987,7 +36273,7 @@ data.output = 0
 clicked = true
 }
 if(clicked){
-world.updateTags(furnaceData.x,furnaceData.y,furnaceData.z,furnaceData.dimension)
+world.updateTags(containerData.x,containerData.y,containerData.z,containerData.dimension)
 }else{
 clickInv(true, mouse)
 }
@@ -35999,19 +36285,18 @@ let s = inventory.size
 let s2 = s/2
 var w = 9
 var h = 3
-var length = w*h
+var length = 27
 gl.clearColor(0, 0, 0, 0)
 gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
 var toPlay
-var data = world.getTags(chestData.x, chestData.y, chestData.z,chestData.dimension)
+var data = world.getTags(containerData.x, containerData.y, containerData.z,containerData.dimension)
 if(!data || !(data&&data.chest)){
-var block = world.getBlock(chestData.x, chestData.y, chestData.z,chestData.dimension)
+var block = world.getBlock(containerData.x, containerData.y, containerData.z,containerData.dimension)
 if(blockData[block].name === "chest"){
-data = {chest:true, contents:new Array(length).fill(0)}
-world.setTags(chestData.x, chestData.y, chestData.z, data,false,chestData.dimension)
+data = blockData[block].setContents(containerData.x,containerData.y,containerData.z,containerData.dimension)
 }else toPlay = true //chest doesn't exsist here
 }
-chestData.data = data
+containerData.data = data
 if(toPlay){
 play()
 return
@@ -36060,11 +36345,8 @@ let name = item ? (item.customName || blockData[item.id].Name) : ""
 if(name !== ""){
 ctx.textAlign = "left"
 ctx.font = "16px VT323";
-var w = ctx.measureText(name).width;
-fill(0)
-ctx.fillRect(mouseX, mouseY, w+20, 20);
-fill(255);
-ctx.fillText(name, mouseX+10, mouseY+13+2);
+fill(255)
+text(name, mouseX, mouseY, 16, 1);
 }
 }
 ctx.drawImage(canvas2,0,0)
@@ -36078,12 +36360,12 @@ var length = w*h
 var x = 50.5 - s2
 var y = 10.2*s
 var over = mouseX > x && mouseY > y && mouseX < x+w*s && mouseY < y+h*s ? (floor((mouseX-x)/s) + floor((mouseY-y)/s)*w) : -1
-var c = chestData.data.contents
+var c = containerData.data.contents
 if(over >= 0 && over < length && c){
 let temp = c[over]
 c[over] = inventory.holding
 inventory.holding = temp
-world.updateTags(chestData.x,chestData.y,chestData.z,chestData.dimension)
+world.updateTags(containerData.x,containerData.y,containerData.z,containerData.dimension)
 }else clickInv(true, mouse)
 drawScreens.chest()
 }
@@ -36156,13 +36438,10 @@ if(over && inventory.anvilOutput && inventory.anvilOutput.id){ //right aligned
 var item = inventory.anvilOutput
 let name = inventory.anvilOutput.customName || blockData[inventory.anvilOutput.id].Name
 if(name !== "" && over){
-ctx.textAlign = "left"
+ctx.textAlign = "right"
 ctx.font = "16px VT323";
-var w = ctx.measureText(name).width;
-fill(0)
-ctx.fillRect(mouseX-w-20, mouseY, w+20, 20);
-fill(255);
-ctx.fillText(name, mouseX+10-w-20, mouseY+13+2);
+fill(255)
+text(name, mouseX, mouseY, 16, 1);
 }
 }
 ctx.drawImage(canvas2,0,0)
@@ -36244,8 +36523,7 @@ var data = world.getTags(dispenserData.x, dispenserData.y, dispenserData.z,dispe
 if(!data || !data.dispenser){
 var block = world.getBlock(dispenserData.x, dispenserData.y, dispenserData.z,dispenserData.dimension)
 if(blockData[block].name === "dispenser" || blockData[block].name === "dropper"){
-data = {dispenser:true, contents:new Array(9).fill(0)}
-world.setTags(dispenserData.x, dispenserData.y, dispenserData.z, data,false,dispenserData.dimension)
+data = blockData[block].setContents(dispenserData.x, dispenserData.y, dispenserData.z, dispenserData.dimension)
 }else toPlay = true //chest doesn't exsist here
 }
 dispenserData.data = data
@@ -36320,10 +36598,11 @@ if(!data.contents[idx]) data.contents[idx] = {id:0,amount:0}
 let holding = inventory.holding
 let slot = data.contents[idx]
 if(holding.id){
-var canSplit = holding.id === slot.id && slot.amount < blockData[slot.id].stackSize
+var canSplit = holding.id === slot.id && (!holding.customName && !slot.customName || holding.customName === slot.customName) && slot.amount < blockData[slot.id].stackSize
 if(!slot.id){
 canSplit = true
 slot.id = holding.id
+slot.customName = holding.customName
 slot.amount = 0
 }
 if(canSplit){
@@ -36344,6 +36623,84 @@ inventory.spreadPlace = "dispenser"
 }else clickInv(true, mouse)
 drawDispenser()
 }
+function drawHopper(){
+drawInv(true)
+let s = inventory.size
+let s2 = s/2
+var length = 5
+gl.clearColor(0, 0, 0, 0)
+gl.clear(gl.DEPTH_BUFFER_BIT | gl.COLOR_BUFFER_BIT)
+var toPlay
+var data = world.getTags(containerData.x, containerData.y, containerData.z,containerData.dimension)
+if(!data || !(data&&data.hopper)){
+var block = world.getBlock(containerData.x, containerData.y, containerData.z,containerData.dimension)
+if(blockData[block].name === "hopper"){
+data = blockData[block].setContents(containerData.x,containerData.y,containerData.z,containerData.dimension)
+}else toPlay = true //chest doesn't exsist here
+}
+containerData.data = data
+if(toPlay) return play()
+var x = 50.5 - s2
+var y = 11*s
+ctx.lineWidth = 1
+ctx.strokeStyle = "black"
+ctx.beginPath()
+for(var lx = 0; lx < length + 1; lx++){
+ctx.moveTo(x + lx*s, y)
+ctx.lineTo(x + lx*s, y+s)
+}
+ctx.moveTo(x, y)
+ctx.lineTo(x + length*s, y)
+ctx.moveTo(x, y+s)
+ctx.lineTo(x + length*s, y+s)
+ctx.stroke()
+var over = mouseX > x && mouseY > y && mouseX < x+length*s && mouseY < y+s ? floor((mouseX-x)/s) : -1
+if(over >= 0 && over < length){
+var ox = over*s+x
+ctx.strokeStyle = "white"
+ctx.lineWidth = 2
+ctx.strokeRect(ox,y,s,s)
+}
+ctx.fillStyle = "white"
+ctx.font = "16px VT323"
+ctx.textAlign = "left"
+ctx.fillText("Item Hopper", x, y-4)
+if(data.contents){
+for(var i=0; i<length; i++){
+var item = data.contents[i]
+if(!item || !item.id) continue
+drawIcon(x+i*s+s2,y+s2, item.id, item)
+}
+}
+ctx.drawImage(gl.canvas,0,0)
+if(over >= 0 && over < length && data.contents){
+var item = data.contents[over]
+let name = item ? (item.customName || blockData[item.id].Name) : ""
+if(name !== ""){
+ctx.textAlign = "left"
+ctx.font = "16px VT323";
+fill(255)
+text(name, mouseX, mouseY, 16, 1);
+}
+}
+ctx.drawImage(canvas2,0,0)
+}
+function clickHopper(mouse){
+let s = inventory.size
+let s2 = s/2
+var length = 5
+var x = 50.5 - s2
+var y = 11*s
+var over = mouseX > x && mouseY > y && mouseX < x+length*s && mouseY < y+s ? floor((mouseX-x)/s) : -1
+var c = containerData.data.contents
+if(over >= 0 && over < length && c){
+let temp = c[over]
+c[over] = inventory.holding
+inventory.holding = temp
+world.updateTags(containerData.x,containerData.y,containerData.z,containerData.dimension)
+}else clickInv(true, mouse)
+drawHopper()
+}
 let unpauseDelay = 0, mmoveX = 0, mmoveY = 0
 function mmoved(e) {
 let mouseS = settings.mouseSense / 30000
@@ -36357,13 +36714,13 @@ if (screen !== "play") {
 cursor("")
 mouseX = e.x
 mouseY = e.y
-if(screen !== "main menu" && !(screen === "furnace" && furnaceData.data.smelting) && screen !== "dead" && screen !== "chat" && screen !== "edit sign" && screen !== "sleep" && screen !== "endPoem" && screen !== "custom menu"){
+if(screen !== "main menu" && !(screen === "furnace" && containerData.data.smelting) && screen !== "dead" && screen !== "chat" && screen !== "edit sign" && screen !== "sleep" && screen !== "endPoem" && screen !== "custom menu"){
 drawScreens[screen]()
 redraw = true
 Slider.drag()
 }
 }
-if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser"){
+if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser" || screen === "hopper"){
 moveInv()
 redraw = true
 }
@@ -36532,7 +36889,7 @@ if(place) {
 placeKeyPressed()
 }
 }
-} else if (screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser") {
+} else if (screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser" || screen === "hopper") {
 if(mouseDown && mouseX >= width-barW){
 draggingInvBar = true
 invBarOffset = mouseY-map(invScroll, 0, invHeight, (barH/2), height-(barH/2))
@@ -36542,6 +36899,7 @@ else if(screen === "furnace")clickFurnace(e.button)
 else if(screen === "chest") clickChest(e.button)
 else if(screen === "anvil")clickAnvil(e.button)
 else if(screen === "dispenser") clickDispenser(e.button)
+else if(screen === "hopper") clickHopper(e.button)
 else clickInv(false, e.button)
 redraw = true
 }
@@ -36576,7 +36934,7 @@ if(!blockData[holding].onrelease(x,y,z, p.dimension, inventory.hotbar[inventory.
 }
 }
 draggingInvBar = false
-if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser") releaseInv()
+if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser" || screen === "hopper") releaseInv()
 }
 canvas.onkeydown = function(e) {
 let k = e.key.toLowerCase()
@@ -36703,7 +37061,7 @@ updateHUD = true
 if(k === controlMap.pause.key) {
 play()
 }
-} else if (screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser") {
+} else if (screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser" || screen === "hopper") {
 if (k === controlMap.inventory.key) {
 if(screen === "crafting" || screen === "inventory"){
 for(var i=0; i<9; i++){
@@ -36750,7 +37108,7 @@ play()
 canvas.onkeyup = function(e) {
 let k = e.key.toLowerCase()
 Key[k] = false
-if(k === "escape" && (screen === "pause" || screen === "inventory" || screen === "chest" || screen === "furnace" || screen === "anvil" || screen === "dispenser" || screen === "chat" || screen === "custom menu" || screen === "options" && previousScreen === "pause") && Date.now() > unpauseDelay) {
+if(k === "escape" && (screen === "pause" || screen === "inventory" || screen === "chest" || screen === "furnace" || screen === "anvil" || screen === "dispenser" || screen === "hopper" || screen === "chat" || screen === "custom menu" || screen === "options" && previousScreen === "pause") && Date.now() > unpauseDelay) {
 play()
 }
 if (screen === "play") {
@@ -36802,7 +37160,7 @@ inventory.showName = 1.5
 updateHUD = true
 holding = inventory.hotbar[inventory.hotbarSlot].id
 }
-if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser"){
+if(screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser" || screen === "hopper"){
 invScroll += e.deltaY
 if(invScroll < 0) invScroll = 0
 if(invScroll > invHeight) invScroll = invHeight
@@ -37699,7 +38057,7 @@ else if(ping > 600) y = -42
 else if(ping > 400) y = -28
 else if(ping > 200) y = -14
 else y = 0
-p.innerHTML = ping+" miliseconds <div class='img' style='background-position:0 "+y+"px;'></div>"
+p.innerHTML = ping+" ms <div class='img' style='background-position:0 "+y+"px;'></div>"
 }else if(ping === "timeout"){
 p.innerHTML = "Ping timed out <div class='img' style='background-position:0 -70px;'></div>"
 }else{
@@ -37720,7 +38078,7 @@ div.classList.add("message")
 div.innerHTML = msg
 window.servers.prepend(div)
 }
-fetch("https://server.thingmaker.repl.co/test").then(r => r.text()).then(r => {
+await fetch("https://server.thingmaker.repl.co/test").then(r => r.text()).then(r => {
 if(r !== "test"){
 console.log(r)
 throw "The server didn't respond correctly."
@@ -37732,7 +38090,7 @@ else if(ping > 600) y = -42
 else if(ping > 400) y = -28
 else if(ping > 200) y = -14
 else y = 0
-addPingMsg("Your ping: "+ping+" miliseconds <div class='pingImg' style='background-position:0 "+y+"px;'></div>")
+addPingMsg("Your ping: "+ping+" ms <div class='pingImg' style='background-position:0 "+y+"px;'></div>")
 }).catch(e => {
 addPingMsg("Something went wrong when pinging: "+e)
 console.log(e)
@@ -38628,7 +38986,7 @@ win.menuMusicVolume = 1
 win.menuMusicIdx = 0
 win.currentMusic = null
 function updateMusic(){
-if(screen === "play" || screen === "pause" || screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser" || screen === "options" || screen.startsWith("options ") || screen === "chat" || screen === "edit sign" || screen === "sleep" || screen === "endPoem" || screen === "custom menu"){
+if(screen === "play" || screen === "pause" || screen === "inventory" || screen === "crafting" || screen === "furnace" || screen === "chest" || screen === "anvil" || screen === "dispenser" || screen === "hopper" || screen === "options" || screen.startsWith("options ") || screen === "chat" || screen === "edit sign" || screen === "sleep" || screen === "endPoem" || screen === "custom menu"){
 if(menuMusicVolume > 0) menuMusicVolume -= 0.01
 if(menuMusicVolume < 0) menuMusicVolume = 0
 if(currentMusic && menuMusicVolume === 0){
@@ -38672,7 +39030,7 @@ console.error(e)
 alert(e)
 return
 }
-audioRecorder = new MediaRecorder(audioStream, { mimeType: "video/webm; codecs=vp9" })
+audioRecorder = new MediaRecorder(audioStream)
 win.audioRecorder = audioRecorder
 }
 canSendAudio = true
@@ -39088,11 +39446,19 @@ setupHelp()
 function finishedLoading(){
 // See if a user followed a link here.
 if (urlParams.has("target")) {
-changeScene("multiplayer menu")
+var target = urlParams.get("target")
+changeScene("multiplayer connecting")
 loggedIn().then(logged => {
 if(logged){
-changeScene("multiplayer connecting")
-initMultiplayer(urlParams.get("target"))
+initServersMenu().then(() => {
+if(servers[target]){
+initMultiplayer(target)
+}else{
+changeScene("main menu")
+}
+})
+}else{
+changeScene("main menu")
 }
 })
 }
@@ -39223,13 +39589,13 @@ text(title, width / 2, 145)*/
 drawImage("minekhan", width/2 - (titleWidth/2), 145 - titleHeight, titleWidth,titleHeight)
 ctx.font = "bold 32px " + font
 fill(50)
-text(subtext, width / 2-1, 180)
-text(subtext, width / 2+1, 180)
-text(subtext, width / 2, 179)
-text(subtext, width / 2, 181)
+text(subtext, width / 2-1, 148)
+text(subtext, width / 2+1, 148)
+text(subtext, width / 2, 147)
+text(subtext, width / 2, 149)
 ctx.font = "bold 32px " + font
 fill(150)
-text(subtext, width / 2, 180)
+text(subtext, width / 2, 148)
 fill(230,220,0)
 ctx.translate(width/2 + 280,170)
 ctx.rotate(-Math.PI/8);
@@ -39260,9 +39626,9 @@ drawTitle()
 fill(220)
 ctx.font = "16px VT323"
 ctx.textAlign = 'left'
-text("MineKhan " + version, 2, height - 2)
+text("MineKhan " + version, 2, height - 2 - 16)
 ctx.textAlign = "right"
-text("Do not plagarize.", width - 2, height - 2)
+text("Do not plagarize.", width - 2, height - 2 - 16)
 }
 drawScreens.play = () => {
 ctx2.clearRect(0,0,width,height)
@@ -39757,7 +40123,7 @@ ctx.font = "80px VT323"
 ctx.textAlign = "center"
 ctx.fillStyle = titleColor
 ctx.globalAlpha = alpha > 1 ? 1 : alpha
-text(title, width/2, height/2, 80)
+text(title, width/2, height/2-40, 80)
 if(subtitle){
 ctx.font = "48px VT323"
 text(subtitle, width/2, height/2+50, 40)
@@ -39784,9 +40150,9 @@ ctx.fillRect(x, 0,w,50)
 ctx.textBaseline = "top"
 ctx.fillStyle = "white"
 ctx.font = "10px VT323"
-ctx.fillText(sideMessageTitle, x+5, 5, w-10)
+text(sideMessageTitle, x+5, 5, w-10)
 ctx.fillStyle = "#aaa"
-ctx.fillText(sideMessageContent, x+5, 20, w-10)
+text(sideMessageContent, x+5, 20, w-10)
 ctx.textBaseline = "alphabetic"
 }
 if(inventory.showName > 0 && tick){
@@ -39815,7 +40181,7 @@ ctx.font = "50px Arial"
 ctx.textAlign = "center"
 ctx.fillText("You died", width/2, 100)
 ctx.font = "20px Arial"
-ctx.fillText(dieMessage, width/2, 140)
+text(dieMessage, width/2, 140-20)
 ctx.fillText("Score: "+p.totalXP, width/2, 160)
 }
 drawScreens.loading = () => {
@@ -39979,6 +40345,7 @@ drawScreens.furnace = drawFurnace
 drawScreens.chest = drawChest
 drawScreens.anvil = drawAnvil
 drawScreens.dispenser = drawDispenser
+drawScreens.hopper = drawHopper
 drawScreens.sleep = () => {
 defineWorld(tick)
 if(skyLight > 0.5){
@@ -40001,7 +40368,7 @@ allSleeping = i === total
 textSize(20)
 fill(255)
 ctx.textAlign = 'center'
-text(`${i} of ${total} players sleeping.`, width / 2, height - 70)
+text(`${i} of ${total} players sleeping.`, width / 2, height - 90)
 }else allSleeping = true
 }
 drawScreens["custom menu"] = () => {
@@ -40040,28 +40407,28 @@ dirt()
 ctx.textAlign = 'center'
 textSize(25)
 fill(255)
-text("Help", width / 2, 40)
+text("Help", width / 2, 15)
 }
 drawScreens["creation menu"] = () => {
 dirt()
 ctx.textAlign = 'center'
 textSize(18)
 fill(255)
-text("Create New World", width / 2, 20)
+text("Create New World", width / 2, 2)
 }
 drawScreens["loadsave menu"] = () => {
 dirt()
 ctx.textAlign = 'center'
 textSize(18)
 fill(255)
-text("Select World", width / 2, 20)
+text("Select World", width / 2, 2)
 }
 drawScreens["broken world"] = () => {
 dirt()
 ctx.textAlign = 'center'
 fill(255)
 textSize(25)
-text("This world is an old world.\nIt might be broken.\nAre you sure you want to load it?", width / 2, height / 2 - 50, 25)
+text("This world is an old world.\nIt might be broken.\nAre you sure you want to load it?", width / 2, height / 2 - 75, 25)
 }
 drawScreens["multiplayer menu"] = () => {
 dirt()
@@ -40075,22 +40442,22 @@ dirt()
 ctx.textAlign = 'center'
 fill(255)
 textSize(25)
-text("Connecting...", width / 2, height / 2 - 40)
+text("Connecting...", width / 2, height / 2 - 65)
 textSize(18)
-if(connectingProgress) text(connectingProgress, width / 2, height / 2)
+if(connectingProgress) text(connectingProgress, width / 2, height / 2-18)
 }
 drawScreens["multiplayer lost"] = () => {
 dirt()
 ctx.textAlign = 'center'
 fill(255)
 textSize(25)
-text("Connection lost!", width / 2, height / 2 - 40)
+text("Connection lost!", width / 2, height / 2 - 65)
 if(multiplayerError && multiplayerError.data){
 if(typeof multiplayerError.data !== "string"){
 multiplayerError.data = multiplayerError.toString()
 }
 textSize(18)
-text(multiplayerError.data, width / 2, height / 2, 18)
+text(multiplayerError.data, width / 2, height / 2-18, 18)
 }
 }
 drawScreens["multiplayer lost long"] = () => {
@@ -40098,7 +40465,7 @@ dirt()
 ctx.textAlign = 'center'
 fill(255)
 textSize(25)
-text("Connection lost!", width / 2, 40)
+text("Connection lost!", width / 2, 15)
 }
 drawScreens.editworld = dirt
 drawScreens.marketplace = () => {
@@ -40106,7 +40473,7 @@ dirt()
 ctx.textAlign = 'center'
 textSize(18)
 fill(255)
-text("Marketplace", width / 2, 20)
+text("Marketplace", width / 2, 2)
 }
 drawScreens["marketplace info"] = drawScreens.marketplace
 drawScreens.downloading = () => {
@@ -40151,7 +40518,7 @@ drawScreens[screen]()
 Button.draw()
 Slider.draw()
 }
-if(screen === "furnace" && furnaceData.data.smelting){
+if(screen === "furnace" && containerData.data.smelting){
 drawScreens[screen]()
 }
 }
